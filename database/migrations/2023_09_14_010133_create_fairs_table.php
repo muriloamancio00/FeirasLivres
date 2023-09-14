@@ -15,6 +15,12 @@ class CreateFairsTable extends Migration
     {
         Schema::create('fairs', function (Blueprint $table) {
             $table->id();
+            $table->string('nome');
+            $table->string('endereco');
+            $table->string('horarioInicio');
+            $table->string('horarioFim');
+            $table->string('longitude')->nullable();
+            $table->string('latitude')->nullable();
             $table->timestamps();
         });
     }

@@ -14,7 +14,15 @@ class CreatePhotosTable extends Migration
     public function up()
     {
         Schema::create('photos', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedBigInteger('fair_id')->nullable();
+            $table->unsignedBigInteger('event_id')->nullable();
+            $table->unsignedBigInteger('product_id')->nullable();
+            $table->unsignedBigInteger('stand_id')->nullable();
+            $table->string('path');
+            $table->foreign('fair_id')->references('id')->on('fairs');
+            $table->foreign('event_id')->references('id')->on('events');
+            $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('stand_id')->references('id')->on('stands');
             $table->timestamps();
         });
     }
