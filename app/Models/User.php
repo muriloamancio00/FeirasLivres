@@ -23,6 +23,11 @@ class User extends Authenticatable
         'type_id'
     ];
 
+    public function type()
+    {
+        return $this->belongsTo(Type::class);
+    }
+
     /**
      * The attributes that should be hidden for arrays.
      *

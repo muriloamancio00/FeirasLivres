@@ -15,10 +15,12 @@ class TypeFactory extends Factory
 
     protected $model = Type::class;
 
+    private $nameRoles = ['Feirante', 'Administrador'];
+    private $index = 0;
+
     public function definition()
     {
-        $name_role = ['Administrador','Feirante'];
-        $name = $this->faker->unique()->randomElement($name_role);
+        $name = $this->nameRoles[$this->index++];
 
         return [
             'nome' => $name,
