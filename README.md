@@ -7,36 +7,59 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-#Passos da criação inicial do projeto
+---
 
-1) inicializando o projeto:
-	composer create-project –prefer-dist laravel=8.5.9 FeirasLivres
+# **Passos para a Criação Inicial do Projeto**
 
-2) instalando pacote UI
-	composer require laravel/ui:^3.2.1
+1. **Inicializando o Projeto:**
+composer create-project –prefer-dist laravel=8.5.9 FeirasLivres
 
-3) gerando esqueleto do projeto com Vue.JS e autentificação web nativa(scaffold)
-    php artisan ui vue - -auth
+markdown
+Copy code
 
-4) baixando dependencias do front end
-	npm install
+2. **Instalando o Pacote UI:**
+composer require laravel/ui:^3.2.1
 
-5) rodando o vue.js
-	npm run dev + php artisan serve
+java
+Copy code
 
-em casos de problemas após o ultimo passo, rodar novamente o passo 4, e repetir o passo 5
+3. **Gerando o Esqueleto do Projeto com Vue.JS e Autenticação Web Nativa (Scaffold):**
+php artisan ui vue --auth
 
-## Pacotes instalados pelo composer
+arduino
+Copy code
 
-#fakerphp/faker
-Descrição: Gera dados falsos para testes e desenvolvimento.
+4. **Baixando Dependências do Front-end:**
+npm install
 
-## Pacotes instalados pelo npm
+markdown
+Copy code
 
-#jquery@3.7.1
+5. **Rodando o Vue.js:**
+npm run dev + php artisan serve
 
+yaml
+Copy code
+
+Em caso de problemas após o último passo, rode novamente o Passo 4 e repita o Passo 5.
+
+---
+
+## **Pacotes Instalados pelo Composer**
+
+### **fakerphp/faker**
+*Descrição*: Gera dados falsos para testes e desenvolvimento.
+
+---
+
+## **Pacotes Instalados pelo Npm**
+
+### **jquery@3.7.1**
 Uma biblioteca JavaScript rápida, pequena e rica em recursos, utilizada para manipular o DOM e simplificar a interação com o HTML.
-Versão: 3.7.1
+
+*Versão*: 3.7.1
+
+---
 
 
 ## Learning Laravel
