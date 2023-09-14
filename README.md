@@ -43,8 +43,7 @@
 ## **Pacotes Instalados pelo Composer**
 
 ### **fakerphp/faker@1.23.0**
-*Descrição*: Gera dados falsos para testes e desenvolvimento.[^1]
-[^1]: Esta é a explicação da nota de rodapé.
+*Descrição*: Gera dados falsos para testes e desenvolvimento.
 
 ---
 
@@ -58,16 +57,11 @@ Uma biblioteca JavaScript rápida, pequena e rica em recursos, utilizada para ma
 ---
 
 
-## Learning Laravel
+## Learning Laravel.[^1]
+[^1]: Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Contributing[^2]
+[^2]Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## License[^3]
+[^3]The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
