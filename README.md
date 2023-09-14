@@ -24,10 +24,19 @@
 5) rodando o vue.js
 	npm run dev + php artisan serve
 
-
-
 em casos de problemas após o ultimo passo, rodar novamente o passo 4, e repetir o passo 5
 
+## Pacotes instalados pelo composer
+
+#fakerphp/faker
+Descrição: Gera dados falsos para testes e desenvolvimento.
+
+## Pacotes instalados pelo npm
+
+#jquery@3.7.1
+
+Uma biblioteca JavaScript rápida, pequena e rica em recursos, utilizada para manipular o DOM e simplificar a interação com o HTML.
+Versão: 3.7.1
 
 
 ## Learning Laravel
