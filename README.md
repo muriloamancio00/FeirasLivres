@@ -14,34 +14,24 @@
 1. **Inicializando o Projeto:**
 composer create-project –prefer-dist laravel=8.5.9 FeirasLivres
 
-markdown
-Copy code
 
-2. **Instalando o Pacote UI:**
+3. **Instalando o Pacote UI:**
 composer require laravel/ui:^3.2.1
 
-java
-Copy code
 
-3. **Gerando o Esqueleto do Projeto com Vue.JS e Autenticação Web Nativa (Scaffold):**
+5. **Gerando o Esqueleto do Projeto com Vue.JS e Autenticação Web Nativa (Scaffold):**
 php artisan ui vue --auth
 
-arduino
-Copy code
 
-4. **Baixando Dependências do Front-end:**
+7. **Baixando Dependências do Front-end:**
 npm install
 
-markdown
-Copy code
 
 5. **Rodando o Vue.js:**
 npm run dev + php artisan serve
 
-yaml
-Copy code
+<span style="color:red">Em caso de problemas após o último passo, rode novamente o Passo 4 e repita o Passo 5.</span>
 
-Em caso de problemas após o último passo, rode novamente o Passo 4 e repita o Passo 5.
 
 ---
 
@@ -55,9 +45,11 @@ Em caso de problemas após o último passo, rode novamente o Passo 4 e repita o 
 ## **Pacotes Instalados pelo Npm**
 
 ### **jquery@3.7.1**
-Uma biblioteca JavaScript rápida, pequena e rica em recursos, utilizada para manipular o DOM e simplificar a interação com o HTML.
+<span style="color:blue">Uma biblioteca JavaScript rápida, pequena e rica em recursos, utilizada para manipular o DOM e simplificar a interação com o HTML.</span>
 
-*Versão*: 3.7.1
+<span style="color:red">*Versão*: 3.7.1</span>
+
+
 
 ---
 
