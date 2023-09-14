@@ -43,7 +43,8 @@
 ## **Pacotes Instalados pelo Composer**
 
 ### **fakerphp/faker@1.23.0**
-*Descrição*: Gera dados falsos para testes e desenvolvimento.
+*Descrição*: Gera dados falsos para testes e desenvolvimento.[^1]
+[^1]: Esta é a explicação da nota de rodapé.
 
 ---
 
