@@ -13,27 +13,27 @@
 
 1. **Inicializando o Projeto:**
    
-composer create-project –prefer-dist laravel=8.5.9 FeirasLivres
+`composer create-project –prefer-dist laravel=8.5.9 FeirasLivres`
 
 
 2. **Instalando o Pacote UI:**
    
-composer require laravel/ui:^3.2.1
+`composer require laravel/ui:^3.2.1`
 
 
 3. **Gerando o Esqueleto do Projeto com Vue.JS e Autenticação Web Nativa (Scaffold):**
    
-php artisan ui vue --auth
+`php artisan ui vue --auth`
 
 
 4. **Baixando Dependências do Front-end:**
    
-npm install
+`npm install`
 
 
 5. **Rodando o Vue.js:**
    
-npm run dev + php artisan serve
+`npm run dev` + `php artisan serve`
 
 [Em caso de problemas após o último passo, rode novamente o Passo 4 e repita o Passo 5]()
 
@@ -42,7 +42,7 @@ npm run dev + php artisan serve
 
 ## **Pacotes Instalados pelo Composer**
 
-### **fakerphp/faker**
+### **fakerphp/faker@1.23.0**
 *Descrição*: Gera dados falsos para testes e desenvolvimento.
 
 ---
@@ -50,9 +50,7 @@ npm run dev + php artisan serve
 ## **Pacotes Instalados pelo Npm**
 
 ### **jquery@3.7.1**
-<span style="color:blue">Uma biblioteca JavaScript rápida, pequena e rica em recursos, utilizada para manipular o DOM e simplificar a interação com o HTML.</span>
-
-<span style="color:red">*Versão*: 3.7.1</span>
+Uma biblioteca JavaScript rápida, pequena e rica em recursos, utilizada para manipular o DOM e simplificar a interação com o HTML.
 
 
 
