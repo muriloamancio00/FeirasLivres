@@ -12,25 +12,30 @@
 # **Passos para a Criação Inicial do Projeto**
 
 1. **Inicializando o Projeto:**
+   
 composer create-project –prefer-dist laravel=8.5.9 FeirasLivres
 
 
-3. **Instalando o Pacote UI:**
+2. **Instalando o Pacote UI:**
+   
 composer require laravel/ui:^3.2.1
 
 
-5. **Gerando o Esqueleto do Projeto com Vue.JS e Autenticação Web Nativa (Scaffold):**
+3. **Gerando o Esqueleto do Projeto com Vue.JS e Autenticação Web Nativa (Scaffold):**
+   
 php artisan ui vue --auth
 
 
-7. **Baixando Dependências do Front-end:**
+4. **Baixando Dependências do Front-end:**
+   
 npm install
 
 
 5. **Rodando o Vue.js:**
+   
 npm run dev + php artisan serve
 
-<span style="color:red">Em caso de problemas após o último passo, rode novamente o Passo 4 e repita o Passo 5.</span>
+[Em caso de problemas após o último passo, rode novamente o Passo 4 e repita o Passo 5]()
 
 
 ---
