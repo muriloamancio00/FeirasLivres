@@ -19,14 +19,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'password',
-        'type_id'
-    ];
-
-    public function type()
-    {
-        return $this->belongsTo(Type::class);
-    }
+        'password',    ];
 
     /**
      * The attributes that should be hidden for arrays.

@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\Stand::factory()->count(5)->create();
         \App\Models\Product::factory()->count(30)->create();
-        \App\Models\FairEvent::factory()->count(5)->create();
+        //\App\Models\FairEvent::factory()->count(5)->create();
 
     }
 }
