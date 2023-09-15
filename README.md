@@ -1,5 +1,18 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
+*Após clonar o Projeto:*
+1. `composer install` (via terminal, apontando para dentro da pasta do projeto)
+   
+2. `npm install`
+
+3. Criar um cópia do arquivo .env.example e renomeá-la para .env
+
+4. `php artisan key:generate` (via terminal, apontando para dentro da pasta do projeto)
+
+5. Rode as instancias de `php artisan serve` e `npm run watch`
+6. 
+---
+
 1. **Inicializando o Projeto:**
    
 `composer create-project –prefer-dist laravel=8.5.9 FeirasLivres`
