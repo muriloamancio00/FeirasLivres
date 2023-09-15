@@ -10,7 +10,7 @@
 4. `php artisan key:generate` (via terminal, apontando para dentro da pasta do projeto)
 
 5. Rode as instancias de `php artisan serve` e `npm run watch`
-6. 
+   
 ---
 
 1. **Inicializando o Projeto:**
