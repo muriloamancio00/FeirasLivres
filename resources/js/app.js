@@ -24,6 +24,7 @@ Vue.component('login-component', require('./components/LoginComponent.vue').defa
 Vue.component('category-component', require('./components/CategoryComponent.vue').default);
 Vue.component('encapsular-component', require('./components/EncapsularComponent.vue').default);
 Vue.component('table-component', require('./components/TableComponent.vue').default);
+Vue.component('card-component', require('./components/CardComponent.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
