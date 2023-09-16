@@ -2157,6 +2157,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2328,7 +2341,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
 //
 //
 //
@@ -38337,7 +38349,68 @@ var render = function () {
       ]),
       _vm._v(" "),
       _c("modal-component", {
-        attrs: { id: "modalCategoria", titulo: "Adicionar Categoria" },
+        attrs: { id: "modalCategoria", titulo: "Adicionar Marca" },
+        scopedSlots: _vm._u([
+          {
+            key: "conteudo",
+            fn: function () {
+              return [
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c(
+                      "input-container-component",
+                      {
+                        attrs: {
+                          titulo: "Nome da Marca",
+                          id: "novoNome",
+                          "id-help": "novoNomeHelp",
+                          "texto-ajuda": "Informe o nome da marca",
+                        },
+                      },
+                      [
+                        _c("input", {
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            id: "novoNome",
+                            "aria-describedby": "novoNomeHelp",
+                            placeholder: "Nome da marca",
+                          },
+                        }),
+                      ]
+                    ),
+                  ],
+                  1
+                ),
+              ]
+            },
+            proxy: true,
+          },
+          {
+            key: "rodape",
+            fn: function () {
+              return [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" },
+                  },
+                  [_vm._v("Fechar")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  { staticClass: "btn btn-primary", attrs: { type: "button" } },
+                  [_vm._v("Salvar")]
+                ),
+              ]
+            },
+            proxy: true,
+          },
+        ]),
       }),
     ],
     1
@@ -38665,11 +38738,9 @@ var render = function () {
             _vm._m(0),
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "modal-body" }, [
-            _vm._v("\n                ...\n            "),
-          ]),
+          _c("div", { staticClass: "modal-body" }, [_vm._t("conteudo")], 2),
           _vm._v(" "),
-          _vm._m(1),
+          _c("div", { staticClass: "modal-footer" }, [_vm._t("rodape")], 2),
         ]),
       ]),
     ]
@@ -38692,27 +38763,6 @@ var staticRenderFns = [
       },
       [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
     )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary",
-          attrs: { type: "button", "data-dismiss": "modal" },
-        },
-        [_vm._v("Fechar")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "button" } },
-        [_vm._v("Salvar")]
-      ),
-    ])
   },
 ]
 render._withStripped = true
