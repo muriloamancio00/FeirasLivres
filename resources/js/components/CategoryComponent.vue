@@ -32,8 +32,7 @@
                         </div>
                     </template>
                     <template v-slot:rodape>
-                        <button type="button" class="btn btn-primary btn-sm float-right">Adicionar</button>
-                    </template>
+                        <button type="button" class="btn btn-primary btn-sm float-right " data-toggle="modal" data-target="#modalCategoria">Adicionar</button></template>
                 </card-component>
                 <!-- Fim do card de Busca -->
 
@@ -50,6 +49,8 @@
                 <!-- Fim da Listagem de Categorias -->
             </div>
         </div>
+        <!-- Button trigger modal -->
+        <modal-component id="modalCategoria" titulo="Adicionar Categoria"></modal-component>
     </div>
 
 </template>
