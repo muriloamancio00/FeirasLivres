@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
-class CategoryControlloer extends Controller
+class CategoryController extends Controller
 {
     public function __construct(Category $category){
         $this->category = $category;
@@ -40,7 +40,12 @@ class CategoryControlloer extends Controller
     public function store(Request $request)
     {
         $request->validate($this->category->rules(), $this->category->feedback());
-        $category = $this->category->create($request->all());
+
+        $category = $this->category->create([
+            'nome' => $request->nome,
+            'descricao' => $request->descricao,
+        ]);
+
         return  response()->json( $category,201);
     }
 
@@ -100,12 +105,12 @@ class CategoryControlloer extends Controller
                 }
             }
             $request->validate($regrasDinamicas, $category->feedback());
-
+            $category->fill($request->all())->save();
         }else {
             $request->validate($this->category->rules(), $this->category->feedback());
+            $category->update($request->all());
         }
 
-        $category->update($request->all());
         return  response()->json( $category, 201);
     }
 

@@ -17,8 +17,8 @@ class CreateFairsTable extends Migration
             $table->id();
             $table->string('nome');
             $table->string('endereco');
-            $table->string('horarioInicio');
-            $table->string('horarioFim');
+            $table->time('horarioInicio');
+            $table->time('horarioFim');
             $table->string('longitude')->nullable();
             $table->string('latitude')->nullable();
             $table->timestamps();
