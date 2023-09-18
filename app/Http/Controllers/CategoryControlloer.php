@@ -84,7 +84,27 @@ class CategoryControlloer extends Controller
         if($category === null){
             return response()->json(['erro' => 'O Recurso solicitado nao existe. Impossivel realizar a atualização'],404);
         }
-        $request->validate($this->category->rules(), $this->category->feedback());
+
+        if($request->method() === 'PATCH') {
+
+            $regrasDinamicas = array();
+
+            //percorrendo todas as regras definidas no Model
+            foreach($category->rules() as $input => $regra) {
+                //input == nome , descrição se nao fosse nulo
+
+                //coletar apenas as regras aplicáveis aos parâmetros parciais da requisição PATCH
+                if(array_key_exists($input, $request->all())) {
+                    //metodo nativo que pesquisa se a regra for compativel com algum indice dentro do request
+                    $regrasDinamicas[$input] = $regra;
+                }
+            }
+            $request->validate($regrasDinamicas, $category->feedback());
+
+        }else {
+            $request->validate($this->category->rules(), $this->category->feedback());
+        }
+
         $category->update($request->all());
         return  response()->json( $category, 201);
     }

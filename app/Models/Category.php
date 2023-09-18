@@ -16,6 +16,7 @@ class Category extends Model
     public function rules() {
         return [
             'nome' => 'required|unique:categories,nome,'.$this->id.'|min:3',
+            //'descricao' => 'min:5',
         ];
     }
 
@@ -23,7 +24,8 @@ class Category extends Model
         return [
             'required' => 'O campo :attribute é obrigatório',
             'nome.unique' => 'O nome da categoria já existe',
-            'nome.min' => 'O nome deve ter no mínimo 3 caracteres'
+            'nome.min' => 'O nome deve ter no mínimo 3 caracteres',
+            //'descricao.min' => 'A descricao deve ter no mínimo 5 caracteres',
         ];
     }
 
