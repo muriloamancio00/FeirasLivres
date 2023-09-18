@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 class CategoryControlloer extends Controller
 {
+    public function __construct(Category $category){
+        $this-> category=$category;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +17,7 @@ class CategoryControlloer extends Controller
      */
     public function index()
     {
-        $category = Category::all();
+        $category = $this->category->all();
         return $category;
     }
 
@@ -36,18 +39,19 @@ class CategoryControlloer extends Controller
      */
     public function store(Request $request)
     {
-        $category = Category::create($request->all());
+        $category = $this->category->create($request->all());
         return $category;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Integer
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show($id)
     {
+        $category = $this->category->find($id);
         return $category;
     }
 
@@ -69,9 +73,10 @@ class CategoryControlloer extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $id)
     {
-        $category -> update($request->all());
+        $category = $this->category->find($id);
+        $category->update($request->all());
         return $category;
     }
 
@@ -81,8 +86,9 @@ class CategoryControlloer extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
+        $category = $this->category->find($id);
         $category->delete();
         return ['msg' => 'categoria removida'];
     }
