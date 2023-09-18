@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryControlloer extends Controller
@@ -13,7 +14,8 @@ class CategoryControlloer extends Controller
      */
     public function index()
     {
-        return 'Chegamos aqui';
+        $category = Category::all();
+        return $category;
     }
 
     /**
@@ -34,7 +36,8 @@ class CategoryControlloer extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $category = Category::create($request->all());
+        return $category;
     }
 
     /**
@@ -43,9 +46,9 @@ class CategoryControlloer extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Category $category)
     {
-        //
+        return $category;
     }
 
     /**
@@ -66,9 +69,10 @@ class CategoryControlloer extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        $category -> update($request->all());
+        return $category;
     }
 
     /**
@@ -77,8 +81,9 @@ class CategoryControlloer extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return ['msg' => 'categoria removida'];
     }
 }
