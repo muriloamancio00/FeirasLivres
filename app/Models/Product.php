@@ -16,7 +16,7 @@ class Product extends Model
     public function rules() {
         return [
             'nome' => 'required|unique:categories,nome,'.$this->id.'|min:3',
-            'category_id' => 'exists:category,id',
+            'category_id' => 'exists:categories,id',
             //'descricao' => 'min:5',
         ];
     }

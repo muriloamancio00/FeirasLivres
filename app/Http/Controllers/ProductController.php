@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    public function __construct(Product $product){
+        $this->product = $product;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +17,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $product = $this->product->all();
+        return  response()->json( $product,201);
     }
 
     /**
@@ -34,7 +39,15 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate($this->product->rules(), $this->product->feedback());
+
+        $product = $this->product->create([
+            'nome' => $request->nome,
+            'product_id'=>$request->product_id,
+            'descricao' => $request->descricao,
+        ]);
+
+        return  response()->json( $product,201);
     }
 
     /**
@@ -45,7 +58,11 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = $this->product->find($id);
+        if($product === null){
+            return response()->json(['erro' => 'Recurso pesquisado nao existe'], 404);
+        }
+        return  response()->json( $product,201);
     }
 
     /**
@@ -68,7 +85,31 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = $this->product->find($id);
+
+        if($product === null){
+            return response()->json(['erro' => 'O Recurso solicitado nao existe. Impossivel realizar a atualização'],404);
+        }
+
+        if($request->method() === 'PATCH') {
+
+            $regrasDinamicas = array();
+
+            foreach($product->rules() as $input => $regra) {
+
+                if(array_key_exists($input, $request->all())) {
+
+                    $regrasDinamicas[$input] = $regra;
+                }
+            }
+            $request->validate($regrasDinamicas, $product->feedback());
+            $product->fill($request->all())->save();
+        }else {
+            $request->validate($this->product->rules(), $this->product->feedback());
+            $product->update($request->all());
+        }
+
+        return  response()->json( $product, 201);
     }
 
     /**
@@ -79,6 +120,11 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = $this->product->find($id);
+        if($product === null){
+            return response()->json( ['erro' => 'Impossivel realizar a exclusão'],404);
+        }
+        $product->delete();
+        return  response()->json( ['msg' => 'Produto removido'],201);
     }
 }
