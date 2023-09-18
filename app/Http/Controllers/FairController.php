@@ -127,6 +127,6 @@ class FairController extends Controller
             return response()->json( ['erro' => 'Impossivel realizar a exclusão'],404);
         }
         $fair->delete();
-        return  response()->json( ['msg' => 'categoria removida'],201);
+        return  response()->json( ['msg' => 'Feira removida com sucesso'],201);
     }
 }
