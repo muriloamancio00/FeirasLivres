@@ -46,17 +46,16 @@
 ## **Pacotes Instalados pelo Npm**
 
 ### **vue@2.7.14**
-Descrição: Uma biblioteca progressiva para a construção de interfaces de usuário interativas.
+*Descrição:* Uma biblioteca progressiva para a construção de interfaces de usuário interativas.
 
 ### **bootstrap@4.6.2**
-Descrição: Um popular framework de front-end para a criação de interfaces web responsivas e atraentes.
+*Descrição:* Um popular framework de front-end para a criação de interfaces web responsivas e atraentes.
 
 ### **jquery@3.7.1**
-Descrição: Uma biblioteca JavaScript rápida, pequena e rica em recursos, utilizada para manipular o DOM e simplificar a interação com o HTML.
+*Descrição:* Uma biblioteca JavaScript rápida, pequena e rica em recursos, utilizada para manipular o DOM e simplificar a interação com o HTML.
 
 ### **axios@0.21.4**
-Descrição: Cliente HTTP que pode ser usado tanto no navegador quanto no Node.js. É especialmente útil para fazer requisições AJAX.
-
+*Descrição:* Cliente HTTP que pode ser usado tanto no navegador quanto no Node.js. É especialmente útil para fazer requisições AJAX.
 
 ---
 
@@ -64,7 +63,11 @@ Descrição: Cliente HTTP que pode ser usado tanto no navegador quanto no Node.j
 ## **Pacotes Instalados pelo Composer**
 
 ### **fakerphp/faker@1.23.0**
-*Descrição*: Gera dados falsos para testes e desenvolvimento.
+*Descrição:* Gera dados falsos para testes e desenvolvimento.
+
+
+## **tymon@2.0.0**
+*Descrição:* tymon inclui a implementação de autenticação JSON Web Token (JWT) para Laravel e Lumen, por meio do pacote jwt-auth.
 
 
 ---
