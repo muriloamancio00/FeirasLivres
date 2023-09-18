@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class CategoryControlloer extends Controller
 {
     public function __construct(Category $category){
-        $this-> category=$category;
+        $this->category = $category;
     }
     /**
      * Display a listing of the resource.
@@ -18,7 +18,7 @@ class CategoryControlloer extends Controller
     public function index()
     {
         $category = $this->category->all();
-        return $category;
+        return  response()->json( $category,201);
     }
 
     /**
@@ -39,8 +39,9 @@ class CategoryControlloer extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate($this->category->rules(), $this->category->feedback());
         $category = $this->category->create($request->all());
-        return $category;
+        return  response()->json( $category,201);
     }
 
     /**
@@ -53,9 +54,9 @@ class CategoryControlloer extends Controller
     {
         $category = $this->category->find($id);
         if($category === null){
-            return ['erro' => 'Recurso pesquisado nao existe'];
+            return response()->json(['erro' => 'Recurso pesquisado nao existe'], 404);
         }
-        return $category;
+        return  response()->json( $category,201);
     }
 
     /**
@@ -79,11 +80,13 @@ class CategoryControlloer extends Controller
     public function update(Request $request, $id)
     {
         $category = $this->category->find($id);
+
         if($category === null){
-            return ['erro' => 'O Recurso solicitado nao existe. Impossivel realizar a atualização'];
+            return response()->json(['erro' => 'O Recurso solicitado nao existe. Impossivel realizar a atualização'],404);
         }
+        $request->validate($this->category->rules(), $this->category->feedback());
         $category->update($request->all());
-        return $category;
+        return  response()->json( $category, 201);
     }
 
     /**
@@ -96,9 +99,9 @@ class CategoryControlloer extends Controller
     {
         $category = $this->category->find($id);
         if($category === null){
-            return ['erro' => 'Impossivel realizar a exclusão'];
+            return response()->json( ['erro' => 'Impossivel realizar a exclusão'],404);
         }
         $category->delete();
-        return ['msg' => 'categoria removida'];
+        return  response()->json( ['msg' => 'categoria removida'],201);
     }
 }

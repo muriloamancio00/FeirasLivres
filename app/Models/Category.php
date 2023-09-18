@@ -15,7 +15,15 @@ class Category extends Model
 
     public function rules() {
         return [
-            'nome' => 'required|unique:category,nome,'.$this->id.'|min:3',
+            'nome' => 'required|unique:categories,nome,'.$this->id.'|min:3',
+        ];
+    }
+
+    public function feedback() {
+        return [
+            'required' => 'O campo :attribute é obrigatório',
+            'nome.unique' => 'O nome da categoria já existe',
+            'nome.min' => 'O nome deve ter no mínimo 3 caracteres'
         ];
     }
 
