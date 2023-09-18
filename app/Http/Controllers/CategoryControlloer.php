@@ -52,6 +52,9 @@ class CategoryControlloer extends Controller
     public function show($id)
     {
         $category = $this->category->find($id);
+        if($category === null){
+            return ['erro' => 'Recurso pesquisado nao existe'];
+        }
         return $category;
     }
 
@@ -76,6 +79,9 @@ class CategoryControlloer extends Controller
     public function update(Request $request, $id)
     {
         $category = $this->category->find($id);
+        if($category === null){
+            return ['erro' => 'O Recurso solicitado nao existe. Impossivel realizar a atualização'];
+        }
         $category->update($request->all());
         return $category;
     }
@@ -89,6 +95,9 @@ class CategoryControlloer extends Controller
     public function destroy($id)
     {
         $category = $this->category->find($id);
+        if($category === null){
+            return ['erro' => 'Impossivel realizar a exclusão'];
+        }
         $category->delete();
         return ['msg' => 'categoria removida'];
     }
