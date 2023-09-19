@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fair;
+use App\Repositories\FairRepository;
 use Illuminate\Http\Request;
 
 class FairController extends Controller
@@ -15,9 +16,19 @@ class FairController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json($this->fair->all(),201);
+        $fairRepository = new FairRepository($this->fair);
+
+        if($request->has('filtro')){
+            $fairRepository->filtro($request->filtro);
+        }
+
+        if($request->has('atributos')) {
+            $fairRepository->selectAtributos($request->atributos);
+        }
+        return  response()->json( $fairRepository->getResultado(),201);
+
     }
 
     /**
@@ -25,9 +36,18 @@ class FairController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $request->validate($this->fair->rules(), $this->fair->feedback());
+
+        $category = $this->fair->create([
+            'nome' => $request->nome,
+            'endereco' => $request->endereco,
+            'horarioInicio' => $request->horarioInicio,
+            'horarioFim' => $request->horarioFim,
+        ]);
+
+        return  response()->json( $category,201);
     }
 
     /**
@@ -94,20 +114,17 @@ class FairController extends Controller
         }
 
         if($request->method() === 'PATCH') {
-
             $regrasDinamicas = array();
 
             foreach($fair->rules() as $input => $regra) {
-
                 if(array_key_exists($input, $request->all())) {
-
                     $regrasDinamicas[$input] = $regra;
                 }
             }
             $request->validate($regrasDinamicas, $fair->feedback());
             $fair->fill($request->all())->save();
         }else {
-            $request->validate($this->$fair->rules(), $this->$fair->feedback());
+            $request->validate($fair->rules(), $fair->feedback());
             $fair->update($request->all());
         }
 

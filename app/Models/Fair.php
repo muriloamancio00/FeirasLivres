@@ -22,8 +22,8 @@ class Fair extends Model
         return [
             'nome' => 'required|min:3',
             'endereco' => 'required|min:10',
-            'horarioInicio' => 'date_format:H:i',
-            'horarioFim' => 'date_format:H:i',
+            'horarioInicio' => 'required|date_format:H:i',
+            'horarioFim' => 'required|date_format:H:i',
         ];
     }
 
@@ -34,5 +34,9 @@ class Fair extends Model
             'nome.min' => 'O nome deve ter no mínimo 3 caracteres',
             //'descricao.min' => 'A descricao deve ter no mínimo 5 caracteres',
         ];
+    }
+
+    public function fair_events() {
+        return $this->hasMany('App\Models\FairEvent');
     }
 }
