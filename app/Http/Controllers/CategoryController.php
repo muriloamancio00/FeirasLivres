@@ -20,17 +20,12 @@ class CategoryController extends Controller
     {
         $categoryRepository = new CategoryRepository($this->category);
 
-        $categories = array();
-
-
         if($request->has('atributos_products')){
             $atributos_products = 'products:id,'.$request->atributos_products;
             $categoryRepository->selecAtributosRegistrosRelacionados($atributos_products);
         } else {
             $categoryRepository->selecAtributosRegistrosRelacionados('products');
         }
-
-        //
 
         if($request->has('filtro')){
             $categoryRepository->filtro($request->filtro);
@@ -39,7 +34,6 @@ class CategoryController extends Controller
         if($request->has('atributos')) {
             $categoryRepository->selectAtributos($request->atributos);
         }
-
         return  response()->json( $categoryRepository->getResultado(),201);
     }
 

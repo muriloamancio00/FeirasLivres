@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CategoryRepository{
+class ProductRepository{
 
     public function __construct(Model $model){
         $this->model = $model;

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -17,41 +18,23 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $produtos = array();
+        $productRepository = new ProductRepository($this->product);
 
-        //obtendo filtros de colunas especificas
         if($request->has('atributos_category')){
-            $atributos_category = $request->atributos_category;
-            $produtos = $this->product->with('category:id,'.$atributos_category);
+            $atributos_category = 'category:id,'.$request->atributos_category;
+            $productRepository->selecAtributosRegistrosRelacionados($atributos_category);
         } else {
-            //obter objeto da relação de produtos
-            $produtos = $this->product->with('category');
+            $productRepository->selecAtributosRegistrosRelacionados('category');
         }
 
-        //feita as atribuições dentro de produtos pela query
-        //podemos adicionar essa nova informação e depois finalizamos com o metodo get
         if($request->has('filtro')){
-            //dd(explode(':',$request->filtro)); como retorno temos um array com 3 colunas
-
-            $filtros = explode(';',$request->filtro);
-
-            foreach($filtros as $key=> $condicao) {
-                //[0] nome do campo
-                //[1] nome do operador
-                //[2] o valor a ser comparado
-                $c = explode(':',$condicao);
-                $produtos = $produtos->where($c[0],$c[1],$c[2]);
-            }
+            $productRepository->filtro($request->filtro);
         }
 
-        //obtendo apenas atributos base, e enviando pelo get
         if($request->has('atributos')) {
-            $atributos = $request->atributos;
-            $produtos = $produtos->selectRaw($atributos)->get();
-        }else {
-            $produtos = $produtos->get();
+            $productRepository->selectAtributos($request->atributos);
         }
-        return  response()->json($produtos,201);
+        return  response()->json( $productRepository->getResultado(),201);
     }
 
     /**
