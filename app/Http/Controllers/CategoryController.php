@@ -15,10 +15,39 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $category = $this->category->with('products')->get();
-        return  response()->json( $category,201);
+        $categories = array();
+
+
+        if($request->has('atributos_products')){
+            $atributos_products = $request->atributos_products;
+            //nome da relação 'with' deve vir da função contida no modelo de category
+            $categories = $this->category->with('products:id,'.$atributos_products);
+        } else {
+
+            $categories = $this->category->with('products');
+        }
+
+        if($request->has('filtro')){
+
+            $filtros = explode(';',$request->filtro);
+
+            foreach($filtros as $key=> $condicao) {
+                $c = explode(':',$condicao);
+                $categories = $categories->where($c[0],$c[1],$c[2]);
+            }
+
+        }
+
+        if($request->has('atributos')) {
+            $atributos = $request->atributos;
+            $categories = $categories->selectRaw($atributos)->get();
+        }else {
+            $categories = $categories->get();
+        }
+
+        return  response()->json( $categories,201);
     }
 
     /**

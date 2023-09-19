@@ -42,7 +42,6 @@ class ProductController extends Controller
                 $c = explode(':',$condicao);
                 $produtos = $produtos->where($c[0],$c[1],$c[2]);
             }
-
         }
 
         //obtendo apenas atributos base, e enviando pelo get
