@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Repositories\CategoryRepository;
 
 class CategoryController extends Controller
 {
@@ -17,37 +18,29 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
+        $categoryRepository = new CategoryRepository($this->category);
+
         $categories = array();
 
 
         if($request->has('atributos_products')){
-            $atributos_products = $request->atributos_products;
-            //nome da relação 'with' deve vir da função contida no modelo de category
-            $categories = $this->category->with('products:id,'.$atributos_products);
+            $atributos_products = 'products:id,'.$request->atributos_products;
+            $categoryRepository->selecAtributosRegistrosRelacionados($atributos_products);
         } else {
-
-            $categories = $this->category->with('products');
+            $categoryRepository->selecAtributosRegistrosRelacionados('products');
         }
 
+        //
+
         if($request->has('filtro')){
-
-            $filtros = explode(';',$request->filtro);
-
-            foreach($filtros as $key=> $condicao) {
-                $c = explode(':',$condicao);
-                $categories = $categories->where($c[0],$c[1],$c[2]);
-            }
-
+            $categoryRepository->filtro($request->filtro);
         }
 
         if($request->has('atributos')) {
-            $atributos = $request->atributos;
-            $categories = $categories->selectRaw($atributos)->get();
-        }else {
-            $categories = $categories->get();
+            $categoryRepository->selectAtributos($request->atributos);
         }
 
-        return  response()->json( $categories,201);
+        return  response()->json( $categoryRepository->getResultado(),201);
     }
 
     /**
