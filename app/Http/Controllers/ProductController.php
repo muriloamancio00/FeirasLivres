@@ -32,8 +32,17 @@ class ProductController extends Controller
         //podemos adicionar essa nova informação e depois finalizamos com o metodo get
         if($request->has('filtro')){
             //dd(explode(':',$request->filtro)); como retorno temos um array com 3 colunas
-            $condicoes = explode(':',$request->filtro);
-            $produtos = $produtos->where($condicoes[0],$condicoes[1],$condicoes[2]);
+
+            $filtros = explode(';',$request->filtro);
+
+            foreach($filtros as $key=> $condicao) {
+                //[0] nome do campo
+                //[1] nome do operador
+                //[2] o valor a ser comparado
+                $c = explode(':',$condicao);
+                $produtos = $produtos->where($c[0],$c[1],$c[2]);
+            }
+
         }
 
         //obtendo apenas atributos base, e enviando pelo get
