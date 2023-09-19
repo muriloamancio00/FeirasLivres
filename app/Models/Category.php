@@ -32,4 +32,8 @@ class Category extends Model
     public function products() {
         return $this->hasMany('App\Models\Product');
     }
+
+    public function fairs_categories() {
+        return $this->hasMany('App\Models\FairsCategories');
+    }
 }
