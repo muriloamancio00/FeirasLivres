@@ -15,10 +15,27 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $product = $this->product->all();
-        return  response()->json( $product,201);
+        $produtos = array();
+
+        //obtendo filtros de colunas especificas
+        if($request->has('atributos_category')){
+            $atributos_category = $request->atributos_category;
+            $produtos = $this->product->with('category:id,'.$atributos_category);
+        } else {
+            //obter objeto da relação
+            $produtos = $this->product->with('category');
+        }
+
+        //obtendo apenas atributos base
+        if($request->has('atributos')) {
+            $atributos = $request->atributos;
+            $produtos = $produtos->selectRaw($atributos)->get();
+        }else {
+            $produtos = $produtos->get();
+        }
+        return  response()->json($produtos,201);
     }
 
     /**
@@ -58,7 +75,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = $this->product->find($id);
+        $product = $this->product->with('category')->find($id);
         if($product === null){
             return response()->json(['erro' => 'Recurso pesquisado nao existe'], 404);
         }
@@ -103,7 +120,9 @@ class ProductController extends Controller
                 }
             }
             $request->validate($regrasDinamicas, $product->feedback());
+
             $product->fill($request->all())->save();
+
         }else {
             $request->validate($this->product->rules(), $this->product->feedback());
             $product->update($request->all());

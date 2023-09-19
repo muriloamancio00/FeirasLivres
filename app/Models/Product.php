@@ -11,7 +11,7 @@ class Product extends Model
 
     protected $table = 'products';
 
-    protected $fillable = ['nome', 'descricao', 'category_id'];
+    protected $fillable = ['nome', 'descricao', 'category_id', ];
 
     public function rules() {
         return [
@@ -32,6 +32,6 @@ class Product extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo('App\Models\Category');
     }
 }

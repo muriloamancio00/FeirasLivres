@@ -17,7 +17,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $category = $this->category->all();
+        $category = $this->category->with('products')->get();
         return  response()->json( $category,201);
     }
 
@@ -57,7 +57,7 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $category = $this->category->find($id);
+        $category = $this->category->with('products')->find($id);
         if($category === null){
             return response()->json(['erro' => 'Recurso pesquisado nao existe'], 404);
         }
