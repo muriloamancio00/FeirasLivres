@@ -24,11 +24,19 @@ class ProductController extends Controller
             $atributos_category = $request->atributos_category;
             $produtos = $this->product->with('category:id,'.$atributos_category);
         } else {
-            //obter objeto da relação
+            //obter objeto da relação de produtos
             $produtos = $this->product->with('category');
         }
 
-        //obtendo apenas atributos base
+        //feita as atribuições dentro de produtos pela query
+        //podemos adicionar essa nova informação e depois finalizamos com o metodo get
+        if($request->has('filtro')){
+            //dd(explode(':',$request->filtro)); como retorno temos um array com 3 colunas
+            $condicoes = explode(':',$request->filtro);
+            $produtos = $produtos->where($condicoes[0],$condicoes[1],$condicoes[2]);
+        }
+
+        //obtendo apenas atributos base, e enviando pelo get
         if($request->has('atributos')) {
             $atributos = $request->atributos;
             $produtos = $produtos->selectRaw($atributos)->get();
@@ -62,6 +70,7 @@ class ProductController extends Controller
             'nome' => $request->nome,
             'product_id'=>$request->product_id,
             'descricao' => $request->descricao,
+            'category_id' => $request->category_id,
         ]);
 
         return  response()->json( $product,201);
