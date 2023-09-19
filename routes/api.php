@@ -21,4 +21,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::resource('category', 'App\Http\Controllers\CategoryController');
 Route::resource('product', 'App\Http\Controllers\ProductController');
 Route::resource('fair', 'App\Http\Controllers\FairController');
+Route::resource('fairsCategories', 'App\Http\Controllers\FairsCategoriesController');
 
