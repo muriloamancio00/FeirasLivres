@@ -25,6 +25,7 @@ class ProductFactory extends Factory
         return [
             'nome' => $this->faker->word,
             'descricao' => $this->faker->sentence,
+            'imagem' => $this->faker->sentence,
             'category_id' => $category_id
         ];
     }

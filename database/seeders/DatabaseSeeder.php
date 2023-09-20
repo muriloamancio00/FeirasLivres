@@ -41,10 +41,24 @@ class DatabaseSeeder extends Seeder
 
         Event::insert($eventos);
 
+        $products = [
+            ['nome' => 'HotWells', 'category_id' => '1' , 'descricao' => 'BRINQUEDOS'],
+            ['nome' => 'Barbie', 'category_id' => '1' , 'descricao' => 'ALIMENTOS'],
+            ['nome' => 'Banana', 'category_id' => '2' , 'descricao' => 'ALIMENTOS'],
+            ['nome' => 'Laranja', 'category_id' => '2' , 'descricao' => 'ALIMENTOS'],
+            ['nome' => 'Artesanato 1', 'category_id' => '3' , 'descricao' => 'ARTESANATO'],
+            ['nome' => 'Artesanato 2', 'category_id' => '3' , 'descricao' => 'ARTESANATO'],
+            ['nome' => 'Artesanato 3', 'category_id' => '3' , 'descricao' => 'ARTESANATO'],
+            ['nome' => 'Folhas A4', 'category_id' => '4' , 'descricao' => 'MATERIAL ESCOLAR'],
+            ['nome' => 'Telefone', 'category_id' => '5' , 'descricao' => 'ELETRONICOS'],
+            ['nome' => 'Computador', 'category_id' => '5' , 'descricao' => 'ELETRONICOS'],
+            ['nome' => 'VideoGame', 'category_id' => '5' , 'descricao' => 'ELETRONICOS'],
+        ];
+        Product::insert($products);
+
         \App\Models\Fair::factory()->count(5)->create();
 
         \App\Models\Stand::factory()->count(5)->create();
-        \App\Models\Product::factory()->count(30)->create();
         //\App\Models\FairEvent::factory()->count(5)->create();
 
     }

@@ -65,6 +65,13 @@
                         <input type="text" class="form-control" id="novoDescricao" aria-describedby="novoDescricaoHelp"
                                placeholder="Descricao do produto">
                     </input-container-component>
+                    <hr><p>Imagem do produto</p>
+                    <div class="form-group">
+                        <input-container-component titulo="Imagem" id="novoImagem" id-help="novoImagemHelp" texto-ajuda="Selecione uma imagem no formato PNG">
+                            <input type="file" class="form-control-file" id="novoImagem" aria-describedby="novoImagemHelp" placeholder="Selecione uma imagem" @change="carregarImagem($event)">
+                        </input-container-component>
+                        {{ arquivoImagem }}
+                    </div>
                 </div>
             </template>
             <template v-slot:rodape>

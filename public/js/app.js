@@ -2569,6 +2569,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -39769,6 +39776,50 @@ var render = function () {
                           },
                         }),
                       ]
+                    ),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _c("p", [_vm._v("Imagem do produto")]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c(
+                          "input-container-component",
+                          {
+                            attrs: {
+                              titulo: "Imagem",
+                              id: "novoImagem",
+                              "id-help": "novoImagemHelp",
+                              "texto-ajuda":
+                                "Selecione uma imagem no formato PNG",
+                            },
+                          },
+                          [
+                            _c("input", {
+                              staticClass: "form-control-file",
+                              attrs: {
+                                type: "file",
+                                id: "novoImagem",
+                                "aria-describedby": "novoImagemHelp",
+                                placeholder: "Selecione uma imagem",
+                              },
+                              on: {
+                                change: function ($event) {
+                                  return _vm.carregarImagem($event)
+                                },
+                              },
+                            }),
+                          ]
+                        ),
+                        _vm._v(
+                          "\n                    " +
+                            _vm._s(_vm.arquivoImagem) +
+                            "\n                "
+                        ),
+                      ],
+                      1
                     ),
                   ],
                   1
