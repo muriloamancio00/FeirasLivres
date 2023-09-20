@@ -35,10 +35,13 @@
                     <ul class="navbar-nav mr-auto">
                         @auth
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Feiras</a>
+                                <a class="nav-link" href="{{route('product')}}">Produtos</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Bancas</a>
+                                <a class="nav-link" href="{{route('stand')}}">Bancas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('fair')}}">Feiras</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Administrativos</a>
