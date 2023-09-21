@@ -49,8 +49,8 @@
         <modal-component id="modalProduto" titulo="Adicionar Produto">
 
             <template v-slot:alerta>
-                <alert-component tipo="success"></alert-component>
-                <alert-component tipo="danger"></alert-component>
+                <alert-component tipo="success" v-if="transacaoStatus == 'adicionado'"></alert-component>
+                <alert-component tipo="danger" v-if="transacaoStatus == 'erro'"></alert-component>
             </template>
             <template v-slot:conteudo>
                 <div class="form-group">
@@ -75,7 +75,7 @@
             </template>
             <template v-slot:rodape>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary" @click="salvar()"></button>
+                <button type="button" class="btn btn-primary" @click="salvar()">Salvar</button>
             </template>
         </modal-component>
     </div>
@@ -106,6 +106,8 @@
                 nomeProduto: '',
                 descricaoProduto: '',
                 arquivoImagem: [],
+                //variavel para salvar o estado da instancia do vue
+                transacaoStatus: '',
             }
         },
         methods: {
@@ -135,9 +137,11 @@
 
                 axios.post(this.urlBase, formData, config)
                     .then(response => {
+                        this.transacaoStatus = 'adicionado'
                         console.log(response)
                     })
                     .catch(errors => {
+                        this.transacaoStatus = 'erro'
                         console.log(errors)
                     })
             }
