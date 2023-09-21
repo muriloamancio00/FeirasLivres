@@ -82,6 +82,22 @@
 
 <script>
     export default{
+        computed: {
+            token() {
+                //separando valores do cookie
+                let token = document.cookie.split(';').find(indice =>{
+                    //busca busca o token
+                    return indice.includes('token=')
+                })
+
+                //separa apenas o conteudo do token
+                token = token.split('=') [1]
+                token = 'Bearer ' + token
+
+                //token formado
+                return token
+            }
+        },
         data() {
             return {
                 urlBase: 'http://127.0.0.1:8000/api/v1/product/',
@@ -110,6 +126,8 @@
                     headers: {
                         'Content-Type': 'multipart/form-data',
                         'Accept': 'application/json',
+                        //compatibilidade com token vindo do backend
+                        'Authorization' : this.token,
                     }
                 }
 

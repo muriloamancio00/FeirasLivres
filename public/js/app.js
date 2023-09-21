@@ -2573,6 +2573,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  computed: {
+    token: function token() {
+      //separando valores do cookie
+      var token = document.cookie.split(';').find(function (indice) {
+        //busca busca o token
+        return indice.includes('token=');
+      });
+
+      //separa apenas o conteudo do token
+      token = token.split('=')[1];
+      token = 'Bearer ' + token;
+
+      //token formado
+      return token;
+    }
+  },
   data: function data() {
     return {
       urlBase: 'http://127.0.0.1:8000/api/v1/product/',
@@ -2599,7 +2615,9 @@ __webpack_require__.r(__webpack_exports__);
       var config = {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'Accept': 'application/json'
+          'Accept': 'application/json',
+          //compatibilidade com token vindo do backend
+          'Authorization': this.token
         }
       };
       axios.post(this.urlBase, formData, config).then(function (response) {
