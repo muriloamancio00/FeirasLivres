@@ -49,24 +49,24 @@
         <modal-component id="modalProduto" titulo="Adicionar Produto">
             <template v-slot:conteudo>
                 <div class="form-group">
-                    <input-container-component titulo="Nome do Produto" id="novoNome" id-help="novoNomeHelp" texto-ajuda="Informe o nome do produto">
+                    <encapsular-component titulo="Nome do Produto" id="novoNome" id-help="novoNomeHelp" texto-ajuda="Informe o nome do produto">
                         <input type="text" class="form-control" id="novoNome" aria-describedby="novoNomeHelp"
                                placeholder="Nome do produto" v-model:id="nomeProduto">
-                    </input-container-component>
+                    </encapsular-component>
                     {{ nomeProduto }}
 
                     <br>
                         <p>Opcionais:</p>
-                    <input-container-component titulo="Nome do Produto" id="novoDescricao" id-help="novoDescricaoHelp" texto-ajuda="Informe o descricao da produto">
+                    <encapsular-component titulo="Nome do Produto" id="novoDescricao" id-help="novoDescricaoHelp" texto-ajuda="Informe o descricao da produto">
                         <input type="text" class="form-control" id="novoDescricao" aria-describedby="novoDescricaoHelp"
                                placeholder="Descricao do produto" v-model:id="descricaoProduto">
-                    </input-container-component>
+                    </encapsular-component>
                     {{ descricaoProduto }}
                     <hr><p>Imagem do produto</p>
                     <div class="form-group">
-                        <input-container-component titulo="Imagem" id="novoImagem" id-help="novoImagemHelp" texto-ajuda="Selecione uma imagem no formato PNG">
+                        <encapsular-component titulo="Imagem" id="novoImagem" id-help="novoImagemHelp" texto-ajuda="Selecione uma imagem no formato PNG">
                             <input type="file" class="form-control-file" id="novoImagem" aria-describedby="novoImagemHelp" placeholder="Selecione uma imagem" @change="carregarImagem($event)">
-                        </input-container-component>
+                        </encapsular-component>
                         {{ arquivoImagem }}
                     </div>
                 </div>

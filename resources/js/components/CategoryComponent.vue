@@ -50,13 +50,13 @@
             </div>
         </div>
         <!-- Button trigger modal -->
-        <modal-component id="modalCategoria" titulo="Adicionar Marca">
+        <modal-component id="modalCategoria" titulo="Adicionar Categoria">
             <template v-slot:conteudo>
                 <div class="form-group">
-                    <input-container-component titulo="Nome da Marca" id="novoNome" id-help="novoNomeHelp" texto-ajuda="Informe o nome da marca">
+                    <encapsular-component titulo="Nome da Categoria" id="novoNome" id-help="novoNomeHelp" texto-ajuda="Informe o nome da categoria">
                         <input type="text" class="form-control" id="novoNome" aria-describedby="novoNomeHelp"
-                               placeholder="Nome da marca">
-                    </input-container-component>
+                               placeholder="Nome da Categoria">
+                    </encapsular-component>
                 </div>
             </template>
             <template v-slot:rodape>

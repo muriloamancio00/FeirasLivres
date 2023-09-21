@@ -53,10 +53,10 @@
         <modal-component id="modalFeira" titulo="Adicionar Feira">
             <template v-slot:conteudo>
                 <div class="form-group">
-                    <input-container-component titulo="Nome da Feira" id="novoNome" id-help="novoNomeHelp" texto-ajuda="Informe o nome da feira">
+                    <encapsular-component titulo="Nome da Feira" id="novoNome" id-help="novoNomeHelp" texto-ajuda="Informe o nome da feira">
                         <input type="text" class="form-control" id="novoNome" aria-describedby="novoNomeHelp"
                                placeholder="Nome da feira">
-                    </input-container-component>
+                    </encapsular-component>
                 </div>
             </template>
             <template v-slot:rodape>

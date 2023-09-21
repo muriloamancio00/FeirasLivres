@@ -49,16 +49,16 @@
         <modal-component id="modalBanca" titulo="Adicionar Banca">
             <template v-slot:conteudo>
                 <div class="form-group">
-                    <input-container-component titulo="Nome do Banca" id="novoNome" id-help="novoNomeHelp" texto-ajuda="Informe o nome do banca">
+                    <encapsular-component titulo="Nome do Banca" id="novoNome" id-help="novoNomeHelp" texto-ajuda="Informe o nome do banca">
                         <input type="text" class="form-control" id="novoNome" aria-describedby="novoNomeHelp"
                                placeholder="Nome do banca">
-                    </input-container-component>
+                    </encapsular-component>
                     <br>
                     <p>Opcionais:</p>
-                    <input-container-component titulo="Nome do Banca" id="novoDescricao" id-help="novoDescricaoHelp" texto-ajuda="Informe o descricao da banca">
+                    <encapsular-component titulo="Nome do Banca" id="novoDescricao" id-help="novoDescricaoHelp" texto-ajuda="Informe o descricao da banca">
                         <input type="text" class="form-control" id="novoDescricao" aria-describedby="novoDescricaoHelp"
                                placeholder="Descricao do banca">
-                    </input-container-component>
+                    </encapsular-component>
                 </div>
             </template>
             <template v-slot:rodape>
