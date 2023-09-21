@@ -28,7 +28,7 @@
                         </encapsular-component>
                     </template>
                     <template v-slot:rodape>
-                        <button type="button" class="btn btn-primary btn-sm float-right " data-toggle="modal" data-target="#modalProduto">Adicionar</button></template>
+                        <button type="button" class="btn btn-primary btn-sm float-right ">Pesquisar</button></template>
                 </card-component>
                 <!-- Fim do card de Busca -->
 
@@ -39,7 +39,7 @@
                     </template>
 
                     <template v-slot:rodape>
-                        <button type="button" class="btn btn-primary btn-sm float-right">Proximo</button>
+                        <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#modalProduto">Adicionar</button>
                     </template>
                 </card-component>
                 <!-- Fim da Listagem de Categorias -->
@@ -47,6 +47,11 @@
         </div>
         <!-- Button trigger modal -->
         <modal-component id="modalProduto" titulo="Adicionar Produto">
+
+            <template v-slot:alerta>
+                <alert-component tipo="success"></alert-component>
+                <alert-component tipo="danger"></alert-component>
+            </template>
             <template v-slot:conteudo>
                 <div class="form-group">
                     <encapsular-component titulo="Nome do Produto" id="novoNome" id-help="novoNomeHelp" texto-ajuda="Informe o nome do produto">
@@ -54,12 +59,9 @@
                                placeholder="Nome do produto" v-model:id="nomeProduto">
                     </encapsular-component>
                     {{ nomeProduto }}
-
-                    <br>
-                        <p>Opcionais:</p>
-                    <encapsular-component titulo="Nome do Produto" id="novoDescricao" id-help="novoDescricaoHelp" texto-ajuda="Informe o descricao da produto">
+                    <encapsular-component titulo="Descrição do Produto" id="novoDescricao" id-help="novoDescricaoHelp" texto-ajuda="Informe o descricao da produto">
                         <input type="text" class="form-control" id="novoDescricao" aria-describedby="novoDescricaoHelp"
-                               placeholder="Descricao do produto" v-model:id="descricaoProduto">
+                               placeholder="Opcional. Descricao" v-model:id="descricaoProduto">
                     </encapsular-component>
                     {{ descricaoProduto }}
                     <hr><p>Imagem do produto</p>
@@ -73,7 +75,7 @@
             </template>
             <template v-slot:rodape>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary" @click="salvar()">Salvar</button>
+                <button type="button" class="btn btn-primary" @click="salvar()"></button>
             </template>
         </modal-component>
     </div>

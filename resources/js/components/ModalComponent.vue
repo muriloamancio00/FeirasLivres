@@ -9,6 +9,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <slot name="alerta"></slot>
                     <slot name="conteudo"></slot>
                 </div>
                 <div class="modal-footer">
