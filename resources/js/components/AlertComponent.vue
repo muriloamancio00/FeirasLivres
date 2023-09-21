@@ -1,13 +1,18 @@
 <template>
     <div :class="estilo" role="alert">
-        A mensagem de feedBack
-        {{ tipo }}
+        {{ titulo }}
+        <hr>
+        {{ detalhes.data.errors}}
     </div>
 </template>
 
 <script>
 export default {
-    props: ['tipo'],
+    props: [
+        'tipo',
+        'titulo',
+        'detalhes'
+    ],
     computed: {
         estilo() {
             return 'alert alert-'+this.tipo

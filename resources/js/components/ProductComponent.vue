@@ -50,7 +50,7 @@
 
             <template v-slot:alerta>
                 <alert-component tipo="success" v-if="transacaoStatus == 'adicionado'"></alert-component>
-                <alert-component tipo="danger" v-if="transacaoStatus == 'erro'"></alert-component>
+                <alert-component tipo="danger" :detalhes="transacaoDetalhes" titulo="Erro ao tentar cadastrar o Produto" v-if="transacaoStatus == 'erro'"></alert-component>
             </template>
             <template v-slot:conteudo>
                 <div class="form-group">
@@ -108,6 +108,7 @@
                 arquivoImagem: [],
                 //variavel para salvar o estado da instancia do vue
                 transacaoStatus: '',
+                transacaoDetalhes: [],
             }
         },
         methods: {
@@ -142,6 +143,7 @@
                     })
                     .catch(errors => {
                         this.transacaoStatus = 'erro'
+                        this.transacaoDetalhes = errors.response
                         console.log(errors)
                     })
             }
