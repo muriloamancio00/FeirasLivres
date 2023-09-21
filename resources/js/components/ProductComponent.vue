@@ -26,12 +26,6 @@
                             <input type="text" class="form-control" id="inputNome" aria-describedby="NomeHelp"
                                    placeholder="Nome do Produto">
                         </encapsular-component>
-                        <select id="Selecione a categoria" onchange="selecionarCategoria()">
-                            <option value="1">Categoria 1</option>
-                            <option value="2">Categoria 2</option>
-                            <option value="3">Categoria 3</option>
-                            <!-- Adicione mais opções conforme necessário -->
-                        </select>
                     </template>
                     <template v-slot:rodape>
                         <button type="button" class="btn btn-primary btn-sm float-right " data-toggle="modal" data-target="#modalProduto">Adicionar</button></template>
@@ -57,14 +51,17 @@
                 <div class="form-group">
                     <input-container-component titulo="Nome do Produto" id="novoNome" id-help="novoNomeHelp" texto-ajuda="Informe o nome do produto">
                         <input type="text" class="form-control" id="novoNome" aria-describedby="novoNomeHelp"
-                               placeholder="Nome do produto">
+                               placeholder="Nome do produto" v-model:id="nomeProduto">
                     </input-container-component>
+                    {{ nomeProduto }}
+
                     <br>
                         <p>Opcionais:</p>
                     <input-container-component titulo="Nome do Produto" id="novoDescricao" id-help="novoDescricaoHelp" texto-ajuda="Informe o descricao da produto">
                         <input type="text" class="form-control" id="novoDescricao" aria-describedby="novoDescricaoHelp"
-                               placeholder="Descricao do produto">
+                               placeholder="Descricao do produto" v-model:id="descricaoProduto">
                     </input-container-component>
+                    {{ descricaoProduto }}
                     <hr><p>Imagem do produto</p>
                     <div class="form-group">
                         <input-container-component titulo="Imagem" id="novoImagem" id-help="novoImagemHelp" texto-ajuda="Selecione uma imagem no formato PNG">
@@ -76,7 +73,7 @@
             </template>
             <template v-slot:rodape>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary">Salvar</button>
+                <button type="button" class="btn btn-primary" @click="salvar()">Salvar</button>
             </template>
         </modal-component>
     </div>
@@ -84,10 +81,46 @@
 </template>
 
 <script>
-import {defineComponent} from "vue";
-import Card from "./CardComponent.vue";
+    export default{
+        data() {
+            return {
+                urlBase: 'http://127.0.0.1:8000/api/v1/product/',
+                nomeProduto: '',
+                descricaoProduto: '',
+                arquivoImagem: [],
+            }
+        },
+        methods: {
+            carregarImagem(e) {
+                this.arquivoImagem = e.target.files
+            },
+            salvar() {
+                console.log(this.descricaoProduto,this.nomeProduto,this.arquivoImagem[0])
 
-export default defineComponent({
-    components: {Card}
-})
+                //preparando o post com os tipos de parametros que
+                //a api espera receber
+
+                let formData = new FormData();
+                formData.append('nome', this.nomeProduto)
+                formData.append('descricao', this.descricaoProduto)
+                formData.append('category_id', '2')
+                formData.append('imagem', this.arquivoImagem[0])
+
+                let config = {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Accept': 'application/json',
+                    }
+                }
+
+                axios.post(this.urlBase, formData, config)
+                    .then(response => {
+                        console.log(response)
+                    })
+                    .catch(errors => {
+                        console.log(errors)
+                    })
+            }
+        }
+    }
 </script>

@@ -2489,11 +2489,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var _CardComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CardComponent.vue */ "./resources/js/components/CardComponent.vue");
-//
-//
-//
 //
 //
 //
@@ -2577,13 +2572,44 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      urlBase: 'http://127.0.0.1:8000/api/v1/product/',
+      nomeProduto: '',
+      descricaoProduto: '',
+      arquivoImagem: []
+    };
+  },
+  methods: {
+    carregarImagem: function carregarImagem(e) {
+      this.arquivoImagem = e.target.files;
+    },
+    salvar: function salvar() {
+      console.log(this.descricaoProduto, this.nomeProduto, this.arquivoImagem[0]);
 
+      //preparando o post com os tipos de parametros que
+      //a api espera receber
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_1__.defineComponent)({
-  components: {
-    Card: _CardComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+      var formData = new FormData();
+      formData.append('nome', this.nomeProduto);
+      formData.append('descricao', this.descricaoProduto);
+      formData.append('category_id', '2');
+      formData.append('imagem', this.arquivoImagem[0]);
+      var config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Accept': 'application/json'
+        }
+      };
+      axios.post(this.urlBase, formData, config).then(function (response) {
+        console.log(response);
+      })["catch"](function (errors) {
+        console.log(errors);
+      });
+    }
   }
-}));
+});
 
 /***/ }),
 
@@ -39634,29 +39660,6 @@ var render = function () {
                           }),
                         ]
                       ),
-                      _vm._v(" "),
-                      _c(
-                        "select",
-                        {
-                          attrs: {
-                            id: "Selecione a categoria",
-                            onchange: "selecionarCategoria()",
-                          },
-                        },
-                        [
-                          _c("option", { attrs: { value: "1" } }, [
-                            _vm._v("Categoria 1"),
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "2" } }, [
-                            _vm._v("Categoria 2"),
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "3" } }, [
-                            _vm._v("Categoria 3"),
-                          ]),
-                        ]
-                      ),
                     ]
                   },
                   proxy: true,
@@ -39740,6 +39743,15 @@ var render = function () {
                       },
                       [
                         _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model:id",
+                              value: _vm.nomeProduto,
+                              expression: "nomeProduto",
+                              arg: "id",
+                            },
+                          ],
                           staticClass: "form-control",
                           attrs: {
                             type: "text",
@@ -39747,10 +39759,23 @@ var render = function () {
                             "aria-describedby": "novoNomeHelp",
                             placeholder: "Nome do produto",
                           },
+                          domProps: { value: _vm.nomeProduto },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.nomeProduto = $event.target.value
+                            },
+                          },
                         }),
                       ]
                     ),
-                    _vm._v(" "),
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.nomeProduto) +
+                        "\n\n                "
+                    ),
                     _c("br"),
                     _vm._v(" "),
                     _c("p", [_vm._v("Opcionais:")]),
@@ -39767,6 +39792,15 @@ var render = function () {
                       },
                       [
                         _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model:id",
+                              value: _vm.descricaoProduto,
+                              expression: "descricaoProduto",
+                              arg: "id",
+                            },
+                          ],
                           staticClass: "form-control",
                           attrs: {
                             type: "text",
@@ -39774,10 +39808,23 @@ var render = function () {
                             "aria-describedby": "novoDescricaoHelp",
                             placeholder: "Descricao do produto",
                           },
+                          domProps: { value: _vm.descricaoProduto },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.descricaoProduto = $event.target.value
+                            },
+                          },
                         }),
                       ]
                     ),
-                    _vm._v(" "),
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.descricaoProduto) +
+                        "\n                "
+                    ),
                     _c("hr"),
                     _c("p", [_vm._v("Imagem do produto")]),
                     _vm._v(" "),
@@ -39843,7 +39890,15 @@ var render = function () {
                 _vm._v(" "),
                 _c(
                   "button",
-                  { staticClass: "btn btn-primary", attrs: { type: "button" } },
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function ($event) {
+                        return _vm.salvar()
+                      },
+                    },
+                  },
                   [_vm._v("Salvar")]
                 ),
               ]
