@@ -108,7 +108,7 @@
                 arquivoImagem: [],
                 //variavel para salvar o estado da instancia do vue
                 transacaoStatus: '',
-                transacaoDetalhes: [],
+                transacaoDetalhes: {},
             }
         },
         methods: {
@@ -140,13 +140,17 @@
                     .then(response => {
                         //fluxo cadastro correto
                         this.transacaoStatus = 'adicionado'
-                        this.transacaoDetalhes = response
-                        console.log(response)
+                        this.transacaoDetalhes = {
+                            mensagem: 'ID do registro: ' + response.data.id
+                        }
                     })
                     .catch(errors => {
                         //fluxo de erro ao cadastrar
                         this.transacaoStatus = 'erro'
-                        this.transacaoDetalhes = errors.response
+                        this.transacaoDetalhes = {
+                            mensagem: errors.response.data.message,
+                            dados: errors.response.data.errors
+                        }
                     })
             }
         }
