@@ -49,8 +49,8 @@
         <modal-component id="modalProduto" titulo="Adicionar Produto">
 
             <template v-slot:alerta>
-                <alert-component tipo="success" v-if="transacaoStatus == 'adicionado'"></alert-component>
-                <alert-component tipo="danger" :detalhes="transacaoDetalhes" titulo="Erro ao tentar cadastrar o Produto" v-if="transacaoStatus == 'erro'"></alert-component>
+                <alert-component tipo="success" :detalhes="transacaoDetalhes" titulo="Cadastro realizado com sucesso!" v-if="transacaoStatus == 'adicionado'"></alert-component>
+                <alert-component tipo="danger" :detalhes="transacaoDetalhes" titulo="Erro, Produto não cadastrado!" v-if="transacaoStatus == 'erro'"></alert-component>
             </template>
             <template v-slot:conteudo>
                 <div class="form-group">
@@ -138,13 +138,15 @@
 
                 axios.post(this.urlBase, formData, config)
                     .then(response => {
+                        //fluxo cadastro correto
                         this.transacaoStatus = 'adicionado'
+                        this.transacaoDetalhes = response
                         console.log(response)
                     })
                     .catch(errors => {
+                        //fluxo de erro ao cadastrar
                         this.transacaoStatus = 'erro'
                         this.transacaoDetalhes = errors.response
-                        console.log(errors)
                     })
             }
         }
