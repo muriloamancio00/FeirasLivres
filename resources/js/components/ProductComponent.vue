@@ -38,7 +38,12 @@
                         <!--os dados precisma ser um array de obj, e os titulos coincidir com os atributos do obj-->
                         <table-component
                             :dados="produtos"
-                            :titulos="['id', 'nome', 'descricao', 'category_id']"
+                            :titulos="{
+                                id: {titulo: 'ID', tipo:'text'},
+                                nome: {titulo: 'Nome', tipo:'text'},
+                                descricao: {titulo: 'Descrição', tipo:'text'},
+                                category_id: {titulo: 'Categoria', tipo:'int'},
+                            }"
                         ></table-component>
                     </template>
 
