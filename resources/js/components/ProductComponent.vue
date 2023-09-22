@@ -35,7 +35,11 @@
                 <!-- Inicio do card de Listagem de Categorias -->
                 <card-component titulo="Todas os Produtos">
                     <template v-slot:conteudo>
-                        <table-component></table-component>
+                        <!--os dados precisma ser um array de obj, e os titulos coincidir com os atributos do obj-->
+                        <table-component
+                            :dados="produtos"
+                            :titulos="['id', 'nome', 'descricao', 'category_id']"
+                        ></table-component>
                     </template>
 
                     <template v-slot:rodape>
@@ -78,8 +82,6 @@
                 <button type="button" class="btn btn-primary" @click="salvar()">Salvar</button>
             </template>
         </modal-component>
-
-        <button type="button" @click="carregarLista()">Teste</button>
     </div>
 
 </template>
@@ -111,13 +113,23 @@
                 //variavel para salvar o estado da instancia do vue
                 transacaoStatus: '',
                 transacaoDetalhes: {},
+                produtos: []
             }
         },
         methods: {
             carregarLista() {
+
+                let config = {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Authorization' : this.token,
+                    }
+                }
+
                 axios.get(this.urlBase)
                     .then(response => {
-                        console.log(response.data)
+                        this.produtos = response.data
+//                        console.log(this.produtos)
                 })
                     .catch(errors => {
                         console.log(errors)
@@ -165,5 +177,8 @@
                     })
             }
         },
+        mounted(){
+            this.carregarLista()
+        }
     }
 </script>
