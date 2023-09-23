@@ -13,7 +13,7 @@
                                     id-help="idHelp"
                                     texto-ajuda="Opcional. Informe o ID do Produto">
                                     <input type="number" class="form-control" id="inputId" aria-describedby="idHelp"
-                                           placeholder="ID do Produto">
+                                           placeholder="ID do Produto" v-model="busca.id">
                                 </encapsular-component>
                             </div>
                         </div>
@@ -24,11 +24,20 @@
                             texto-ajuda="Opcional. Informe o Nome do Produto">
 
                             <input type="text" class="form-control" id="inputNome" aria-describedby="NomeHelp"
-                                   placeholder="Nome do Produto">
+                                   placeholder="Nome do Produto" v-model="busca.nome">
+                        </encapsular-component>
+                        <encapsular-component
+                            titulo="Categoria do Produto"
+                            id="InputCategoria"
+                            id-help="CategoriaHelp"
+                            texto-ajuda="Opcional. Informe a Categoria do Produto">
+
+                            <input type="int" class="form-control" id="inputCategoria" aria-describedby="CategoriaHelp"
+                                   placeholder="Categoria do Produto" v-model="busca.category_id">
                         </encapsular-component>
                     </template>
                     <template v-slot:rodape>
-                        <button type="button" class="btn btn-primary btn-sm float-right ">Pesquisar</button></template>
+                        <button type="button" class="btn btn-primary btn-sm float-right" @click="pesquisar()">Pesquisar</button></template>
                 </card-component>
                 <!-- Fim do card de Busca -->
 
@@ -136,10 +145,24 @@
                 transacaoStatus: '',
                 transacaoDetalhes: {},
                 //definindo para vazio, ao invez de indefinido antes do meto assincrono for realizado
-                produtos: {data: []}
+                produtos: {data: []},
+                busca: {id: '', nome: '', category_id: ''}
             }
         },
         methods: {
+            pesquisar(){
+                let filtro = ''
+
+                for(let chave in this.busca) {
+                    if(this.busca[chave]) {
+                        if(filtro != '') {
+                            filtro +=";"
+                        }filtro += chave + ':like:' + this.busca[chave]
+                    }
+                }
+                console.log(filtro)
+            }
+            ,
             paginacao(l){
                 let config = {
                     headers: {
