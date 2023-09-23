@@ -52,8 +52,11 @@
                             <div class="col-10">
                                 <paginate-component>
                                     <!-- percorrendo todos os links dentro-->
-                                    <li v-for="l, key in produtos.links" :key="key" class="page-item">
-                                        <a class="page-link" href="#" v-html="l.label">
+                                    <li v-for="l, key in produtos.links" :key="key"
+                                        :class="l.active ? 'page-item active' : 'page-item'"
+                                        @click="paginacao(l)"
+                                    >
+                                        <a class="page-link" v-html="l.label">
                                             <!--{{l}}, dentro dele cada um possui um unico label -->
                                         </a>
                                     </li>
@@ -137,6 +140,20 @@
             }
         },
         methods: {
+            paginacao(l){
+                let config = {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Authorization' : this.token,
+                    }
+                }
+                //se for valido
+                if(l.url){
+                    this.urlBase = l.url // ajustando a url com o paramêtro de pagina
+                    this.carregarLista() // requisita dnv para API
+                }
+            }
+            ,
             carregarLista() {
 
                 let config = {
