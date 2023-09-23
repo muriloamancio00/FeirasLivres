@@ -4,7 +4,7 @@
             <thead>
             <tr>
                 <th scope="col" v-for="t, key in titulos" :key="key">{{ t.titulo }}</th>
-                <th v-if="visualizar || atualizar || remover"></th>
+                <th v-if="visualizar.visivel || atualizar.visivel || remover.visivel"></th>
             </tr>
             </thead>
             <tbody>
@@ -16,10 +16,10 @@
                             <img :src="'/storage/'+valor" width="30" height="30">
                         </span>
                     </td>
-                    <td v-if="visualizar || atualizar || remover">
-                        <button v-if="visualizar" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modalProdutoVisualizar">Visualizar</button>
-                        <button v-if="atualizar" class="btn btn-outline-dark btn-sm">Atualizar</button>
-                        <button v-if="remover" class="btn btn-outline-danger btn-sm">Remover</button>
+                    <td v-if="visualizar.visivel || atualizar.visivel || remover.visivel">
+                        <button v-if="visualizar.visivel" class="btn btn-outline-primary btn-sm" :data-toggle="visualizar.dataToggle" :data-target="visualizar.dataTarget">Visualizar</button>
+                        <button v-if="atualizar.visivel" class="btn btn-outline-dark btn-sm">Atualizar</button>
+                        <button v-if="remover.visivel" class="btn btn-outline-danger btn-sm">Remover</button>
                     </td>
                 </tr>
             </tbody>

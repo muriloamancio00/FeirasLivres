@@ -47,9 +47,9 @@
                         <!--os dados precisma ser um array de obj, e os titulos coincidir com os atributos do obj-->
                         <table-component
                             :dados="produtos.data"
-                            :visualizar="true"
-                            :atualizar="true"
-                            :remover="true"
+                            :visualizar="{ visivel: true, dataToggle: 'modal', dataTarget: '#modalProdutoVisualizar'}"
+                            :atualizar="{ visivel: true}"
+                            :remover="{ visivel: true}"
                             :titulos="{
                                 id: {titulo: 'ID', tipo:'text'},
                                 nome: {titulo: 'Nome', tipo:'text'},
