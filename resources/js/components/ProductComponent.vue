@@ -83,7 +83,8 @@
                 <!-- Fim da Listagem de Categorias -->
             </div>
         </div>
-        <!-- Button trigger modal -->
+
+        <!-- Button modal Adição de Produtos -->
         <modal-component id="modalProduto" titulo="Adicionar Produto">
 
             <template v-slot:alerta>
@@ -116,6 +117,18 @@
                 <button type="button" class="btn btn-primary" @click="salvar()">Salvar</button>
             </template>
         </modal-component>
+        <!-- Fim Button modal Adição de Produtos -->
+
+        <!-- Button modal Visualização de Produtos -->
+        <modal-component id="modalProdutoVisualizar" titulo="Visualizar Produto">
+                <template v-slot:alerta></template>
+                <template v-slot:conteudo>Teste</template>
+                <template v-slot:rodape>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </template>
+
+        </modal-component>
+        <!-- Fim Button modal Visualização de Produtos -->
     </div>
 
 </template>
