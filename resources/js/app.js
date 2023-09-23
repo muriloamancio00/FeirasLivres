@@ -30,6 +30,7 @@ Vue.component('table-component', require('./components/TableComponent.vue').defa
 Vue.component('card-component', require('./components/CardComponent.vue').default);
 Vue.component('modal-component', require('./components/ModalComponent.vue').default);
 Vue.component('alert-component', require('./components/AlertComponent.vue').default);
+Vue.component('paginate-component', require('./components/PaginateComponent.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

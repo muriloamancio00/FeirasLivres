@@ -37,7 +37,7 @@
                     <template v-slot:conteudo>
                         <!--os dados precisma ser um array de obj, e os titulos coincidir com os atributos do obj-->
                         <table-component
-                            :dados="produtos"
+                            :dados="produtos.data"
                             :titulos="{
                                 id: {titulo: 'ID', tipo:'text'},
                                 nome: {titulo: 'Nome', tipo:'text'},
@@ -48,7 +48,21 @@
                     </template>
 
                     <template v-slot:rodape>
-                        <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#modalProduto">Adicionar</button>
+                        <div class="row">
+                            <div class="col-10">
+                                <paginate-component>
+                                    <!-- percorrendo todos os links dentro-->
+                                    <li v-for="l, key in produtos.links" :key="key" class="page-item">
+                                        <a class="page-link" href="#" v-html="l.label">
+                                            <!--{{l}}, dentro dele cada um possui um unico label -->
+                                        </a>
+                                    </li>
+                                </paginate-component>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#modalProduto">Adicionar</button>
+                            </div>
+                        </div>
                     </template>
                 </card-component>
                 <!-- Fim da Listagem de Categorias -->
@@ -118,7 +132,8 @@
                 //variavel para salvar o estado da instancia do vue
                 transacaoStatus: '',
                 transacaoDetalhes: {},
-                produtos: []
+                //definindo para vazio, ao invez de indefinido antes do meto assincrono for realizado
+                produtos: {data: []}
             }
         },
         methods: {
@@ -133,8 +148,10 @@
 
                 axios.get(this.urlBase)
                     .then(response => {
-                        this.produtos = response.data
-//                        console.log(this.produtos)
+                        //dentro de response.data, temos os parametros de paginação
+                        this.produtos = response.data // então buscamos os arrays contidos
+//                      //this.produtos = response.data.data // podendo ser chamado assim, ou por meio do :dados"x.data"
+//                        console.log(this.produtos.data)
                 })
                     .catch(errors => {
                         console.log(errors)

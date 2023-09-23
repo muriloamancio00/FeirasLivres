@@ -34,7 +34,7 @@ class ProductController extends Controller
         if($request->has('atributos')) {
             $productRepository->selectAtributos($request->atributos);
         }
-        return  response()->json( $productRepository->getResultado(),201);
+        return  response()->json( $productRepository->getResultadoPaginado(3),201);
     }
 
     /**
