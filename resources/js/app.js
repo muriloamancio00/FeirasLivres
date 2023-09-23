@@ -8,6 +8,17 @@ require('./bootstrap');
 
 window.Vue = require('vue').default;
 
+import Vue from 'vue'
+//importando e configurando o vuex
+import Vuex from 'Vuex'
+Vue.use(Vuex)
+
+//essa é uma forma de dizer onde esses atributos centralizados serao encontrados
+const store = new Vuex.Store({
+    state: {
+        teste: 'Teste de Recuperação de valor, dentro da store do Vuex'
+    }
+})
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -39,4 +50,5 @@ Vue.component('paginate-component', require('./components/PaginateComponent.vue'
 
 const app = new Vue({
     el: '#app',
+    store
 });

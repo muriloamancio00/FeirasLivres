@@ -3,6 +3,8 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <!-- Inicio do card de Busca -->
+                {{$store.state.teste}}
+                <button @click="$store.state.teste = 'Modifiquei o valor da Store da Vuex'">Teste Store</button>
                 <card-component titulo="Busca de Produtos">
                     <template v-slot:conteudo>
                         <div class="form-row">
