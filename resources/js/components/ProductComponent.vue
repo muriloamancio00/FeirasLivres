@@ -138,6 +138,8 @@
         data() {
             return {
                 urlBase: 'http://127.0.0.1:8000/api/v1/product/',
+                urlPaginacao: '',
+                urlFiltro: '',
                 nomeProduto: '',
                 descricaoProduto: '',
                 arquivoImagem: [],
@@ -146,7 +148,7 @@
                 transacaoDetalhes: {},
                 //definindo para vazio, ao invez de indefinido antes do meto assincrono for realizado
                 produtos: {data: []},
-                busca: {id: '', nome: '', category_id: ''}
+                busca: {id: '', nome: '', category_id: ''},
             }
         },
         methods: {
@@ -160,7 +162,14 @@
                         }filtro += chave + ':like:' + this.busca[chave]
                     }
                 }
-                console.log(filtro)
+                if(filtro != ''){
+                    this.urlPaginacao = 'page=1'
+                    this.urlFiltro = '&filtro='+filtro
+                } else {
+                    this.urlFiltro = ''
+                }
+                //dinamicamente envia filtro atualizado quando atualizar lista
+                this.carregarLista()
             }
             ,
             paginacao(l){
@@ -172,7 +181,7 @@
                 }
                 //se for valido
                 if(l.url){
-                    this.urlBase = l.url // ajustando a url com o paramêtro de pagina
+                    this.urlPaginacao = l.url.split('?')[1] // ajustando a url com o paramêtro de pagina
                     this.carregarLista() // requisita dnv para API
                 }
             }
@@ -185,8 +194,9 @@
                         'Authorization' : this.token,
                     }
                 }
+                let url = this.urlBase +'?' + this.urlPaginacao + this.urlFiltro
 
-                axios.get(this.urlBase)
+                axios.get(url)
                     .then(response => {
                         //dentro de response.data, temos os parametros de paginação
                         this.produtos = response.data // então buscamos os arrays contidos
