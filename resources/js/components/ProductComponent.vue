@@ -51,7 +51,7 @@
                             :dados="produtos.data"
                             :visualizar="{ visivel: true, dataToggle: 'modal', dataTarget: '#modalProdutoVisualizar'}"
                             :atualizar="{ visivel: true}"
-                            :remover="{ visivel: true}"
+                            :remover="{ visivel: true, dataToggle: 'modal', dataTarget: '#modalProdutoRemover'}"
                             :titulos="{
                                 id: {titulo: 'ID', tipo:'text'},
                                 nome: {titulo: 'Nome', tipo:'text'},
@@ -86,7 +86,7 @@
             </div>
         </div>
 
-        <!-- Button modal Adição de Produtos -->
+        <!-- Modal Adição de Produtos -->
         <modal-component id="modalProduto" titulo="Adicionar Produto">
 
             <template v-slot:alerta>
@@ -119,13 +119,12 @@
                 <button type="button" class="btn btn-primary" @click="salvar()">Salvar</button>
             </template>
         </modal-component>
-        <!-- Fim Button modal Adição de Produtos -->
+        <!-- Fim Modal Adição de Produtos -->
 
-        <!-- Button modal Visualização de Produtos -->
+        <!-- Inicio Modal Visualização de Produtos -->
         <modal-component id="modalProdutoVisualizar" titulo="Visualizar Produto">
                 <template v-slot:alerta></template>
                 <template v-slot:conteudo>
-                    {{ $store.state.item }}
                     <encapsular-component titulo="ID">
                         <input type="text" class ="form-control" :value="$store.state.item.id" disabled>
                     </encapsular-component>
@@ -144,7 +143,25 @@
                 </template>
 
         </modal-component>
-        <!-- Fim Button modal Visualização de Produtos -->
+        <!-- Fim Modal Visualização de Produtos -->
+
+        <!-- Inicio modal Remoção de Produtos -->
+        <modal-component id="modalProdutoRemover" titulo="Remover Produto">
+            <template v-slot:alerta></template>
+            <template v-slot:conteudo>
+                <encapsular-component titulo="ID">
+                    <input type="text" class ="form-control" :value="$store.state.item.id" disabled>
+                </encapsular-component>
+                <encapsular-component titulo="Nome do Produto">
+                    <input type="text" class ="form-control" :value="$store.state.item.nome" disabled>
+                </encapsular-component>
+            </template>
+            <template v-slot:rodape>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </template>
+
+        </modal-component>
+        <!-- Fim Modal Remoção de Produtos -->
     </div>
 
 </template>

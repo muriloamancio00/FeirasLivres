@@ -20,7 +20,7 @@
                     <td v-if="visualizar.visivel || atualizar.visivel || remover.visivel">
                         <button v-if="visualizar.visivel" class="btn btn-outline-primary btn-sm" :data-toggle="visualizar.dataToggle" :data-target="visualizar.dataTarget" @click="setStore(obj)">Visualizar</button>
                         <button v-if="atualizar.visivel" class="btn btn-outline-dark btn-sm">Atualizar</button>
-                        <button v-if="remover.visivel" class="btn btn-outline-danger btn-sm">Remover</button>
+                        <button v-if="remover.visivel" class="btn btn-outline-danger btn-sm" :data-toggle="visualizar.dataToggle" :data-target="remover.dataTarget" @click="setStore(obj)">Remover</button>
                     </td>
                 </tr>
             </tbody>
