@@ -71,7 +71,7 @@
                                         @click="paginacao(l)"
                                     >
                                         <a class="page-link" v-html="l.label">
-                                            <!--{{l}}, dentro dele cada um possui um unico label -->
+                                            <!-- {{l}}, dentro dele cada um possui um unico label -->
                                         </a>
                                     </li>
                                 </paginate-component>
@@ -124,7 +124,21 @@
         <!-- Button modal Visualização de Produtos -->
         <modal-component id="modalProdutoVisualizar" titulo="Visualizar Produto">
                 <template v-slot:alerta></template>
-                <template v-slot:conteudo>Teste</template>
+                <template v-slot:conteudo>
+                    {{ $store.state.item }}
+                    <encapsular-component titulo="ID">
+                        <input type="text" class ="form-control" :value="$store.state.item.id" disabled>
+                    </encapsular-component>
+                    <encapsular-component titulo="Nome do Produto">
+                        <input type="text" class ="form-control" :value="$store.state.item.nome" disabled>
+                    </encapsular-component>
+                    <encapsular-component titulo="Descricao do Produto">
+                        <input type="text" class ="form-control" :value="$store.state.item.descricao" disabled>
+                    </encapsular-component>
+                    <encapsular-component titulo="Categoria do Produto">
+                        <input type="int" class ="form-control" :value="$store.state.item.category_id" disabled>
+                    </encapsular-component>
+                </template>
                 <template v-slot:rodape>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                 </template>

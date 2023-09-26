@@ -16,7 +16,7 @@ Vue.use(Vuex)
 //essa é uma forma de dizer onde esses atributos centralizados serao encontrados
 const store = new Vuex.Store({
     state: {
-        teste: 'Teste de Recuperação de valor, dentro da store do Vuex'
+        item: {}
     }
 })
 /**
