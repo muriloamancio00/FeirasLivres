@@ -34,7 +34,7 @@ class ProductController extends Controller
         if($request->has('atributos')) {
             $productRepository->selectAtributos($request->atributos);
         }
-        return  response()->json( $productRepository->getResultadoPaginado(3),201);
+        return  response()->json( $productRepository->getResultadoPaginado(3),200);
     }
 
     /**
@@ -79,7 +79,7 @@ class ProductController extends Controller
         if($product === null){
             return response()->json(['erro' => 'Recurso pesquisado nao existe'], 404);
         }
-        return  response()->json( $product,201);
+        return  response()->json( $product,200);
     }
 
     /**
@@ -128,7 +128,7 @@ class ProductController extends Controller
             $product->update($request->all());
         }
 
-        return  response()->json( $product, 201);
+        return  response()->json( $product, 200);
     }
 
     /**
@@ -144,6 +144,6 @@ class ProductController extends Controller
             return response()->json( ['erro' => 'Impossivel realizar a exclusão'],404);
         }
         $product->delete();
-        return  response()->json( ['msg' => 'Produto removido'],201);
+        return  response()->json( ['msg' => 'Produto removido'],200);
     }
 }
