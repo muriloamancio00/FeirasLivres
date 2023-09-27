@@ -167,10 +167,10 @@
         <modal-component id="modalProdutoAtualizar" titulo="Alterar Produto">
 
             <template v-slot:alerta>
-                <alert-component tipo="success" :detalhes="transacaoDetalhes" titulo="Cadastro atualizado com sucesso!" v-if="transacaoStatus == 'adicionado'"></alert-component>
-                <alert-component tipo="danger" :detalhes="transacaoDetalhes" titulo="Erro, Produto não atualizado!" v-if="transacaoStatus == 'erro'"></alert-component>
+                <alert-component tipo="success" titulo="Transação realizada com sucesso" :detalhes="$store.state.transacao" v-if="$store.state.transacao.status == 'sucesso'"></alert-component>
+                <alert-component tipo="danger" titulo="Erro na transação" :detalhes="$store.state.transacao" v-if="$store.state.transacao.status == 'erro'"></alert-component>
             </template>
-            <template v-slot:conteudo v-if="$store.state.transacao.status != 'sucesso'">
+            <template v-slot:conteudo>
                 <div class="form-group">
                     <encapsular-component titulo="ID">
                         <input type="text" class ="form-control" :value="$store.state.item.id" disabled>
@@ -192,7 +192,7 @@
             </template>
             <template v-slot:rodape>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary" @click="atualizar()" v-if="$store.state.transacao.status != 'sucesso'">Atualizar</button>
+                <button type="button" class="btn btn-primary" @click="atualizar()">Atualizar</button>
             </template>
         </modal-component>
         <!-- Fim Modal  Alterar Produtos -->
@@ -237,11 +237,6 @@
         },
         methods: {
             atualizar(){
-                let formData = new FormData();
-                formData.append('_method', 'patch')
-                formData.append('nome', this.$store.state.item.nome)
-                formData.append('descricao', this.$store.state.item.descricao)
-                formData.append('category_id', this.$store.state.item.category_id)
 
                 let config = {
                     headers: {
@@ -252,19 +247,34 @@
 
                 let url = this.urlBase + this.$store.state.item.id
 
+                let formData = new FormData();
+                formData.append('_method', 'patch')
+                formData.append('nome', this.$store.state.item.nome)
+                formData.append('category_id', this.$store.state.item.category_id)
+                formData.append('descricao', this.$store.state.item.descricao)
+
                 axios.post(url, formData, config)
                     .then(response => {
                         this.$store.state.transacao.status = 'sucesso'
-                        this.$store.state.transacao.mensagem = response.data.msg
+                        this.$store.state.transacao.mensagem = 'Registro de produto atualizado com sucesso!'
                         this.carregarLista()
                     })
                     .catch(errors => {
                         this.$store.state.transacao.status = 'erro'
-                        this.$store.state.transacao.mensagem = 'Erro ao Remover Registro!'
+                        this.$store.state.transacao.dados = errors.response.data.errors
                     })
 
             },
             remover() {
+                let config = {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Authorization': this.token
+                    }
+                }
+
+                let url = this.urlBase + this.$store.state.item.id
+
                 let confirmacao = confirm('Tem certeza que deseja remover esse registro?')
 
                 if(!confirmacao) {
@@ -273,15 +283,6 @@
 
                 let formData = new FormData();
                 formData.append('_method', 'delete')
-
-                let config = {
-                    headers: {
-                        'Accept': 'application/json',
-                        'Authorization': this.token
-                    }
-                }
-
-                let url = this.urlBase + this.$store.state.item.id
 
                 console.log(this.$store.state.transacao)
 
@@ -294,7 +295,7 @@
                     .catch(errors => {
                         this.$store.state.transacao.status = 'erro'
                         //padrao da api
-                        this.$store.state.transacao.mensagem = errors.response.data.erro
+                        this.$store.state.transacao.mensagem = errors.response.data.errors
                         //adicionando uma mensagem direta
                         // this.$store.state.transacao.mensagem = 'Erro ao Remover Registro!'
                     })
@@ -334,7 +335,6 @@
             }
             ,
             carregarLista() {
-
                 let config = {
                     headers: {
                         'Accept': 'application/json',
@@ -358,25 +358,21 @@
                 this.arquivoImagem = e.target.files
             },
             salvar() {
-                console.log(this.descricaoProduto,this.nomeProduto,this.arquivoImagem[0])
+                let config = {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Accept': 'application/json',
+                        'Authorization' : this.token,
+                    }
+                }
 
                 //preparando o post com os tipos de parametros que
                 //a api espera receber
-
                 let formData = new FormData();
                 formData.append('nome', this.nomeProduto)
                 formData.append('descricao', this.descricaoProduto)
                 formData.append('category_id', this.category_idProduto)
                 formData.append('imagem', this.arquivoImagem[0])
-
-                let config = {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        'Accept': 'application/json',
-                        //compatibilidade com token vindo do backend
-                        'Authorization' : this.token,
-                    }
-                }
 
                 axios.post(this.urlBase, formData, config)
                     .then(response => {
@@ -385,6 +381,7 @@
                         this.transacaoDetalhes = {
                             mensagem: 'ID do registro: ' + response.data.id
                         }
+                        this.carregarLista()
                     })
                     .catch(errors => {
                         //fluxo de erro ao cadastrar

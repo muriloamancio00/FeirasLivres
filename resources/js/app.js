@@ -18,7 +18,7 @@ const store = new Vuex.Store({
     state: {
         item: {},
         //de acordo com a situação da transação, irei alimentar o atributo e aplicar nas logicas de feedback
-        transacao: {status: '', mensagem: ''}
+        transacao: {status: '', mensagem: '', dados: ''}
     }
 })
 /**

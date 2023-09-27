@@ -37,6 +37,7 @@ export default {
             this.$store.state.item = obj
             this.$store.state.transacao.status = ''
             this.$store.state.transacao.mensagem = ''
+            this.$store.state.transacao.dados = ''
         }
     },
     computed: {
