@@ -95,23 +95,19 @@
             </template>
             <template v-slot:conteudo>
                 <div class="form-group">
-                    <encapsular-component titulo="Nome do Produto" id="novoNome" id-help="novoNomeHelp" texto-ajuda="Informe o nome do produto">
+                    <encapsular-component titulo="Nome do Produto" id="novoNome" id-help="novoNomeHelp" texto-ajuda="Informe o Nome do Produto">
                         <input type="text" class="form-control" id="novoNome" aria-describedby="novoNomeHelp"
                                placeholder="Nome do produto" v-model:id="nomeProduto">
                     </encapsular-component>
-                    {{ nomeProduto }}
-                    <encapsular-component titulo="Descrição do Produto" id="novoDescricao" id-help="novoDescricaoHelp" texto-ajuda="Informe o descricao da produto">
-                        <input type="text" class="form-control" id="novoDescricao" aria-describedby="novoDescricaoHelp"
-                               placeholder="Opcional. Descricao" v-model:id="descricaoProduto">
+                    <encapsular-component titulo="Categoria do Produto" id="novoCategory_id" id-help="novoCategory_idHelp" texto-ajuda="Informe a Categoria do Produto">
+                        <input type="int" class="form-control" id="novoCategory_id" aria-describedby="novoCategory_idHelp"
+                               placeholder="Seleciona a Categoria" v-model:id="category_idProduto">
                     </encapsular-component>
-                    {{ descricaoProduto }}
-                    <hr><p>Imagem do produto</p>
-                    <div class="form-group">
-                        <encapsular-component titulo="Imagem" id="novoImagem" id-help="novoImagemHelp" texto-ajuda="Selecione uma imagem no formato PNG">
-                            <input type="file" class="form-control-file" id="novoImagem" aria-describedby="novoImagemHelp" placeholder="Selecione uma imagem" @change="carregarImagem($event)">
-                        </encapsular-component>
-                        {{ arquivoImagem }}
-                    </div>
+                    <hr><p>Opcional</p>
+                    <encapsular-component titulo="Descrição do Produto" id="novoDescricao" id-help="novoDescricaoHelp" texto-ajuda="Informe a Descricao do Produto">
+                        <input type="text" class="form-control" id="novoDescricao" aria-describedby="novoDescricaoHelp"
+                               placeholder="Opcional. Descricao do Produto" v-model:id="descricaoProduto">
+                    </encapsular-component>
                 </div>
             </template>
             <template v-slot:rodape>
@@ -192,6 +188,7 @@
                 urlFiltro: '',
                 nomeProduto: '',
                 descricaoProduto: '',
+                category_idProduto: '',
                 arquivoImagem: [],
                 //variavel para salvar o estado da instancia do vue
                 transacaoStatus: '',
@@ -298,7 +295,7 @@
                 let formData = new FormData();
                 formData.append('nome', this.nomeProduto)
                 formData.append('descricao', this.descricaoProduto)
-                formData.append('category_id', '2')
+                formData.append('category_id', this.category_idProduto)
                 formData.append('imagem', this.arquivoImagem[0])
 
                 let config = {

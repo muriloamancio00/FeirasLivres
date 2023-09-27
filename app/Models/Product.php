@@ -15,17 +15,20 @@ class Product extends Model
 
     public function rules() {
         return [
-            'nome' => 'required|unique:categories,nome,'.$this->id.'|min:3',
-            'category_id' => 'exists:categories,id',
+            'nome' => 'required|unique:products,nome,'.$this->id.'|min:3',
+            'category_id' => 'required|nullable|integer|not_in:0|exists:categories,id',
             //'descricao' => 'min:5',
         ];
     }
 
     public function feedback() {
         return [
-            'required' => 'O campo :attribute é obrigatório',
+            'required' => 'O Campo :attribute é Obrigatório',
             'nome.unique' => 'O nome da categoria já existe',
             'nome.min' => 'O nome deve ter no mínimo 3 caracteres',
+            'category_id.integer' => 'O ID da categoria deve ser um número inteiro',
+            'category_id.not_in' => 'O ID da categoria não pode ser 0',
+            'category_id.exists' => 'O ID da categoria não foi encontrado na base de dados',
             //'descricao.min' => 'A descricao deve ter no mínimo 5 caracteres',
         ];
     }
