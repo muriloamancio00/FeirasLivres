@@ -16,7 +16,9 @@ Vue.use(Vuex)
 //essa é uma forma de dizer onde esses atributos centralizados serao encontrados
 const store = new Vuex.Store({
     state: {
-        item: {}
+        item: {},
+        //de acordo com a situação da transação, irei alimentar o atributo e aplicar nas logicas de feedback
+        transacao: {status: '', mensagem: ''}
     }
 })
 /**

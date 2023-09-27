@@ -35,6 +35,8 @@ export default {
         setStore(obj) {
             //nesse contexto é preciso do this para referenciar
             this.$store.state.item = obj
+            this.$store.state.transacao.status = ''
+            this.$store.state.transacao.mensagem = ''
         }
     },
     computed: {

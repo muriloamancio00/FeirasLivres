@@ -143,8 +143,11 @@
 
         <!-- Inicio modal Remoção de Produtos -->
         <modal-component id="modalProdutoRemover" titulo="Remover Produto">
-            <template v-slot:alerta></template>
-            <template v-slot:conteudo>
+            <template v-slot:alerta>
+                <alert-component tipo="success" titulo="Transação realizada com sucesso" :detalhes="$store.state.transacao" v-if="$store.state.transacao.status == 'sucesso'"></alert-component>
+                <alert-component tipo="danger" titulo="Erro na transação" :detalhes="$store.state.transacao" v-if="$store.state.transacao.status == 'erro'"></alert-component>
+            </template>
+            <template v-slot:conteudo v-if="$store.state.transacao.status != 'sucesso'">
                 <encapsular-component titulo="ID">
                     <input type="text" class ="form-control" :value="$store.state.item.id" disabled>
                 </encapsular-component>
@@ -152,9 +155,9 @@
                     <input type="text" class ="form-control" :value="$store.state.item.nome" disabled>
                 </encapsular-component>
             </template>
-            <template v-slot:rodape>
+            <template v-slot:rodape >
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-danger" @click="remover()">Remover</button>
+                <button type="button" class="btn btn-danger" @click="remover()" v-if="$store.state.transacao.status != 'sucesso'">Remover</button>
             </template>
 
         </modal-component>
@@ -217,15 +220,23 @@
                 }
 
                 let url = this.urlBase + this.$store.state.item.id
-                console.log(url)
+
+
+
+                console.log(this.$store.state.transacao)
 
                 axios.post(url, formData, config)
                     .then(response => {
-                    console.log('Registro removico com sucesso', response)
+                        this.$store.state.transacao.status = 'sucesso'
+                        this.$store.state.transacao.mensagem = response.data.msg
                         this.carregarLista()
                 })
                     .catch(errors => {
-                        console.log('Houve um erro na tentativa de remoção do registro', errors.response)
+                        this.$store.state.transacao.status = 'erro'
+                        //padrao da api
+                        this.$store.state.transacao.mensagem = errors.response.data.erro
+                        //adicionando uma mensagem direta
+                        // this.$store.state.transacao.mensagem = 'Erro ao Remover Registro!'
                     })
             },
             pesquisar(){
