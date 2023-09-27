@@ -125,13 +125,13 @@
                         <input type="text" class ="form-control" :value="$store.state.item.id" disabled>
                     </encapsular-component>
                     <encapsular-component titulo="Nome do Produto">
-                        <input type="text" class ="form-control" :value="$store.state.item.nome">
+                        <input type="text" class ="form-control" :value="$store.state.item.nome" disabled>
                     </encapsular-component>
                     <encapsular-component titulo="Descricao do Produto">
-                        <input type="text" class ="form-control" :value="$store.state.item.descricao">
+                        <input type="text" class ="form-control" :value="$store.state.item.descricao" disabled>
                     </encapsular-component>
                     <encapsular-component titulo="Categoria do Produto">
-                        <input type="int" class ="form-control" :value="$store.state.item.category_id">
+                        <input type="int" class ="form-control" :value="$store.state.item.category_id" disabled>
                     </encapsular-component>
                 </template>
                 <template v-slot:rodape>
@@ -167,29 +167,32 @@
         <modal-component id="modalProdutoAtualizar" titulo="Alterar Produto">
 
             <template v-slot:alerta>
-                <alert-component tipo="success" :detalhes="transacaoDetalhes" titulo="Cadastro realizado com sucesso!" v-if="transacaoStatus == 'adicionado'"></alert-component>
-                <alert-component tipo="danger" :detalhes="transacaoDetalhes" titulo="Erro, Produto não cadastrado!" v-if="transacaoStatus == 'erro'"></alert-component>
+                <alert-component tipo="success" :detalhes="transacaoDetalhes" titulo="Cadastro atualizado com sucesso!" v-if="transacaoStatus == 'adicionado'"></alert-component>
+                <alert-component tipo="danger" :detalhes="transacaoDetalhes" titulo="Erro, Produto não atualizado!" v-if="transacaoStatus == 'erro'"></alert-component>
             </template>
-            <template v-slot:conteudo>
+            <template v-slot:conteudo v-if="$store.state.transacao.status != 'sucesso'">
                 <div class="form-group">
+                    <encapsular-component titulo="ID">
+                        <input type="text" class ="form-control" :value="$store.state.item.id" disabled>
+                    </encapsular-component>
                     <encapsular-component titulo="Nome do Produto" id="atualizarNome" id-help="atualizarNomeHelp" texto-ajuda="Informe o Nome do Produto">
                         <input type="text" class="form-control" id="atualizarNome" aria-describedby="atualizarNomeHelp"
-                               placeholder="Nome do produto" v-model:id="nomeProduto">
+                               placeholder="Nome do produto" v-model:id="$store.state.item.nome">
                     </encapsular-component>
                     <encapsular-component titulo="Categoria do Produto" id="atualizarCategory_id" id-help="atualizarCategory_idHelp" texto-ajuda="Informe a Categoria do Produto">
                         <input type="number" class="form-control" id="atualizarategory_id" aria-describedby="atualizarCategory_idHelp"
-                               placeholder="Seleciona a Categoria" v-model:id="category_idProduto">
+                               placeholder="Seleciona a Categoria" v-model:id="$store.state.item.category_id">
                     </encapsular-component>
                     <hr><p>Opcional</p>
                     <encapsular-component titulo="Descrição do Produto" id="atualizarDescricao" id-help="atualizarDescricaoHelp" texto-ajuda="Informe a Descricao do Produto">
                         <input type="text" class="form-control" id="atualizarDescricao" aria-describedby="atualizarDescricaoHelp"
-                               placeholder="Opcional. Descricao do Produto" v-model:id="descricaoProduto">
+                               placeholder="Opcional. Descricao do Produto" v-model:id="$store.state.item.descricao">
                     </encapsular-component>
                 </div>
             </template>
             <template v-slot:rodape>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary" @click="atualizar()">Atualizar</button>
+                <button type="button" class="btn btn-primary" @click="atualizar()" v-if="$store.state.transacao.status != 'sucesso'">Atualizar</button>
             </template>
         </modal-component>
         <!-- Fim Modal  Alterar Produtos -->
@@ -234,7 +237,32 @@
         },
         methods: {
             atualizar(){
-                console.log(this.$store.state.item)
+                let formData = new FormData();
+                formData.append('_method', 'patch')
+                formData.append('nome', this.$store.state.item.nome)
+                formData.append('descricao', this.$store.state.item.descricao)
+                formData.append('category_id', this.$store.state.item.category_id)
+
+                let config = {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Authorization': this.token
+                    }
+                }
+
+                let url = this.urlBase + this.$store.state.item.id
+
+                axios.post(url, formData, config)
+                    .then(response => {
+                        this.$store.state.transacao.status = 'sucesso'
+                        this.$store.state.transacao.mensagem = response.data.msg
+                        this.carregarLista()
+                    })
+                    .catch(errors => {
+                        this.$store.state.transacao.status = 'erro'
+                        this.$store.state.transacao.mensagem = 'Erro ao Remover Registro!'
+                    })
+
             },
             remover() {
                 let confirmacao = confirm('Tem certeza que deseja remover esse registro?')
@@ -254,8 +282,6 @@
                 }
 
                 let url = this.urlBase + this.$store.state.item.id
-
-
 
                 console.log(this.$store.state.transacao)
 
