@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <!-- Inicio do card de Busca -->
+                <!-- Inicio Busca -->
                 <card-component titulo="Busca de Produtos">
                     <template v-slot:conteudo>
                         <div class="form-row">
@@ -39,9 +39,9 @@
                     <template v-slot:rodape>
                         <button type="button" class="btn btn-primary btn-sm float-right" @click="pesquisar()">Pesquisar</button></template>
                 </card-component>
-                <!-- Fim do card de Busca -->
+                <!-- Fim Busca -->
 
-                <!-- Inicio do card de Listagem de Categorias -->
+                <!-- Inicio Lista Produtos-->
                 <card-component titulo="Todas os Produtos">
                     <template v-slot:conteudo>
                         <!--os dados precisma ser um array de obj, e os titulos coincidir com os atributos do obj-->
@@ -81,11 +81,11 @@
                         </div>
                     </template>
                 </card-component>
-                <!-- Fim da Listagem de Categorias -->
+                <!-- Fim Lista Produtos-->
             </div>
         </div>
 
-        <!-- Modal Adição de Produtos -->
+        <!-- Inicio Modal Criar Produto -->
         <modal-component id="modalProduto" titulo="Adicionar Produto">
 
             <template v-slot:alerta>
@@ -114,9 +114,9 @@
                 <button type="button" class="btn btn-primary" @click="salvar()">Salvar</button>
             </template>
         </modal-component>
-        <!-- Fim Modal Adição de Produtos -->
+        <!-- Fim Modal Criar Produto -->
 
-        <!-- Inicio Modal Visualização de Produtos -->
+        <!-- Inicio Modal Visualiza Produtos -->
         <modal-component id="modalProdutoVisualizar" titulo="Visualizar Produto">
                 <template v-slot:alerta></template>
                 <template v-slot:conteudo>
@@ -141,9 +141,9 @@
                 </template>
 
         </modal-component>
-        <!-- Fim Modal Visualização de Produtos -->
+        <!-- Fim Modal Visualiza Produtos -->
 
-        <!-- Inicio modal Remoção de Produtos -->
+        <!-- Inicio Modal Remove Produto -->
         <modal-component id="modalProdutoRemover" titulo="Remover Produto">
             <template v-slot:alerta>
                 <alert-component tipo="success" titulo="Transação realizada com sucesso" :detalhes="$store.state.transacao" v-if="$store.state.transacao.status == 'sucesso'"></alert-component>
@@ -163,9 +163,9 @@
             </template>
 
         </modal-component>
-        <!-- Fim Modal Remoção de Produtos -->
+        <!-- Fim Modal Remove Produto -->
 
-        <!-- Modal Alterar Produtos -->
+        <!-- Inicio Modal Altera Produto -->
         <modal-component id="modalProdutoAtualizar" titulo="Alterar Produto">
 
             <template v-slot:alerta>
@@ -197,7 +197,7 @@
                 <button type="button" class="btn btn-primary" @click="atualizar()">Atualizar</button>
             </template>
         </modal-component>
-        <!-- Fim Modal  Alterar Produtos -->
+        <!-- Fim Modal Altera Produto -->
     </div>
 
 </template>
@@ -350,9 +350,9 @@
                         }
                     })
             }
-        },
-        mounted(){
+        },mounted(){
             this.carregarLista()
         }
+
     }
 </script>

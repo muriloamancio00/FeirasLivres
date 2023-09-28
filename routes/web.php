@@ -31,5 +31,9 @@ Route::get('/fair',function(){
 Route::get('/product',function(){
     return view('app.product');
 })->name('product')->middleware('auth');
+Route::get('/event',function(){
+    return view('app.product');
+})->name('event')->middleware('auth');
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

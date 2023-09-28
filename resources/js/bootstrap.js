@@ -70,14 +70,10 @@ axios.interceptors.request.use(
 //interceptar as respostas da aplicação
 axios.interceptors.response.use(
     response => {
-        console.log('Interceptando a resposta antes da aplicação', response)
         return response
     },
     error => {
-        console.log('Erro na requisição: ', error.response)
-
         if(error.response.status == 401 && error.response.data.message == 'Token has expired'){
-            console.log('Fazer requisi~çao para rota refresh')
 
             //nesse ponto qualquer requisição por meio do axios voltam a receber todas as refras do axios.interceptors.request
             axios.post('http://127.0.0.1:8000/api/refresh/')
