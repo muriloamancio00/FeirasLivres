@@ -206,22 +206,6 @@
 
 <script>
     export default{
-        computed: {
-            token() {
-                //separando valores do cookie
-                let token = document.cookie.split(';').find(indice =>{
-                    //busca busca o token
-                    return indice.includes('token=')
-                })
-
-                //separa apenas o conteudo do token
-                token = token.split('=') [1]
-                token = 'Bearer ' + token
-
-                //token formado
-                return token
-            }
-        },
         data() {
             return {
                 urlBase: 'http://127.0.0.1:8000/api/v1/product/',
@@ -241,14 +225,6 @@
         },
         methods: {
             atualizar(){
-
-                let config = {
-                    headers: {
-                        'Accept': 'application/json',
-                        'Authorization': this.token
-                    }
-                }
-
                 let url = this.urlBase + this.$store.state.item.id
 
                 let formData = new FormData();
@@ -257,7 +233,7 @@
                 formData.append('category_id', this.$store.state.item.category_id)
                 formData.append('descricao', this.$store.state.item.descricao)
 
-                axios.post(url, formData, config)
+                axios.post(url, formData)
                     .then(response => {
                         this.$store.state.transacao.status = 'sucesso'
                         this.$store.state.transacao.mensagem = 'Registro de produto atualizado com sucesso!'
@@ -270,13 +246,6 @@
 
             },
             remover() {
-                let config = {
-                    headers: {
-                        'Accept': 'application/json',
-                        'Authorization': this.token
-                    }
-                }
-
                 let url = this.urlBase + this.$store.state.item.id
 
                 let confirmacao = confirm('Tem certeza que deseja remover esse registro?')
@@ -290,7 +259,7 @@
 
                 console.log(this.$store.state.transacao)
 
-                axios.post(url, formData, config)
+                axios.post(url, formData)
                     .then(response => {
                         this.$store.state.transacao.status = 'sucesso'
                         this.$store.state.transacao.mensagem = response.data.msg
@@ -325,12 +294,6 @@
             }
             ,
             paginacao(l){
-                let config = {
-                    headers: {
-                        'Accept': 'application/json',
-                        'Authorization' : this.token,
-                    }
-                }
                 //se for valido
                 if(l.url){
                     this.urlPaginacao = l.url.split('?')[1] // ajustando a url com o paramêtro de pagina
@@ -339,12 +302,7 @@
             }
             ,
             carregarLista() {
-                let config = {
-                    headers: {
-                        'Accept': 'application/json',
-                        'Authorization' : this.token,
-                    }
-                }
+
                 let url = this.urlBase +'?' + this.urlPaginacao + this.urlFiltro
 
                 axios.get(url)
@@ -365,8 +323,6 @@
                 let config = {
                     headers: {
                         'Content-Type': 'multipart/form-data',
-                        'Accept': 'application/json',
-                        'Authorization' : this.token,
                     }
                 }
 
