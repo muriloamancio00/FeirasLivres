@@ -12,7 +12,9 @@
                 <tr v-for="obj, chave in dadosFiltrados" :key="chave">
                     <td v-for="valor, chaveValor in obj" :key="chaveValor">
                         <span v-if="titulos[chaveValor].tipo == 'text'">{{valor}}</span>
+                        <!-- buscar nome do atributo que possui int -->
                         <span v-if="titulos[chaveValor].tipo == 'int'">{{valor}}</span>
+                        <span v-if="titulos[chaveValor].tipo == 'data'">{{valor | formataDataTempoGlobal}}</span>
                         <span v-if="titulos[chaveValor].tipo == 'imagem'">
                             <img :src="'/storage/'+valor" width="30" height="30">
                         </span>

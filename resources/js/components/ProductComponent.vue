@@ -57,6 +57,7 @@
                                 nome: {titulo: 'Nome', tipo:'text'},
                                 descricao: {titulo: 'Descrição', tipo:'text'},
                                 category_id: {titulo: 'Categoria', tipo:'int'},
+                                created_at: {titulo: 'Data Criação', tipo:'data'},
                             }"
                         ></table-component>
                     </template>
@@ -131,7 +132,10 @@
                         <input type="text" class ="form-control" :value="$store.state.item.descricao" disabled>
                     </encapsular-component>
                     <encapsular-component titulo="Categoria do Produto">
-                        <input type="int" class ="form-control" :value="$store.state.item.category_id" disabled>
+                        <input type="number" class ="form-control" :value="$store.state.item.category_id" disabled>
+                    </encapsular-component>
+                    <encapsular-component titulo="Data de Criação">
+                        <input type="text" class ="form-control" :value="$store.state.item.created_at" disabled>
                     </encapsular-component>
                 </template>
                 <template v-slot:rodape>

@@ -54,3 +54,20 @@ const app = new Vue({
     el: '#app',
     store
 });
+
+Vue.filter('formataDataTempoGlobal', function(d) {
+    if(!d) return ''
+
+    d = d.split('T')
+    let data = d[0]
+    let tempo = d[1]
+
+    // formatando data
+    data = data.split('-')
+    data = data[2] + '/' + data[1] + '/' + data[0]
+
+    tempo = tempo.split('.')
+    tempo = tempo[0]
+
+    return data + ' ' + tempo
+})
