@@ -3,8 +3,6 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <!-- Inicio do card de Busca -->
-                {{$store.state.teste}}
-                <button @click="$store.state.teste = 'Modifiquei o valor da Store da Vuex'">Teste Store</button>
                 <card-component titulo="Busca de Produtos">
                     <template v-slot:conteudo>
                         <div class="form-row">
@@ -55,8 +53,8 @@
                             :titulos="{
                                 id: {titulo: 'ID', tipo:'text'},
                                 nome: {titulo: 'Nome', tipo:'text'},
-                                descricao: {titulo: 'Descrição', tipo:'text'},
-                                category_id: {titulo: 'Categoria', tipo:'int'},
+                                descricao: {},
+                                category_id: {},
                                 created_at: {titulo: 'Data Criação', tipo:'data'},
                             }"
                         ></table-component>
@@ -135,7 +133,7 @@
                         <input type="number" class ="form-control" :value="$store.state.item.category_id" disabled>
                     </encapsular-component>
                     <encapsular-component titulo="Data de Criação">
-                        <input type="text" class ="form-control" :value="$store.state.item.created_at" disabled>
+                        <input type="data" class ="form-control" :value="$store.state.item.created_at | formataDataTempoGlobal" disabled>
                     </encapsular-component>
                 </template>
                 <template v-slot:rodape>
