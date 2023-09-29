@@ -47,7 +47,7 @@
                         <!--os dados precisma ser um array de obj, e os titulos coincidir com os atributos do obj-->
                         <table-component
                             :dados="produtos.data"
-                            :visualizar="{ visivel: true, dataToggle: 'modal', dataTarget: '#modalProdutoVisualizar'}"
+                            :visualizar="{ visivel: true, dataToggle: 'modal', dataTarget: '#modalProdutoVizualizar'}"
                             :atualizar="{ visivel: true, dataToggle: 'modal', dataTarget: '#modalProdutoAtualizar'}"
                             :remover="{ visivel: true, dataToggle: 'modal', dataTarget: '#modalProdutoRemover'}"
                             :titulos="{
@@ -117,7 +117,7 @@
         <!-- Fim Modal Adiciona -->
 
         <!-- Inicio Modal Visualizar -->
-        <modal-component id="modalProdutoVisualizar" titulo="Visualizar Produto">
+        <modal-component id="modalProdutoVizualizar" titulo="Visualizar Produto">
                 <template v-slot:alerta></template>
                 <template v-slot:conteudo>
                     <encapsular-component titulo="ID">
@@ -212,7 +212,6 @@
                 nomeProduto: '',
                 descricaoProduto: '',
                 category_idProduto: '',
-                arquivoImagem: [],
                 //variavel para salvar o estado da instancia do vue
                 transacaoStatus: '',
                 transacaoDetalhes: {},
@@ -222,6 +221,60 @@
             }
         },
         methods: {
+            carregarLista() {
+
+                let url = this.urlBase +'?' + this.urlPaginacao + this.urlFiltro
+
+                axios.get(url)
+                    .then(response => {
+                        //dentro de response.data, temos os parametros de paginação
+                        this.produtos = response.data // então buscamos os arrays contidos
+//                      //this.produtos = response.data.data // podendo ser chamado assim, ou por meio do :dados"x.data"
+//                        console.log(this.produtos.data)
+                    })
+                    .catch(errors => {
+                        console.log(errors)
+                    })
+            },
+            paginacao(l){
+                //se for valido
+                if(l.url){
+                    this.urlPaginacao = l.url.split('?')[1] // ajustando a url com o paramêtro de pagina
+                    this.carregarLista() // requisita dnv para API
+                }
+            },
+            salvar() {
+                let config = {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    }
+                }
+
+                //preparando o post com os tipos de parametros que
+                //a api espera receber
+                let formData = new FormData();
+                formData.append('nome', this.nomeProduto)
+                formData.append('descricao', this.descricaoProduto)
+                formData.append('category_id', this.category_idProduto)
+
+                axios.post(this.urlBase, formData, config)
+                    .then(response => {
+                        //fluxo cadastro correto
+                        this.transacaoStatus = 'adicionado'
+                        this.transacaoDetalhes = {
+                            mensagem: 'ID do registro: ' + response.data.id
+                        }
+                        this.carregarLista()
+                    })
+                    .catch(errors => {
+                        //fluxo de erro ao cadastrar
+                        this.transacaoStatus = 'erro'
+                        this.transacaoDetalhes = {
+                            mensagem: errors.response.data.message,
+                            dados: errors.response.data.errors
+                        }
+                    })
+            },
             atualizar(){
                 let url = this.urlBase + this.$store.state.item.id
 
@@ -289,67 +342,10 @@
                 }
                 //dinamicamente envia filtro atualizado quando atualizar lista
                 this.carregarLista()
-            }
-            ,
-            paginacao(l){
-                //se for valido
-                if(l.url){
-                    this.urlPaginacao = l.url.split('?')[1] // ajustando a url com o paramêtro de pagina
-                    this.carregarLista() // requisita dnv para API
-                }
-            }
-            ,
-            carregarLista() {
-
-                let url = this.urlBase +'?' + this.urlPaginacao + this.urlFiltro
-
-                axios.get(url)
-                    .then(response => {
-                        //dentro de response.data, temos os parametros de paginação
-                        this.produtos = response.data // então buscamos os arrays contidos
-//                      //this.produtos = response.data.data // podendo ser chamado assim, ou por meio do :dados"x.data"
-//                        console.log(this.produtos.data)
-                })
-                    .catch(errors => {
-                        console.log(errors)
-                    })
             },
             carregarImagem(e) {
                 this.arquivoImagem = e.target.files
             },
-            salvar() {
-                let config = {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    }
-                }
-
-                //preparando o post com os tipos de parametros que
-                //a api espera receber
-                let formData = new FormData();
-                formData.append('nome', this.nomeProduto)
-                formData.append('descricao', this.descricaoProduto)
-                formData.append('category_id', this.category_idProduto)
-                formData.append('imagem', this.arquivoImagem[0])
-
-                axios.post(this.urlBase, formData, config)
-                    .then(response => {
-                        //fluxo cadastro correto
-                        this.transacaoStatus = 'adicionado'
-                        this.transacaoDetalhes = {
-                            mensagem: 'ID do registro: ' + response.data.id
-                        }
-                        this.carregarLista()
-                    })
-                    .catch(errors => {
-                        //fluxo de erro ao cadastrar
-                        this.transacaoStatus = 'erro'
-                        this.transacaoDetalhes = {
-                            mensagem: errors.response.data.message,
-                            dados: errors.response.data.errors
-                        }
-                    })
-            }
         },
         mounted(){
             this.carregarLista()

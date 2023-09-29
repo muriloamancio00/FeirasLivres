@@ -32,10 +32,10 @@
                 <card-component titulo="Relação de categorias">
                     <template v-slot:conteudo>
                         <table-component
-                            :visualizar="{ visivel: true}"
+                            :dados="categorias"
+                            :visualizar="{ visivel: true, dataToggle: 'modal', dataTarget: '#modalCategoriaVizualizar'}"
                             :atualizar="{ visivel: true}"
                             :remover="{ visivel: true}"
-                            :dados="categorias"
                             :titulos="{
                                 id: {titulo: 'ID', tipo:'text'},
                                 nome: {titulo: 'Nome', tipo:'text'},
@@ -46,43 +46,78 @@
                     </template>
 
                     <template v-slot:rodape>
-                        <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#modalMarca">Adicionar</button>
+                        <div class="row">
+                            <div class="col-10">
+                                <paginate-component>
+                                    <li v-for="l, key in categorias.links" :key="key"
+                                        :class="l.active ? 'page-item active' : 'page-item'"
+                                        @click="paginacao(l)"
+                                    >
+                                        <a class="page-link" v-html="l.label"></a>
+                                    </li>
+                                </paginate-component>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#modalCategoria">Adicionar</button>
+                            </div>
+                        </div>
                     </template>
                 </card-component>
                 <!-- fim do card de listagem de categorias -->
             </div>
         </div>
 
+        <!-- Modal Adiciona -->
+        <modal-component id="modalCategoria" titulo="Adicionar Categoria">
 
-
-        <modal-component id="modalMarca" titulo="Adicionar Categoria">
-
-            <template v-slot:alertas>
-                <alert-component tipo="success" :detalhes="transacaoDetalhes" titulo="Cadastro realizado com sucesso" v-if="transacaoStatus == 'adicionado'"></alert-component>
-                <alert-component tipo="danger" :detalhes="transacaoDetalhes" titulo="Erro ao tentar cadastrar a categoria" v-if="transacaoStatus == 'erro'"></alert-component>
+            <template v-slot:alerta>
+                <alert-component tipo="success" :detalhes="transacaoDetalhes" titulo="Cadastro realizado com sucesso!" v-if="transacaoStatus == 'adicionado'"></alert-component>
+                <alert-component tipo="danger" :detalhes="transacaoDetalhes" titulo="Erro, Produto não cadastrado!" v-if="transacaoStatus == 'erro'"></alert-component>
             </template>
-
             <template v-slot:conteudo>
                 <div class="form-group">
-                    <input-container-component titulo="Nome da categoria" id="novoNome" id-help="novoNomeHelp" texto-ajuda="Informe o nome da categoria">
-                        <input type="text" class="form-control" id="novoNome" aria-describedby="novoNomeHelp" placeholder="Nome da categoria" v-model="nomeCategoria">
-                    </input-container-component>
-                    {{ nomeCategoria }}
-                </div>
-
-                <div class="form-group">
-                    <input-container-component titulo="Imagem" id="novoImagem" id-help="novoImagemHelp" texto-ajuda="Selecione uma imagem no formato PNG">
-                        <input type="file" class="form-control-file" id="novoImagem" aria-describedby="novoImagemHelp" placeholder="Selecione uma imagem" @change="carregarImagem($event)">
-                    </input-container-component>
-                    {{ arquivoImagem }}
+                    <encapsular-component titulo="Nome do Produto" id="novoNome" id-help="novoNomeHelp" texto-ajuda="Informe o Nome do Produto">
+                        <input type="text" class="form-control" id="novoNome" aria-describedby="novoNomeHelp"
+                               placeholder="Nome do produto" v-model:id="nomeCategoria">
+                    </encapsular-component>
+                    <hr><p>Opcional</p>
+                    <encapsular-component titulo="Descrição do Produto" id="novoDescricao" id-help="novoDescricaoHelp" texto-ajuda="Informe a Descricao do Produto">
+                        <input type="text" class="form-control" id="novoDescricao" aria-describedby="novoDescricaoHelp"
+                               placeholder="Opcional. Descricao do Produto" v-model:id="descricaoCategoria">
+                    </encapsular-component>
                 </div>
             </template>
-
             <template v-slot:rodape>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                 <button type="button" class="btn btn-primary" @click="salvar()">Salvar</button>
             </template>
         </modal-component>
+        <!-- Fim Modal Adiciona -->
+
+        <!-- Inicio Modal Visualizar -->
+        <modal-component id="modalCategoriaVizualizar" titulo="Visualizar Categoria">
+            <template v-slot:alerta></template>
+            <template v-slot:conteudo>
+                <encapsular-component titulo="ID">
+                    <input type="text" class ="form-control" :value="$store.state.item.id" disabled>
+                </encapsular-component>
+                <encapsular-component titulo="Nome do Produto">
+                    <input type="text" class ="form-control" :value="$store.state.item.nome" disabled>
+                </encapsular-component>
+                <encapsular-component titulo="Descricao do Produto">
+                    <input type="text" class ="form-control" :value="$store.state.item.descricao" disabled>
+                </encapsular-component>
+                <encapsular-component titulo="Data de Criação">
+                    <input type="data" class ="form-control" :value="$store.state.item.created_at | formataDataTempoGlobal" disabled>
+                </encapsular-component>
+            </template>
+            <template v-slot:rodape>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </template>
+
+        </modal-component>
+        <!-- Fim Modal Visualizar -->
+
     </div>
 </template>
 
@@ -91,24 +126,24 @@ export default {
     data() {
         return {
             urlBase: 'http://127.0.0.1:8000/api/v1/category',
+            urlPaginacao: '',
+            urlFiltro: '',
             nomeCategoria: '',
-            arquivoImagem: [],
+            descricaoCategoria: '',
+            //
             transacaoStatus: '',
             transacaoDetalhes: {},
-            categorias: []
+            //
+            categorias: [],
+            busca: {id: '', nome: ''},
         }
     },
     methods: {
         carregarLista() {
 
-            let config = {
-                headers: {
-                    'Accept': 'application/json',
-                    'Authorization': this.token
-                }
-            }
+            let url = this.urlBase +'?' + this.urlPaginacao + this.urlFiltro
 
-            axios.get(this.urlBase, config)
+            axios.get(url)
                 .then(response => {
                     this.categorias = response.data
                     //console.log(this.categorias)
@@ -117,23 +152,24 @@ export default {
                     console.log(errors)
                 })
         },
-        carregarImagem(e) {
-            this.arquivoImagem = e.target.files
+        paginacao(l){
+            //se for valido
+            if(l.url){
+                this.urlPaginacao = l.url.split('?')[1] // ajustando a url com o paramêtro de pagina
+                this.carregarLista() // requisita dnv para API
+            }
         },
         salvar() {
-            console.log(this.nomeCategoria, this.arquivoImagem[0])
-
-            let formData = new FormData();
-            formData.append('nome', this.nomeCategoria)
-            formData.append('imagem', this.arquivoImagem[0])
 
             let config = {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    'Accept': 'application/json',
-                    'Authorization': this.token
                 }
             }
+
+            let formData = new FormData();
+            formData.append('nome', this.nomeCategoria)
+            formData.append('descricao', this.descricaoCategoria)
 
             axios.post(this.urlBase, formData, config)
                 .then(response => {
@@ -141,8 +177,7 @@ export default {
                     this.transacaoDetalhes = {
                         mensagem: 'ID do registro: ' + response.data.id
                     }
-
-                    console.log(response)
+                    this.carregarLista()
                 })
                 .catch(errors => {
                     this.transacaoStatus = 'erro'
@@ -150,9 +185,9 @@ export default {
                         mensagem: errors.response.data.message,
                         dados: errors.response.data.errors
                     }
-                    //errors.response.data.message
                 })
-        }
+        },
+
     },
     mounted() {
         this.carregarLista()
