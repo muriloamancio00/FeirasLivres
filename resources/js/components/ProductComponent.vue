@@ -41,7 +41,7 @@
                 </card-component>
                 <!-- Fim Busca -->
 
-                <!-- Inicio Lista Produtos-->
+                <!-- Inicio Lista -->
                 <card-component titulo="Todas os Produtos">
                     <template v-slot:conteudo>
                         <!--os dados precisma ser um array de obj, e os titulos coincidir com os atributos do obj-->
@@ -81,11 +81,11 @@
                         </div>
                     </template>
                 </card-component>
-                <!-- Fim Lista Produtos-->
+                <!-- Fim Lista -->
             </div>
         </div>
 
-        <!-- Inicio Modal Criar Produto -->
+        <!-- Modal Adiciona -->
         <modal-component id="modalProduto" titulo="Adicionar Produto">
 
             <template v-slot:alerta>
@@ -114,9 +114,9 @@
                 <button type="button" class="btn btn-primary" @click="salvar()">Salvar</button>
             </template>
         </modal-component>
-        <!-- Fim Modal Criar Produto -->
+        <!-- Fim Modal Adiciona -->
 
-        <!-- Inicio Modal Visualiza Produtos -->
+        <!-- Inicio Modal Visualizar -->
         <modal-component id="modalProdutoVisualizar" titulo="Visualizar Produto">
                 <template v-slot:alerta></template>
                 <template v-slot:conteudo>
@@ -141,9 +141,9 @@
                 </template>
 
         </modal-component>
-        <!-- Fim Modal Visualiza Produtos -->
+        <!-- Fim Modal Visualizar -->
 
-        <!-- Inicio Modal Remove Produto -->
+        <!-- Inicio modal Remove -->
         <modal-component id="modalProdutoRemover" titulo="Remover Produto">
             <template v-slot:alerta>
                 <alert-component tipo="success" titulo="Transação realizada com sucesso" :detalhes="$store.state.transacao" v-if="$store.state.transacao.status == 'sucesso'"></alert-component>
@@ -163,9 +163,9 @@
             </template>
 
         </modal-component>
-        <!-- Fim Modal Remove Produto -->
+        <!-- Fim Modal Remove -->
 
-        <!-- Inicio Modal Altera Produto -->
+        <!-- Modal Alterar -->
         <modal-component id="modalProdutoAtualizar" titulo="Alterar Produto">
 
             <template v-slot:alerta>
@@ -197,7 +197,7 @@
                 <button type="button" class="btn btn-primary" @click="atualizar()">Atualizar</button>
             </template>
         </modal-component>
-        <!-- Fim Modal Altera Produto -->
+        <!-- Fim Modal Alterar -->
     </div>
 
 </template>
@@ -350,9 +350,9 @@
                         }
                     })
             }
-        },mounted(){
+        },
+        mounted(){
             this.carregarLista()
         }
-
     }
 </script>

@@ -34,7 +34,7 @@ class CategoryController extends Controller
         if($request->has('atributos')) {
             $categoryRepository->selectAtributos($request->atributos);
         }
-        return  response()->json( $categoryRepository->getResultado(),201);
+        return  response()->json( $categoryRepository->getResultado(),200);
     }
 
     /**
