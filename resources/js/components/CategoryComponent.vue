@@ -145,6 +145,19 @@
 
 <script>
 export default {
+    computed: {
+        token() {
+
+            let token = document.cookie.split(';').find(indice => {
+                return indice.includes('token=')
+            })
+
+            token = token.split('=')[1]
+            token = 'Bearer ' + token
+
+            return token
+        }
+    },
     data() {
         return {
             urlBase: 'http://127.0.0.1:8000/api/v1/category/',
@@ -215,7 +228,7 @@ export default {
             let confirmacao = confirm('Tem certeza que deseja remover esse registro?')
 
             if(!confirmacao) {
-                return false
+                return false;
             }
 
             let formData = new FormData();
@@ -228,9 +241,16 @@ export default {
                     this.carregarLista()
                 })
                 .catch(errors => {
-                    this.$store.state.transacao.status = 'erro'
-                    this.$store.state.transacao.mensagem = errors.response.data.errors
-                })
+                    if (errors.response.status === 500) {
+                        // Categoria possui produtos vinculados
+                        this.$store.state.transacao.status = 'erro';
+                        this.$store.state.transacao.mensagem = 'Esta categoria possui produtos vinculados e não pode ser removida.';
+                    } else {
+                        // Outro tipo de erro
+                        this.$store.state.transacao.status = 'erro';
+                        this.$store.state.transacao.mensagem = errors.response.data.errors;
+                    }
+                });
         },
 
     },

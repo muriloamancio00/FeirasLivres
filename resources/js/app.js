@@ -19,8 +19,17 @@ const store = new Vuex.Store({
         item: {},
         //de acordo com a situação da transação, irei alimentar o atributo e aplicar nas logicas de feedback
         transacao: {status: '', mensagem: '', dados: ''}
+    },
+    mutations: {
+        atualizarItem(state, novoItem) {
+            state.item = novoItem;
+        },
+        atualizarTransacao(state, novaTransacao) {
+            state.transacao = novaTransacao;
+        }
     }
-})
+});
+export default store;
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

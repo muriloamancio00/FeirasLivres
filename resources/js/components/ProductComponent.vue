@@ -54,7 +54,7 @@
                                 id: {titulo: 'ID', tipo:'text'},
                                 nome: {titulo: 'Nome', tipo:'text'},
                                 descricao: {},
-                                category_id: {},
+                                category_id: {titulo: 'ID Categoria', tipo:'int'},
                                 created_at: {titulo: 'Data Criação', tipo:'data'},
                             }"
                         ></table-component>
@@ -99,8 +99,9 @@
                                placeholder="Nome do produto" v-model:id="nomeProduto">
                     </encapsular-component>
                     <encapsular-component titulo="Categoria do Produto" id="novoCategory_id" id-help="novoCategory_idHelp" texto-ajuda="Informe a Categoria do Produto">
-                        <input type="number" class="form-control" id="novoCategory_id" aria-describedby="novoCategory_idHelp"
-                               placeholder="Seleciona a Categoria" v-model:id="category_idProduto">
+                        <select class="form-control" id="novoCategory_id" aria-describedby="novoCategory_idHelp" v-model="category_idProduto">
+                            <option v-for="categoria in listaDeCategorias" :value="categoria.id">{{ categoria.nome }}</option>
+                        </select>
                     </encapsular-component>
                     <hr><p>Opcional</p>
                     <encapsular-component titulo="Descrição do Produto" id="novoDescricao" id-help="novoDescricaoHelp" texto-ajuda="Informe a Descricao do Produto">
@@ -130,7 +131,7 @@
                         <input type="text" class ="form-control" :value="$store.state.item.descricao" disabled>
                     </encapsular-component>
                     <encapsular-component titulo="Categoria do Produto">
-                        <input type="number" class ="form-control" :value="$store.state.item.category_id" disabled>
+                        <input type="text" class="form-control" :value="getNomeCategoria($store.state.item.category_id)" disabled>
                     </encapsular-component>
                     <encapsular-component titulo="Data de Criação">
                         <input type="data" class ="form-control" :value="$store.state.item.created_at | formataDataTempoGlobal" disabled>
@@ -167,7 +168,6 @@
 
         <!-- Modal Alterar -->
         <modal-component id="modalProdutoAtualizar" titulo="Alterar Produto">
-
             <template v-slot:alerta>
                 <alert-component tipo="success" titulo="Transação realizada com sucesso" :detalhes="$store.state.transacao" v-if="$store.state.transacao.status == 'sucesso'"></alert-component>
                 <alert-component tipo="danger" titulo="Erro na transação" :detalhes="$store.state.transacao" v-if="$store.state.transacao.status == 'erro'"></alert-component>
@@ -181,9 +181,10 @@
                         <input type="text" class="form-control" id="atualizarNome" aria-describedby="atualizarNomeHelp"
                                placeholder="Nome do produto" v-model:id="$store.state.item.nome">
                     </encapsular-component>
-                    <encapsular-component titulo="Categoria do Produto" id="atualizarCategory_id" id-help="atualizarCategory_idHelp" texto-ajuda="Informe a Categoria do Produto">
-                        <input type="number" class="form-control" id="atualizarategory_id" aria-describedby="atualizarCategory_idHelp"
-                               placeholder="Seleciona a Categoria" v-model:id="$store.state.item.category_id">
+                    <encapsular-component titulo="Categoria do Produto" id="novoCategory_id" id-help="novoCategory_idHelp" texto-ajuda="Informe a Categoria do Produto">
+                        <select class="form-control" id="novoCategory_id" aria-describedby="novoCategory_idHelp" v-model="category_idProduto">
+                            <option v-for="categoria in listaDeCategorias" :value="categoria.id">{{ categoria.nome }}</option>
+                        </select>
                     </encapsular-component>
                     <hr><p>Opcional</p>
                     <encapsular-component titulo="Descrição do Produto" id="atualizarDescricao" id-help="atualizarDescricaoHelp" texto-ajuda="Informe a Descricao do Produto">
@@ -204,23 +205,67 @@
 
 <script>
     export default{
+        computed: {
+            item() {
+                return this.$store.state.item;
+            },
+            transacao() {
+                return this.$store.state.transacao;
+            }
+        },
         data() {
             return {
+                //url
                 urlBase: 'http://127.0.0.1:8000/api/v1/product/',
                 urlPaginacao: '',
                 urlFiltro: '',
+                //variaveis obj
                 nomeProduto: '',
                 descricaoProduto: '',
                 category_idProduto: '',
-                //variavel para salvar o estado da instancia do vue
+                //exibição
+                nomeCategoriaSelecionada: '',
+                //feedbacks
                 transacaoStatus: '',
                 transacaoDetalhes: {},
-                //definindo para vazio, ao invez de indefinido antes do meto assincrono for realizado
+                //objetos
                 produtos: {data: []},
+                listaDeCategorias: [],
                 busca: {id: '', nome: '', category_id: ''},
             }
         },
         methods: {
+            getNomeCategoria(categoryId) {
+                if (this.listaDeCategorias.length > 0) {
+                    const categoria = this.listaDeCategorias.find(c => c.id === categoryId);
+
+                    if (categoria) {
+                        return `ID: ${categoria.id}  Nome: ${categoria.nome}`;
+                    } else {
+                        return 'Categoria não encontrada';
+                    }
+                }
+                return '';
+            },
+            dataCategoria() {
+                axios.get('http://127.0.0.1:8000/api/v1/category')
+                    .then(response => {
+                        this.listaDeCategorias = response.data;
+
+                        const categoria = this.listaDeCategorias.find(c => c.id === this.$store.state.item.category_id);
+
+                        if (categoria) {
+                            this.nomeCategoriaSelecionada = `Nome: ${categoria.nome}`;
+                        } else {
+                            this.nomeCategoriaSelecionada = 'Categoria não encontrada';
+                        }
+
+                        console.log(this.listaDeCategorias);
+                    })
+                    .catch(error => {
+                        console.error('Erro ao obter a lista de categorias:', error);
+                    });
+            },
             carregarLista() {
 
                 let url = this.urlBase +'?' + this.urlPaginacao + this.urlFiltro
@@ -279,22 +324,21 @@
                 let url = this.urlBase + this.$store.state.item.id
 
                 let formData = new FormData();
-                formData.append('_method', 'patch')
-                formData.append('nome', this.$store.state.item.nome)
-                formData.append('category_id', this.$store.state.item.category_id)
-                formData.append('descricao', this.$store.state.item.descricao)
+                formData.append('_method', 'patch');
+                formData.append('nome', this.$store.state.item.nome);
+                formData.append('category_id', this.category_idProduto);
+                formData.append('descricao', this.$store.state.item.descricao);
 
                 axios.post(url, formData)
                     .then(response => {
-                        this.$store.state.transacao.status = 'sucesso'
-                        this.$store.state.transacao.mensagem = 'Registro de produto atualizado com sucesso!'
-                        this.carregarLista()
+                        this.$store.state.transacao.status = 'sucesso';
+                        this.$store.state.transacao.mensagem = 'Registro de produto atualizado com sucesso!';
+                        this.carregarLista();
                     })
                     .catch(errors => {
                         this.$store.state.transacao.status = 'erro'
                         this.$store.state.transacao.dados = errors.response.data.errors
                     })
-
             },
             remover() {
                 let url = this.urlBase + this.$store.state.item.id
@@ -349,6 +393,7 @@
         },
         mounted(){
             this.carregarLista()
+            this.dataCategoria()
         }
     }
 </script>
