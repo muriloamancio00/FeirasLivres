@@ -143,6 +143,6 @@ class CategoryController extends Controller
             return response()->json( ['erro' => 'Impossivel realizar a exclusão'],404);
         }
         $category->delete();
-        return  response()->json( ['msg' => 'categoria removida'],201);
+        return  response()->json( ['msg' => 'categoria removida'],200);
     }
 }
