@@ -140,6 +140,33 @@
         </modal-component>
         <!-- Fim Modal Remove -->
 
+        <!-- Início Modal Atualiza -->
+        <modal-component id="modalCategoriaAtualizar" titulo="Atualizar Categoria">
+
+            <template v-slot:alertas>
+                <alert-component tipo="success" titulo="Transação realizada com sucesso" :detalhes="$store.state.transacao" v-if="$store.state.transacao.status == 'sucesso'"></alert-component>
+                <alert-component tipo="danger" titulo="Erro na transação" :detalhes="$store.state.transacao" v-if="$store.state.transacao.status == 'erro'"></alert-component>
+            </template>
+
+            <template v-slot:conteudo>
+                <div class="form-group">
+                    <encapsular-component titulo="Nome da Categoria" id="atualizarNome" id-help="atualizarNomeHelp" texto-ajuda="Informe o Nome da Categoria">
+                        <input type="text" class="form-control" id="atualizarNome" aria-describedby="atualizarNomeHelp" placeholder="Nome da Categoria" v-model="$store.state.item.nome">
+                    </encapsular-component>
+                    <encapsular-component titulo="Descrição da Categoria" id="novoDescricao" id-help="novoDescricaoHelp" texto-ajuda="Informe a Descricao da Categoria">
+                        <input type="text" class="form-control" id="novoDescricao" aria-describedby="novoDescricaoHelp"
+                               placeholder="Opcional. Descricao da Categoria" v-model:id="$store.state.item.descricao">
+                    </encapsular-component>
+                </div>
+            </template>
+
+            <template v-slot:rodape>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" @click="atualizar()">Atualizar</button>
+            </template>
+        </modal-component>
+        <!-- Fim Modal Atualiza -->
+
     </div>
 </template>
 
@@ -251,6 +278,34 @@ export default {
                         this.$store.state.transacao.mensagem = errors.response.data.errors;
                     }
                 });
+        },
+        atualizar() {
+
+            let formData = new FormData();
+            formData.append('_method', 'patch')
+            formData.append('nome', this.$store.state.item.nome)
+            formData.append('descricao', this.$store.state.item.descricao)
+
+            let url = this.urlBase + this.$store.state.item.id
+
+            let config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
+
+            axios.post(url, formData, config)
+                .then(response => {
+                    this.$store.state.transacao.status = 'sucesso'
+                    this.$store.state.transacao.mensagem = 'Registro de Categorias atualizado com sucesso!'
+
+                    this.carregarLista()
+                })
+                .catch(errors => {
+                    this.$store.state.transacao.status = 'erro'
+                    this.$store.state.transacao.mensagem = errors.response.data.message
+                    this.$store.state.transacao.dados = errors.response.data.errors
+                })
         },
 
     },
