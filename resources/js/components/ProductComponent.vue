@@ -240,7 +240,7 @@
                     const categoria = this.listaDeCategorias.find(c => c.id === categoryId);
 
                     if (categoria) {
-                        return `ID: ${categoria.id}  Nome: ${categoria.nome}`;
+                        return `ID: ${categoria.id}  Categoria: ${categoria.nome}`;
                     } else {
                         return 'Categoria não encontrada';
                     }
@@ -255,7 +255,7 @@
                         const categoria = this.listaDeCategorias.find(c => c.id === this.$store.state.item.category_id);
 
                         if (categoria) {
-                            this.nomeCategoriaSelecionada = `Nome: ${categoria.nome}`;
+                            this.nomeCategoriaSelecionada = categoria.nome;
                         } else {
                             this.nomeCategoriaSelecionada = 'Categoria não encontrada';
                         }
