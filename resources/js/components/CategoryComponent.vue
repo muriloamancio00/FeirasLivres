@@ -9,30 +9,32 @@
                     <template v-slot:conteudo>
                         <div class="form-row">
                             <div class="col mb-3">
-                                <input-container-component titulo="ID" id="inputId" id-help="idHelp" texto-ajuda="Opcional. Informe o ID da Categoria">
+                                <encapsular-component titulo="ID" id="inputId" id-help="idHelp" texto-ajuda="Opcional. Informe o ID da Categoria">
                                     <input type="number" class="form-control" id="inputId" aria-describedby="idHelp" placeholder="ID">
-                                </input-container-component>
+                                </encapsular-component>
                             </div>
                             <div class="col mb-3">
-                                <input-container-component titulo="Nome da Categoria" id="inputNome" id-help="nomeHelp" texto-ajuda="Opcional. Informe o nome da Categoria">
+                                <encapsular-component titulo="Nome da Categoria" id="inputNome" id-help="nomeHelp" texto-ajuda="Opcional. Informe o nome da Categoria">
                                     <input type="text" class="form-control" id="inputNome" aria-describedby="nomeHelp" placeholder="Nome da Categoria">
-                                </input-container-component>
+                                </encapsular-component>
                             </div>
+
                         </div>
                     </template>
 
                     <template v-slot:rodape>
-                        <button type="submit" class="btn btn-primary btn-sm float-right">Pesquisar</button>
+                        <button type="submit" class="btn btn-primary btn-sm float-right" @click="pesquisar()">Pesquisar</button>
                     </template>
                 </card-component>
                 <!-- fim do card de busca -->
 
 
                 <!-- início do card de listagem de categorias -->
-                <card-component titulo="Relação de categorias">
+                <card-component titulo="Todas as Categorias">
                     <template v-slot:conteudo>
+                        <!--os dados precisma ser um array de obj, e os titulos coincidir com os atributos do obj-->
                         <table-component
-                            :dados="categorias"
+                            :dados="categorias.data"
                             :visualizar="{ visivel: true, dataToggle: 'modal', dataTarget: '#modalCategoriaVizualizar'}"
                             :atualizar="{ visivel: true, dataToggle: 'modal', dataTarget: '#modalCategoriaAtualizar'}"
                             :remover="{ visivel: true, dataToggle: 'modal', dataTarget: '#modalCategoriaRemover'}"
@@ -57,13 +59,14 @@
                                     </li>
                                 </paginate-component>
                             </div>
+
                             <div class="col">
                                 <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#modalCategoria">Adicionar</button>
                             </div>
                         </div>
                     </template>
-                </card-component>
                 <!-- fim do card de listagem de categorias -->
+                </card-component>
             </div>
         </div>
 
@@ -202,7 +205,6 @@ export default {
     },
     methods: {
         carregarLista() {
-
             let url = this.urlBase +'?' + this.urlPaginacao + this.urlFiltro
 
             axios.get(url)
@@ -213,6 +215,29 @@ export default {
                 .catch(errors => {
                     console.log(errors)
                 })
+        },
+        pesquisar() {
+            let filtro = ''
+
+            for(let chave in this.busca) {
+
+                if(this.busca[chave]) {
+                    //console.log(chave, this.busca[chave])
+                    if(filtro != '') {
+                        filtro += ";"
+                    }
+
+                    filtro += chave + ':like:' + this.busca[chave]
+                }
+            }
+            if(filtro != '') {
+                this.urlPaginacao = 'page=1'
+                this.urlFiltro = '&filtro='+filtro
+            } else {
+                this.urlFiltro = ''
+            }
+
+            this.carregarLista()
         },
         paginacao(l){
             //se for valido

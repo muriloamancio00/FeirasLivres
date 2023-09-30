@@ -20,14 +20,6 @@ const store = new Vuex.Store({
         //de acordo com a situação da transação, irei alimentar o atributo e aplicar nas logicas de feedback
         transacao: {status: '', mensagem: '', dados: ''}
     },
-    mutations: {
-        atualizarItem(state, novoItem) {
-            state.item = novoItem;
-        },
-        atualizarTransacao(state, novaTransacao) {
-            state.transacao = novaTransacao;
-        }
-    }
 });
 export default store;
 /**
