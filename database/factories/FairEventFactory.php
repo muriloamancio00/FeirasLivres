@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Event;
 use App\Models\Fair;
-use App\Models\FairEvent;
+use App\Models\FairsEvents;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class FairEventFactory extends Factory
@@ -14,7 +14,7 @@ class FairEventFactory extends Factory
      *
      * @return array
      */
-    protected $model = FairEvent::class;
+    protected $model = FairsEvents::class;
 
     public function definition()
     {

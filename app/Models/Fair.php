@@ -36,7 +36,8 @@ class Fair extends Model
         ];
     }
 
-    public function fair_events() {
-        return $this->hasMany('App\Models\FairEvent');
+    public function events()
+    {
+        return $this->hasMany(FairsEvents::class, 'fair_id', 'id');
     }
 }

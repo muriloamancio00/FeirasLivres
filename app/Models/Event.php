@@ -26,9 +26,8 @@ class Event extends Model
             'nome.min' => 'O nome deve ter no mínimo 3 caracteres',
         ];
     }
-
-    public function fairs_events()
+    public function fair()
     {
-        return $this->belongsToMany('App\Models\FairEvent');
+        return $this->hasMany(FairsEvents::class, 'event_id', 'id');
     }
 }

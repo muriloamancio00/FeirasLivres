@@ -69,7 +69,7 @@ class FairsCategoriesController extends Controller
      */
     public function show($id)
     {
-        $fairs_categories = $this->fairs_categories->with('products')->find($id);
+        $fairs_categories = $this->fairs_categories->find($id);
         if($fairs_categories === null){
             return response()->json(['erro' => 'Recurso pesquisado nao existe'], 404);
         }

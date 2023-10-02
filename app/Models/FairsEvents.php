@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FairEvent extends Model
+class FairsEvents extends Model
 {
     use HasFactory;
 
@@ -14,8 +14,8 @@ class FairEvent extends Model
 
     public function rules() {
         return [
-            'fair_id' => 'required|integer|not_in:0|unique:fairs',
-            'event_id' => 'required|integer|not_in:0|unique:events',
+            'fair_id' => 'required|integer',
+            'event_id' => 'required|integer',
             'data' => 'required|date_format:Y-m-d',
             'status' => 'required|integer|in:1,2,3,4',
             'horarioInicio' => 'required|regex:/^[0-9]{2}:[0-9]{2}$/|before_or_equal:horarioFim', // Adicionando filtro e regra para horarioInicio.
@@ -38,11 +38,11 @@ class FairEvent extends Model
 
     public function fair()
     {
-        return $this->belongsTo(Fair::class);
+        return $this->belongsTo(Fair::class, 'fair_id', 'id');
     }
 
     public function event()
     {
-        return $this->belongsTo(Event::class);
+        return $this->belongsTo(Event::class, 'event_id', 'id');
     }
 }
