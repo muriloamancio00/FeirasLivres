@@ -10,12 +10,12 @@
                         <div class="form-row">
                             <div class="col mb-3">
                                 <encapsular-component titulo="ID" id="inputId" id-help="idHelp" texto-ajuda="Opcional. Informe o ID da Categoria">
-                                    <input type="number" class="form-control" id="inputId" aria-describedby="idHelp" placeholder="ID">
+                                    <input type="number" class="form-control" id="inputId" aria-describedby="idHelp" placeholder="ID" v-model="busca.id">
                                 </encapsular-component>
                             </div>
                             <div class="col mb-3">
                                 <encapsular-component titulo="Nome da Categoria" id="inputNome" id-help="nomeHelp" texto-ajuda="Opcional. Informe o nome da Categoria">
-                                    <input type="text" class="form-control" id="inputNome" aria-describedby="nomeHelp" placeholder="Nome da Categoria">
+                                    <input type="text" class="form-control" id="inputNome" aria-describedby="nomeHelp" placeholder="Nome da Categoria" v-model="busca.nome">
                                 </encapsular-component>
                             </div>
 
@@ -200,6 +200,7 @@ export default {
             transacaoDetalhes: {},
             //
             categorias: {data: []},
+            //campos para buscar categorias
             busca: {id: '', nome: ''},
         }
     },
@@ -216,27 +217,23 @@ export default {
                     console.log(errors)
                 })
         },
-        pesquisar() {
+        pesquisar(){
             let filtro = ''
 
             for(let chave in this.busca) {
-
                 if(this.busca[chave]) {
-                    //console.log(chave, this.busca[chave])
                     if(filtro != '') {
-                        filtro += ";"
-                    }
-
-                    filtro += chave + ':like:' + this.busca[chave]
+                        filtro +=";"
+                    }filtro += chave + ':like:' + this.busca[chave]
                 }
             }
-            if(filtro != '') {
+            if(filtro != ''){
                 this.urlPaginacao = 'page=1'
                 this.urlFiltro = '&filtro='+filtro
             } else {
                 this.urlFiltro = ''
             }
-
+            //dinamicamente envia filtro atualizado quando atualizar lista
             this.carregarLista()
         },
         paginacao(l){
