@@ -34,16 +34,6 @@ class FairsCategoriesController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -73,18 +63,7 @@ class FairsCategoriesController extends Controller
         if($fairs_categories === null){
             return response()->json(['erro' => 'Recurso pesquisado nao existe'], 404);
         }
-        return  response()->json( $fairs_categories,201);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return  response()->json( $fairs_categories,200);
     }
 
     /**
@@ -117,7 +96,7 @@ class FairsCategoriesController extends Controller
             $fairs_categories->update($request->all());
         }
 
-        return  response()->json( $fairs_categories, 201);
+        return  response()->json( $fairs_categories, 200);
     }
 
     /**
@@ -133,6 +112,6 @@ class FairsCategoriesController extends Controller
             return response()->json( ['erro' => 'Impossivel realizar a exclusão'],404);
         }
         $fairs_categories->delete();
-        return  response()->json( ['msg' => 'fairs_categories removido'],201);
+        return  response()->json( ['msg' => 'fairs_categories removido'],200);
     }
 }
