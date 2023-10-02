@@ -27,7 +27,7 @@ Route::prefix('v1')->middleware('jwt.auth')->group(function(){
     Route::resource('category', 'App\Http\Controllers\CategoryController');
     //incompletos?
     Route::resource('stand', 'App\Http\Controllers\FairController');
-    Route::resource('event', 'App\Http\Controllers\FairController');
+    Route::resource('event', 'App\Http\Controllers\EventController');
     });
 
 Route::post('login','App\Http\Controllers\AuthController@login');

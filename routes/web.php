@@ -22,18 +22,23 @@ Auth::routes();
 Route::get('/category',function(){
     return view('app.category');
 })->name('category')->middleware('auth');
+
 Route::get('/stand',function(){
     return view('app.stand');
 })->name('stand')->middleware('auth');
+
 Route::get('/fair',function(){
     return view('app.fair');
 })->name('fair')->middleware('auth');
+
 Route::get('/product',function(){
     return view('app.product');
 })->name('product')->middleware('auth');
+
 Route::get('/event',function(){
-    return view('app.product');
+    return view('app.event');
 })->name('event')->middleware('auth');
+
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
