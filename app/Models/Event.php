@@ -16,7 +16,6 @@ class Event extends Model
     public function rules() {
         return [
             'nome' => 'required|unique:events,nome,'.$this->id.'|min:3',
-            'descricao' => 'required|nullable|integer|not_in:0|exists:categories,id',
         ];
     }
 

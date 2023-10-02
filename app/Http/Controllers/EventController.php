@@ -49,7 +49,14 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate($this->event->rules(), $this->event->feedback());
+
+        $event = $this->event->create([
+            'nome' => $request->nome,
+            'descricao' => $request->descricao,
+        ]);
+
+        return  response()->json( $event,201);
     }
 
     /**
