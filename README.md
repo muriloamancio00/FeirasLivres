@@ -40,7 +40,8 @@
 [Em caso de problemas após o último passo, rode novamente o Passo 4 e repita o Passo 5]()
 
 
----git
+## Assets do Projeto ##
+<details> 
 ### Assets do Projeto ###
 #### Login ####
 <img src="public/storage/imagens/img.png">
@@ -56,6 +57,7 @@
 <img src="public/storage/imagens/imgCreateFeiras.png">
 <img src="public/storage/imagens/imgDeletFeiras.png">
 
+</details>
 
 ## **Pacotes Instalados pelo Npm**
 
@@ -73,7 +75,6 @@
 
 ---
 
-
 ## **Pacotes Instalados pelo Composer**
 
 ### **fakerphp/faker@1.23.0**
@@ -83,9 +84,7 @@
 ## **tymon@2.0.0**
 *Descrição:* tymon inclui a implementação de autenticação JSON Web Token (JWT) para Laravel e Lumen, por meio do pacote jwt-auth.
 
-
 ---
-
 
 ## Learning Laravel.[^1]
 [^1]: Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
@@ -95,3 +94,4 @@
 
 ## License.[^3]
 [^3]: The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
