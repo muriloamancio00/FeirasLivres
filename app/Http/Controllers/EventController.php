@@ -28,7 +28,7 @@ class EventController extends Controller
         if($request->has('atributos')) {
             $eventRepository->selectAtributos($request->atributos);
         }
-        return  response()->json( $eventRepository->getResultado(),200);
+        return  response()->json( $eventRepository->getResultadoPaginado(3),200);
     }
 
     /**
@@ -61,7 +61,7 @@ class EventController extends Controller
         if($event === null){
             return response()->json(['erro' => 'Nenhum evento encontrado'],400);
         }
-        return  response()->json( $event,200);
+        return  response()->json($event,200);
     }
 
     /**

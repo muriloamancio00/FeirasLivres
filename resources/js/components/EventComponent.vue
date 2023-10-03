@@ -104,17 +104,81 @@
 
 
         <!-- Inicio Modal Visualizar -->
+        <modal-component id="modalEventoVizualizar" titulo="Visualizar Evento">
+            <template v-slot:alerta></template>
+            <template v-slot:conteudo>
+                <encapsular-component titulo="ID">
+                    <input type="text" class ="form-control" :value="$store.state.item.id" disabled>
+                </encapsular-component>
+                <encapsular-component titulo="Nome do Evento">
+                    <input type="text" class ="form-control" :value="$store.state.item.nome" disabled>
+                </encapsular-component>
+                <encapsular-component titulo="Descricao do Evento">
+                    <input type="text" class ="form-control" :value="$store.state.item.descricao" disabled>
+                </encapsular-component>
+                <encapsular-component titulo="Data de Criação">
+                    <input type="data" class ="form-control" :value="$store.state.item.created_at | formataDataTempoGlobal" disabled>
+                </encapsular-component>
+            </template>
+            <template v-slot:rodape>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </template>
 
+        </modal-component>
         <!-- Fim Modal Visualizar -->
 
 
         <!-- Inicio modal Remove -->
+        <modal-component id="modalEventoRemover" titulo="Remover Evento">
+            <template v-slot:alerta>
+                <alert-component tipo="success" titulo="Transação realizada com sucesso" :detalhes="$store.state.transacao" v-if="$store.state.transacao.status == 'sucesso'"></alert-component>
+                <alert-component tipo="danger" titulo="Erro na transação" :detalhes="$store.state.transacao" v-if="$store.state.transacao.status == 'erro'"></alert-component>
+            </template>
+            <template v-slot:conteudo v-if="$store.state.transacao.status != 'sucesso'">
+                <encapsular-component titulo="ID">
+                    <input type="text" class ="form-control" :value="$store.state.item.id" disabled>
+                </encapsular-component>
+                <encapsular-component titulo="Nome do Evento">
+                    <input type="text" class ="form-control" :value="$store.state.item.nome" disabled>
+                </encapsular-component>
+            </template>
+            <template v-slot:rodape >
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-danger" @click="remover()" v-if="$store.state.transacao.status != 'sucesso'">Remover</button>
+            </template>
 
+        </modal-component>
         <!-- Fim modal Remove -->
 
 
         <!-- Inicio Modal Alterar -->
+        <modal-component id="modalEventoAtualizar" titulo="Alterar Evento">
 
+            <template v-slot:alerta>
+                <alert-component tipo="success" titulo="Transação realizada com sucesso" :detalhes="$store.state.transacao" v-if="$store.state.transacao.status == 'sucesso'"></alert-component>
+                <alert-component tipo="danger" titulo="Erro na transação" :detalhes="$store.state.transacao" v-if="$store.state.transacao.status == 'erro'"></alert-component>
+            </template>
+            <template v-slot:conteudo>
+                <div class="form-group">
+                    <encapsular-component titulo="ID">
+                        <input type="text" class ="form-control" :value="$store.state.item.id" disabled>
+                    </encapsular-component>
+                    <encapsular-component titulo="Nome do Evento" id="atualizarNome" id-help="atualizarNomeHelp" texto-ajuda="Informe o Nome do Evento">
+                        <input type="text" class="form-control" id="atualizarNome" aria-describedby="atualizarNomeHelp"
+                               placeholder="Nome do Evento" v-model:id="$store.state.item.nome">
+                    </encapsular-component>
+                    <hr><p>Opcional</p>
+                    <encapsular-component titulo="Descrição do Evento" id="atualizarDescricao" id-help="atualizarDescricaoHelp" texto-ajuda="Informe a Descricao do Evento">
+                        <input type="text" class="form-control" id="atualizarDescricao" aria-describedby="atualizarDescricaoHelp"
+                               placeholder="Opcional. Descricao do Evento" v-model:id="$store.state.item.descricao">
+                    </encapsular-component>
+                </div>
+            </template>
+            <template v-slot:rodape>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" @click="atualizar()">Atualizar</button>
+            </template>
+        </modal-component>
         <!-- Fim Modal Alterar -->
 
     </div>
@@ -138,8 +202,23 @@ export default {
         }
     },
     methods: {
-        carregarLista() {},
-        paginacao(l){},
+        carregarLista() {
+            let url = this.urlBase +'?' + this.urlPaginacao + this.urlFiltro
+
+            axios.get(url)
+                .then(response => {
+                    this.eventos = response.data
+                })
+                .catch(errors => {
+                    console.log(errors)
+                })
+        },
+        paginacao(l){
+            if(l.url){
+                this.urlPaginacao = l.url.split('?')[1]
+                this.carregarLista()
+            }
+        },
         salvar() {
             let config = {
                 headers: {
@@ -167,9 +246,75 @@ export default {
                     }
                 })
         },
-        atualizar(){},
-        remover() {},
-        pesquisar(){},
+        atualizar(){
+            let url = this.urlBase + this.$store.state.item.id
+
+            let formData = new FormData();
+            formData.append('_method', 'patch')
+            formData.append('nome', this.$store.state.item.nome)
+            formData.append('descricao', this.$store.state.item.descricao)
+
+            axios.post(url, formData)
+                .then(response => {
+                    this.$store.state.transacao.status = 'sucesso'
+                    this.$store.state.transacao.mensagem = 'Registro de evento atualizado com sucesso!'
+                    this.carregarLista()
+                })
+                .catch(errors => {
+                    this.$store.state.transacao.status = 'erro'
+                    this.$store.state.transacao.dados = errors.response.data.errors
+                })
+        },
+        remover() {
+            let url = this.urlBase + this.$store.state.item.id
+
+            let confirmacao = confirm('Tem certeza que deseja remover esse registro?')
+
+            if(!confirmacao) {
+                return false
+            }
+
+            let formData = new FormData();
+            formData.append('_method', 'delete')
+
+            console.log(this.$store.state.transacao)
+
+            axios.post(url, formData)
+                .then(response => {
+                    this.$store.state.transacao.status = 'sucesso'
+                    this.$store.state.transacao.mensagem = response.data.msg
+                    this.carregarLista()
+                })
+                .catch(errors => {
+                    if (errors.response.status === 500) {
+                        // Categoria possui produtos vinculados
+                        this.$store.state.transacao.status = 'erro';
+                        this.$store.state.transacao.mensagem = 'Evento está programado para ocorrer em alguma Feira. Não pode ser removido.';
+                    } else {
+                        // Outro tipo de erro
+                        this.$store.state.transacao.status = 'erro';
+                        this.$store.state.transacao.mensagem = errors.response.data.errors;
+                    }
+                })
+        },
+        pesquisar(){
+            let filtro = ''
+
+            for(let chave in this.busca) {
+                if(this.busca[chave]) {
+                    if(filtro != '') {
+                        filtro +=";"
+                    }filtro += chave + ':like:' + this.busca[chave]
+                }
+            }
+            if(filtro != ''){
+                this.urlPaginacao = 'page=1'
+                this.urlFiltro = '&filtro='+filtro
+            } else {
+                this.urlFiltro = ''
+            }
+            this.carregarLista()
+        },
     },
     mounted(){
         this.carregarLista()
