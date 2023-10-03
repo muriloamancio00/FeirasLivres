@@ -31,6 +31,14 @@ Route::get('/fair',function(){
     return view('app.fair');
 })->name('fair')->middleware('auth');
 
+Route::get('/fairs_events',function(){
+    return view('app.fairsEvents');
+})->name('fairs_events')->middleware('auth');
+
+Route::get('/fairs_categories',function(){
+    return view('app.fairsCategories');
+})->name('fairs_categories')->middleware('auth');
+
 Route::get('/product',function(){
     return view('app.product');
 })->name('product')->middleware('auth');

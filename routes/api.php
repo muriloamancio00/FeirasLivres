@@ -22,8 +22,8 @@ Route::prefix('v1')->middleware('jwt.auth')->group(function(){
     Route::post('me','App\Http\Controllers\AuthController@me');
     Route::post('logout','App\Http\Controllers\AuthController@logout');
     Route::resource('fair', 'App\Http\Controllers\FairController');
-    Route::resource('fairsCategories', 'App\Http\Controllers\FairsCategoriesController');
-    Route::resource('fairsEvents', 'App\Http\Controllers\FairsEventsController');
+    Route::resource('fairs_categories', 'App\Http\Controllers\FairsCategoriesController');
+    Route::resource('fairs_events', 'App\Http\Controllers\FairsEventsController');
     Route::resource('product', 'App\Http\Controllers\ProductController');
     Route::resource('category', 'App\Http\Controllers\CategoryController');
     //incompletos?

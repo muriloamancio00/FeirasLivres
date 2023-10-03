@@ -1,5 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-    <product-component></product-component>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="card-header">Produtos</div>
+                    <div class="card-body">
+                        <product-component></product-component>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
