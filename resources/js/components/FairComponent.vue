@@ -46,9 +46,13 @@
                             :titulos="{
                                 id: {titulo: 'ID', tipo:'text'},
                                 nome: {titulo: 'Nome', tipo:'text'},
+                                endereco: {},
                                 horarioInicio: {titulo: 'Inicia', tipo:'text'},
                                 horarioFim: {titulo: 'Acaba', tipo:'text'},
+                                longitude: {},
+                                latitude: {},
                                 created_at: {},
+                                updated_at: {},
                             }"
                         ></table-component>
                     </template>
@@ -98,7 +102,7 @@
                             <div class="form-group">
                                 <encapsular-component titulo="Endereço da Feira" id="novoEndereco" id-help="novoEnderecoHelp" texto-ajuda="Informe o Endereço da Feira">
                                     <input type="text" class="form-control" id="novoEndereco" aria-describedby="novoEnderecoHelp"
-                                           placeholder="Opcional. Endereço da Feira" v-model:id="enderecoFeira">
+                                           placeholder="Endereço da Feira" v-model:id="enderecoFeira">
                                 </encapsular-component>
                             </div>
                         </div>
@@ -106,13 +110,13 @@
                             <div class="form-group">
                                 <encapsular-component titulo="Horário de Início da Feira" id="novoHorarioInicio" id-help="novoHorarioInicioHelp" texto-ajuda="Informe o Horário de Início da Feira">
                                     <input type="text" class="form-control" id="novoHorarioInicio" aria-describedby="novoHorarioInicioHelp"
-                                           placeholder="Opcional. Horário de Início da Feira" v-model:id="horarioInicioFeira">
+                                           placeholder="Horário, ex 12:00" v-model:id="horarioInicioFeira">
                                 </encapsular-component>
                             </div>
                             <div class="form-group">
                                 <encapsular-component titulo="Horário de Fim da Feira" id="novoHorarioFim" id-help="novoHorarioFimHelp" texto-ajuda="Informe o Horário de Fim da Feira">
                                     <input type="text" class="form-control" id="novoHorarioFim" aria-describedby="novoHorarioFimHelp"
-                                           placeholder="Opcional. Horário de Fim da Feira" v-model:id="horarioFimFeira">
+                                           placeholder="Horário, ex 24:00" v-model:id="horarioFimFeira">
                                 </encapsular-component>
                             </div>
                         </div>
@@ -145,7 +149,54 @@
 
 
         <!-- Inicio Modal Visualizar -->
+        <modal-component id="modalFeiraVizualizar" titulo="Visualizar Feira">
+            <template v-slot:alerta></template>
+            <template v-slot:conteudo>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <encapsular-component titulo="ID">
+                                <input type="text" class="form-control" :value="$store.state.item.id" disabled>
+                            </encapsular-component>
+                            <encapsular-component titulo="Inicio da Feira">
+                                <input type="text" class="form-control" :value="$store.state.item.horarioInicio" disabled>
+                            </encapsular-component>
+                            <encapsular-component titulo="Fim da Feira">
+                                <input type="text" class="form-control" :value="$store.state.item.horarioFim" disabled>
+                            </encapsular-component>
+                        </div>
+                        <div class="col-md-6">
+                            <encapsular-component titulo="Nome da Feira">
+                                <input type="text" class="form-control" :value="$store.state.item.nome" disabled>
+                            </encapsular-component>
+                            <encapsular-component titulo="Data de Criação">
+                                <input type="data" class="form-control" :value="$store.state.item.created_at | formataDataTempoGlobal" disabled>
+                            </encapsular-component>
+                            <encapsular-component titulo="Data de Atualização">
+                                <input type="data" class="form-control" :value="$store.state.item.updated_at | formataDataTempoGlobal" disabled>
+                            </encapsular-component>
+                        </div>
+                        <hr><p></p>
+                        <div class="col-md-12">
+                            <encapsular-component titulo="Endereço da Feira">
+                                <input type="text" class="form-control" :value="$store.state.item.endereco" disabled>
+                            </encapsular-component>
+                            <encapsular-component titulo="Longitude">
+                                <input type="text" class="form-control" :value="$store.state.item.longitude" disabled>
+                            </encapsular-component>
+                            <encapsular-component titulo="Latitude">
+                                <input type="text" class="form-control" :value="$store.state.item.latitude" disabled>
+                            </encapsular-component>
+                        </div>
+                    </div>
+                </div>
+            </template>
 
+            <template v-slot:rodape>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </template>
+
+        </modal-component>
         <!-- Fim Modal Visualizar -->
 
 
