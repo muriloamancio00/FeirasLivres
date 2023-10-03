@@ -199,11 +199,27 @@
         </modal-component>
         <!-- Fim Modal Visualizar -->
 
-
         <!-- Inicio modal Remove -->
+        <modal-component id="modalFeiraRemover" titulo="Remover Produto">
+            <template v-slot:alerta>
+                <alert-component tipo="success" titulo="Transação realizada com sucesso" :detalhes="$store.state.transacao" v-if="$store.state.transacao.status == 'sucesso'"></alert-component>
+                <alert-component tipo="danger" titulo="Erro na transação" :detalhes="$store.state.transacao" v-if="$store.state.transacao.status == 'erro'"></alert-component>
+            </template>
+            <template v-slot:conteudo v-if="$store.state.transacao.status != 'sucesso'">
+                <encapsular-component titulo="ID">
+                    <input type="text" class ="form-control" :value="$store.state.item.id" disabled>
+                </encapsular-component>
+                <encapsular-component titulo="Nome da Feira">
+                    <input type="text" class ="form-control" :value="$store.state.item.nome" disabled>
+                </encapsular-component>
+            </template>
+            <template v-slot:rodape >
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-danger" @click="remover()" v-if="$store.state.transacao.status != 'sucesso'">Remover</button>
+            </template>
 
+        </modal-component>
         <!-- Fim modal Remove -->
-
 
         <!-- Inicio Modal Alterar -->
 
@@ -288,7 +304,31 @@ export default {
                 })
         },
         atualizar(){},
-        remover() {},
+        remover() {
+            let url = this.urlBase + this.$store.state.item.id
+
+            let confirmacao = confirm('Tem certeza que deseja remover esse registro?')
+
+            if(!confirmacao) {
+                return false
+            }
+
+            let formData = new FormData();
+            formData.append('_method', 'delete')
+
+            console.log(this.$store.state.transacao)
+
+            axios.post(url, formData)
+                .then(response => {
+                    this.$store.state.transacao.status = 'sucesso'
+                    this.$store.state.transacao.mensagem = response.data.msg
+                    this.carregarLista()
+                })
+                .catch(errors => {
+                    this.$store.state.transacao.status = 'erro'
+                    this.$store.state.transacao.mensagem = errors.response.data.errors
+                })
+        },
         pesquisar(){},
     },
     mounted(){
