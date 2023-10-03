@@ -22,8 +22,8 @@ class Fair extends Model
         return [
             'nome' => 'required|min:3',
             'endereco' => 'required|min:10',
-            'horarioInicio' => 'required|date_format:H:i',
-            'horarioFim' => 'required|date_format:H:i',
+            'horarioInicio' => 'required|date_format:H:i:s',
+            'horarioFim' => 'required|date_format:H:i:s',
         ];
     }
 

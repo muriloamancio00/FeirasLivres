@@ -147,7 +147,6 @@
         </modal-component>
         <!-- Fim Modal Adiciona -->
 
-
         <!-- Inicio Modal Visualizar -->
         <modal-component id="modalFeiraVizualizar" titulo="Visualizar Feira">
             <template v-slot:alerta></template>
@@ -200,7 +199,7 @@
         <!-- Fim Modal Visualizar -->
 
         <!-- Inicio modal Remove -->
-        <modal-component id="modalFeiraRemover" titulo="Remover Produto">
+        <modal-component id="modalFeiraRemover" titulo="Remover Feira">
             <template v-slot:alerta>
                 <alert-component tipo="success" titulo="Transação realizada com sucesso" :detalhes="$store.state.transacao" v-if="$store.state.transacao.status == 'sucesso'"></alert-component>
                 <alert-component tipo="danger" titulo="Erro na transação" :detalhes="$store.state.transacao" v-if="$store.state.transacao.status == 'erro'"></alert-component>
@@ -222,7 +221,54 @@
         <!-- Fim modal Remove -->
 
         <!-- Inicio Modal Alterar -->
+        <modal-component id="modalFeiraAtualizar" titulo="Alterar Feira">
+            <template v-slot:alerta>
+                <alert-component tipo="success" titulo="Transação realizada com sucesso" :detalhes="$store.state.transacao" v-if="$store.state.transacao.status == 'sucesso'"></alert-component>
+                <alert-component tipo="danger" titulo="Erro na transação" :detalhes="$store.state.transacao" v-if="$store.state.transacao.status == 'erro'"></alert-component>
+            </template>
+            <template v-slot:conteudo>
+                <div class="form-group">
+                    <encapsular-component titulo="ID">
+                        <input type="text" class="form-control" :value="$store.state.item.id" disabled>
+                    </encapsular-component>
+                    <encapsular-component titulo="Nome do Feira" id="atualizarNome" id-help="atualizarNomeHelp" texto-ajuda="Informe o Nome da Feira">
+                        <input type="text" class="form-control" id="atualizarNome" aria-describedby="atualizarNomeHelp"
+                               placeholder="Nome da Feira" v-model="$store.state.item.nome">
+                    </encapsular-component>
+                    <encapsular-component titulo="Endereço da Feira" id="atualizarEndereco" id-help="atualizarEnderecoHelp" texto-ajuda="Informe o Endereço da Feira">
+                        <input type="text" class="form-control" id="atualizarEndereco" aria-describedby="atualizarEnderecoHelp"
+                               placeholder="Endereço da Feira" v-model="$store.state.item.endereco">
+                    </encapsular-component>
+                    <encapsular-component titulo="Horário de Início da Feira" id="atualizarHorarioInicio" id-help="atualizarHorarioInicioHelp" texto-ajuda="Informe o Horário de Início da Feira">
+                        <input type="text" class="form-control" id="atualizarHorarioInicio" aria-describedby="atualizarHorarioInicioHelp"
+                               placeholder="Horário de Início da Feira" v-model="$store.state.item.horarioInicio">
+                    </encapsular-component>
+                    <encapsular-component titulo="Horário de Fim da Feira" id="atualizarHorarioFim" id-help="atualizarHorarioFimHelp" texto-ajuda="Informe o Horário de Fim da Feira">
+                        <input type="text" class="form-control" id="atualizarHorarioFim" aria-describedby="atualizarHorarioFimHelp"
+                               placeholder="Horário de Fim da Feira" v-model="$store.state.item.horarioFim">
+                    </encapsular-component>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <encapsular-component titulo="Longitude da Feira" id="atualizarLongitude" id-help="atualizarLongitudeHelp" texto-ajuda="Informe a Longitude da Feira">
+                                <input type="text" class="form-control" id="atualizarLongitude" aria-describedby="atualizarLongitudeHelp"
+                                       placeholder="Longitude da Feira" v-model="$store.state.item.longitude">
+                            </encapsular-component>
+                        </div>
+                        <div class="col-md-6">
+                            <encapsular-component titulo="Latitude da Feira" id="atualizarLatitude" id-help="atualizarLatitudeHelp" texto-ajuda="Informe a Latitude da Feira">
+                                <input type="text" class="form-control" id="atualizarLatitude" aria-describedby="atualizarLatitudeHelp"
+                                       placeholder="Latitude da Feira" v-model="$store.state.item.latitude">
+                            </encapsular-component>
+                        </div>
+                    </div>
+                </div>
+            </template>
 
+            <template v-slot:rodape>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" @click="atualizar()">Atualizar</button>
+            </template>
+        </modal-component>
         <!-- Fim Modal Alterar -->
 
     </div>
@@ -303,7 +349,31 @@ export default {
                     }
                 })
         },
-        atualizar(){},
+        atualizar(){
+            let url = this.urlBase + this.$store.state.item.id
+
+            let formData = new FormData();
+            formData.append('_method', 'patch')
+            formData.append('nome', this.$store.state.item.nome)
+            formData.append('endereco', this.$store.state.item.endereco)
+            formData.append('horarioInicio', this.$store.state.item.horarioInicio)
+            formData.append('horarioFim', this.$store.state.item.horarioFim)
+            formData.append('longitude', this.$store.state.item.longitude)
+            formData.append('latitude', this.$store.state.item.latitude)
+
+
+            axios.post(url, formData)
+                .then(response => {
+                    console.log(response)
+                    this.$store.state.transacao.status = 'sucesso'
+                    this.$store.state.transacao.mensagem = 'Registro de feira atualizado com sucesso!'
+                    this.carregarLista()
+                })
+                .catch(errors => {
+                    this.$store.state.transacao.status = 'erro'
+                    this.$store.state.transacao.dados = errors.response.data.errors
+                })
+        },
         remover() {
             let url = this.urlBase + this.$store.state.item.id
 

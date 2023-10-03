@@ -221,28 +221,28 @@ export default{
         }
     },
     methods: {
-//         carregarLista() {
-//
-//             let url = this.urlBase +'?' + this.urlPaginacao + this.urlFiltro
-//
-//             axios.get(url)
-//                 .then(response => {
-//                     //dentro de response.data, temos os parametros de paginação
-//                     this.produtos = response.data // então buscamos os arrays contidos
-// //                      //this.produtos = response.data.data // podendo ser chamado assim, ou por meio do :dados"x.data"
-// //                        console.log(this.produtos.data)
-//                 })
-//                 .catch(errors => {
-//                     console.log(errors)
-//                 })
-//         },
-//         paginacao(l){
-//             //se for valido
-//             if(l.url){
-//                 this.urlPaginacao = l.url.split('?')[1] // ajustando a url com o paramêtro de pagina
-//                 this.carregarLista() // requisita dnv para API
-//             }
-//         },
+        carregarLista() {
+
+            let url = this.urlBase +'?' + this.urlPaginacao + this.urlFiltro
+
+            axios.get(url)
+                .then(response => {
+                    //dentro de response.data, temos os parametros de paginação
+                    this.produtos = response.data // então buscamos os arrays contidos
+//                      //this.produtos = response.data.data // podendo ser chamado assim, ou por meio do :dados"x.data"
+//                        console.log(this.produtos.data)
+                })
+                .catch(errors => {
+                    console.log(errors)
+                })
+        },
+        paginacao(l){
+            //se for valido
+            if(l.url){
+                this.urlPaginacao = l.url.split('?')[1] // ajustando a url com o paramêtro de pagina
+                this.carregarLista() // requisita dnv para API
+            }
+        },
         salvar() {
             let config = {
                 headers: {
@@ -294,7 +294,6 @@ export default{
                     this.$store.state.transacao.status = 'erro'
                     this.$store.state.transacao.dados = errors.response.data.errors
                 })
-
         },
         remover() {
             let url = this.urlBase + this.$store.state.item.id
