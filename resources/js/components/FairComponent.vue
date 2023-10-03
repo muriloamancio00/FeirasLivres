@@ -399,7 +399,24 @@ export default {
                     this.$store.state.transacao.mensagem = errors.response.data.errors
                 })
         },
-        pesquisar(){},
+        pesquisar(){
+            let filtro = ''
+
+            for(let chave in this.busca) {
+                if(this.busca[chave]) {
+                    if(filtro != '') {
+                        filtro +=";"
+                    }filtro += chave + ':like:' + this.busca[chave]
+                }
+            }
+            if(filtro != ''){
+                this.urlPaginacao = 'page=1'
+                this.urlFiltro = '&filtro='+filtro
+            } else {
+                this.urlFiltro = ''
+            }
+            this.carregarLista()
+        },
     },
     mounted(){
         this.carregarLista()
