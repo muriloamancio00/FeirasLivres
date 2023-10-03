@@ -25,11 +25,11 @@ class FairsCategories extends Model
     }
 
     public function fairs() {
-        return $this->belongsToMany('App\Models\Fair', 'fairs_categories', 'category_id', 'fair_id');
+        return $this->belongsToMany(\App\Models\Fair::class);
     }
 
     public function categories() {
-        return $this->belongsToMany('App\Models\Category', 'fairs_categories', 'fair_id', 'category_id');
+        return $this->belongsToMany(\App\Models\Category::class);
     }
 
 }

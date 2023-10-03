@@ -35,9 +35,12 @@ class Fair extends Model
             //'descricao.min' => 'A descricao deve ter no mínimo 5 caracteres',
         ];
     }
-
     public function events()
     {
         return $this->hasMany(FairsEvents::class, 'fair_id', 'id');
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'fairs_categories', 'fair_id', 'category_id');
     }
 }
