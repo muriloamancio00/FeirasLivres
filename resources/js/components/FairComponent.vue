@@ -134,7 +134,12 @@ export default {
                     console.log(errors)
                 })
         },
-        paginacao(l){},
+        paginacao(l){
+            if(l.url){
+                this.urlPaginacao = l.url.split('?')[1] // ajustando a url com o paramêtro de pagina
+                this.carregarLista() // requisita dnv para API
+            }
+        },
         salvar() {},
         atualizar(){},
         remover() {},
