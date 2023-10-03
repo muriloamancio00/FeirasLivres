@@ -41,8 +41,8 @@
 
 
 ## Assets do Projeto ##
-<details> 
-### Assets do Projeto ###
+<details>
+
 #### Login ####
 <img src="public/storage/imagens/img.png">
 
