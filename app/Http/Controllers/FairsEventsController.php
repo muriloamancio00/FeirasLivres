@@ -28,7 +28,7 @@ class FairsEventsController extends Controller
         if($request->has('atributos')) {
             $fairsEventsRepository->selectAtributos($request->atributos);
         }
-        return  response()->json( $fairsEventsRepository->getResultado(),200);
+        return  response()->json( $fairsEventsRepository->getResultadoPaginado(3),200);
 
     }
 
@@ -99,7 +99,7 @@ class FairsEventsController extends Controller
             $fairs_events->update($request->all());
         }
 
-        return  response()->json( $fairs_events, 201);
+        return  response()->json( $fairs_events, 200);
     }
 
     /**
