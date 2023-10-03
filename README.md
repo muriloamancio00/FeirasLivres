@@ -40,7 +40,21 @@
 [Em caso de problemas após o último passo, rode novamente o Passo 4 e repita o Passo 5]()
 
 
----
+---git
+### Assets do Projeto ###
+#### Login ####
+<img src="public/storage/imagens/img.png">
+
+#### Register ####
+<img src="public/storage/imagens/imgRegister.png">
+
+
+#### CRUD Feiras ####
+
+<img src="public/storage/imagens/imgCrudFeiras.png">
+<img src="public/storage/imagens/imgViewFeiras.png">
+<img src="public/storage/imagens/imgCreateFeiras.png">
+<img src="public/storage/imagens/imgDeletFeiras.png">
 
 
 ## **Pacotes Instalados pelo Npm**
