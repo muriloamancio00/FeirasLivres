@@ -27,7 +27,7 @@ class FairController extends Controller
         if($request->has('atributos')) {
             $fairRepository->selectAtributos($request->atributos);
         }
-        return  response()->json( $fairRepository->getResultado(),201);
+        return  response()->json( $fairRepository->getResultadoPaginado(3),201);
 
     }
 

@@ -35,7 +35,44 @@
                 <!-- Fim Busca -->
 
                 <!-- Inicio Lista -->
+                <card-component titulo="Todas os Feiras">
+                    <template v-slot:conteudo>
+                        <!--os dados precisma ser um array de obj, e os titulos coincidir com os atributos do obj-->
+                        <table-component
+                            :dados="feiras.data"
+                            :visualizar="{ visivel: true, dataToggle: 'modal', dataTarget: '#modalFeiraVizualizar'}"
+                            :atualizar="{ visivel: true, dataToggle: 'modal', dataTarget: '#modalFeiraAtualizar'}"
+                            :remover="{ visivel: true, dataToggle: 'modal', dataTarget: '#modalFeiraRemover'}"
+                            :titulos="{
+                                id: {titulo: 'ID', tipo:'text'},
+                                nome: {titulo: 'Nome', tipo:'text'},
+                                horarioInicio: {titulo: 'Inicia', tipo:'text'},
+                                horarioFim: {titulo: 'Acaba', tipo:'text'},
+                                created_at: {},
+                            }"
+                        ></table-component>
+                    </template>
 
+                    <template v-slot:rodape>
+                        <div class="row">
+                            <div class="col-10">
+                                <paginate-component>
+                                    <!-- percorrendo todos os links dentro-->
+                                    <li v-for="l, key in feiras.links" :key="key"
+                                        :class="l.active ? 'page-item active' : 'page-item'"
+                                        @click="paginacao(l)"
+                                    >
+                                        <a class="page-link" v-html="l.label">
+                                        </a>
+                                    </li>
+                                </paginate-component>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#modalFeira">Adicionar</button>
+                            </div>
+                        </div>
+                    </template>
+                </card-component>
                 <!-- Fim Lista -->
 
             </div>
