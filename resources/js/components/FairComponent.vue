@@ -79,7 +79,68 @@
         </div>
 
         <!-- Inicio Modal Adiciona -->
+        <modal-component id="modalFeira" titulo="Adicionar Feira">
 
+            <template v-slot:alerta>
+                <alert-component tipo="success" :detalhes="transacaoDetalhes" titulo="Cadastro realizado com sucesso!" v-if="transacaoStatus == 'adicionado'"></alert-component>
+                <alert-component tipo="danger" :detalhes="transacaoDetalhes" titulo="Erro, Feira não cadastrada!" v-if="transacaoStatus == 'erro'"></alert-component>
+            </template>
+            <template v-slot:conteudo>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <encapsular-component titulo="Nome do Feira" id="novoNome" id-help="novoNomeHelp" texto-ajuda="Informe o Nome do Produto">
+                                    <input type="text" class="form-control" id="novoNome" aria-describedby="novoNomeHelp"
+                                           placeholder="Nome da Feira" v-model:id="nomeFeira">
+                                </encapsular-component>
+                            </div>
+                            <div class="form-group">
+                                <encapsular-component titulo="Endereço da Feira" id="novoEndereco" id-help="novoEnderecoHelp" texto-ajuda="Informe o Endereço da Feira">
+                                    <input type="text" class="form-control" id="novoEndereco" aria-describedby="novoEnderecoHelp"
+                                           placeholder="Opcional. Endereço da Feira" v-model:id="enderecoFeira">
+                                </encapsular-component>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <encapsular-component titulo="Horário de Início da Feira" id="novoHorarioInicio" id-help="novoHorarioInicioHelp" texto-ajuda="Informe o Horário de Início da Feira">
+                                    <input type="text" class="form-control" id="novoHorarioInicio" aria-describedby="novoHorarioInicioHelp"
+                                           placeholder="Opcional. Horário de Início da Feira" v-model:id="horarioInicioFeira">
+                                </encapsular-component>
+                            </div>
+                            <div class="form-group">
+                                <encapsular-component titulo="Horário de Fim da Feira" id="novoHorarioFim" id-help="novoHorarioFimHelp" texto-ajuda="Informe o Horário de Fim da Feira">
+                                    <input type="text" class="form-control" id="novoHorarioFim" aria-describedby="novoHorarioFimHelp"
+                                           placeholder="Opcional. Horário de Fim da Feira" v-model:id="horarioFimFeira">
+                                </encapsular-component>
+                            </div>
+                        </div>
+                    </div>
+                    <hr><p>Opcional</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                                <encapsular-component titulo="Longitude da Feira" id="novaLongitude" id-help="novaLongitudeHelp" texto-ajuda="Informe a Longitude da Feira">
+                                    <input type="text" class="form-control" id="novaLongitude" aria-describedby="novaLongitudeHelp"
+                                           placeholder="Opcional. Longitude da Feira" v-model:id="longitudeFeira">
+                                </encapsular-component>
+                        </div>
+                        <div class="col-md-6">
+                                <encapsular-component titulo="Latitude da Feira" id="novaLatitude" id-help="novaLatitudeHelp" texto-ajuda="Informe a Latitude da Feira">
+                                    <input type="text" class="form-control" id="novaLatitude" aria-describedby="novaLatitudeHelp"
+                                           placeholder="Opcional. Latitude da Feira" v-model:id="latitudeFeira">
+                                </encapsular-component>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+
+            <template v-slot:rodape>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" @click="salvar()">Salvar</button>
+            </template>
+        </modal-component>
         <!-- Fim Modal Adiciona -->
 
 
@@ -140,7 +201,41 @@ export default {
                 this.carregarLista() // requisita dnv para API
             }
         },
-        salvar() {},
+        salvar() {
+            let config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                }
+            }
+
+            //preparando o post com os tipos de parametros que
+            //a api espera receber
+            let formData = new FormData();
+            formData.append('nome', this.nomeFeira)
+            formData.append('endereco', this.enderecoFeira)
+            formData.append('horarioInicio', this.horarioInicioFeira)
+            formData.append('horarioFim', this.horarioFimFeira)
+            formData.append('longitude', this.longitudeFeira)
+            formData.append('latitude', this.latitudeFeira)
+
+            axios.post(this.urlBase, formData, config)
+                .then(response => {
+                    //fluxo cadastro correto
+                    this.transacaoStatus = 'adicionado'
+                    this.transacaoDetalhes = {
+                        mensagem: 'ID do registro: ' + response.data.id
+                    }
+                    this.carregarLista()
+                })
+                .catch(errors => {
+                    //fluxo de erro ao cadastrar
+                    this.transacaoStatus = 'erro'
+                    this.transacaoDetalhes = {
+                        mensagem: errors.response.data.message,
+                        dados: errors.response.data.errors
+                    }
+                })
+        },
         atualizar(){},
         remover() {},
         pesquisar(){},
