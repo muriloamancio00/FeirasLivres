@@ -39,6 +39,7 @@ Vue.component('category-component', require('./components/CategoryComponent.vue'
 Vue.component('product-component', require('./components/ProductComponent.vue').default);
 Vue.component('stand-component', require('./components/StandComponent.vue').default);
 Vue.component('fair-component', require('./components/FairComponent.vue').default);
+Vue.component('faircat-component', require('./components/FairsCategoriesComponent.vue').default);
 Vue.component('event-component', require('./components/EventComponent.vue').default);
 Vue.component('encapsular-component', require('./components/EncapsularComponent.vue').default);
 Vue.component('table-component', require('./components/TableComponent.vue').default);

@@ -37,10 +37,11 @@ class Fair extends Model
     }
     public function events()
     {
-        return $this->hasMany(FairsEvents::class, 'fair_id', 'id');
+        return $this->belongsToMany('App\Models\Event', 'fairs_events');
+    }
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class, 'fairs_categories', 'fair_id', 'category_id');
+        return $this->belongsToMany('App\Models\Category', 'fairs_categories');
     }
 }

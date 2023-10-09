@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class FairsCategories extends Model
 {
     use HasFactory;
+
     protected $table = 'fairs_categories';
 
     protected $fillable = ['fair_id', 'category_id'];
@@ -25,11 +26,11 @@ class FairsCategories extends Model
     }
 
     public function fairs() {
-        return $this->belongsToMany(\App\Models\Fair::class);
+        return $this->belongsTo(\App\Models\Fair::class);
     }
 
     public function categories() {
-        return $this->belongsToMany(\App\Models\Category::class);
+        return $this->belongsTo(\App\Models\Category::class);
     }
 
 }

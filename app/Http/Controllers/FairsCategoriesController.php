@@ -29,7 +29,7 @@ class FairsCategoriesController extends Controller
         if($request->has('atributos')) {
             $fairsCategoriesRepository->selectAtributos($request->atributos);
         }
-        return  response()->json( $fairsCategoriesRepository->getResultado(),200);
+        return  response()->json( $fairsCategoriesRepository->getResultadoPaginado(3),200);
 
     }
 
