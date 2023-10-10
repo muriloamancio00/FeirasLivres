@@ -35,7 +35,7 @@ class Category extends Model
 
     public function fairs()
     {
-        return $this->belongsToMany('App\Models\Fairs', 'fairs_categories');
+        return $this->belongsToMany('App\Models\Fair', 'fairs_categories');
     }
 
 }

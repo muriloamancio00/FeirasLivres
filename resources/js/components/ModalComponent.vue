@@ -11,6 +11,8 @@
                 <div class="modal-body">
                     <slot name="alerta"></slot>
                     <slot name="conteudo"></slot>
+                    <!-- Adicione o slot para exibir os detalhes dos dias de abertura -->
+                    <slot name="detalhes-dias-abertura"></slot>
                 </div>
                 <div class="modal-footer">
                     <slot name="rodape" />
@@ -22,6 +24,6 @@
 
 <script>
 export default {
-    props:['id','titulo']
+    props: ['id', 'titulo']
 }
 </script>

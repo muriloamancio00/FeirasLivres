@@ -51,10 +51,12 @@
                                 horarioFim: {titulo: 'Acaba', tipo:'text'},
                                 longitude: {},
                                 latitude: {},
+                                dias_abertura: {titulo: 'Semanal', tipo:'text'},
                                 created_at: {},
                                 updated_at: {},
                             }"
-                        ></table-component>
+                        >
+                        </table-component>
                     </template>
 
                     <template v-slot:rodape>
@@ -84,7 +86,6 @@
 
         <!-- Inicio Modal Adiciona -->
         <modal-component id="modalFeira" titulo="Adicionar Feira">
-
             <template v-slot:alerta>
                 <alert-component tipo="success" :detalhes="transacaoDetalhes" titulo="Cadastro realizado com sucesso!" v-if="transacaoStatus == 'adicionado'"></alert-component>
                 <alert-component tipo="danger" :detalhes="transacaoDetalhes" titulo="Erro, Feira não cadastrada!" v-if="transacaoStatus == 'erro'"></alert-component>
@@ -194,7 +195,6 @@
             <template v-slot:rodape>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
             </template>
-
         </modal-component>
         <!-- Fim Modal Visualizar -->
 
@@ -216,7 +216,6 @@
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                 <button type="button" class="btn btn-danger" @click="remover()" v-if="$store.state.transacao.status != 'sucesso'">Remover</button>
             </template>
-
         </modal-component>
         <!-- Fim modal Remove -->
 

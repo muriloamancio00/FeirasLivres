@@ -9,13 +9,18 @@ class Fair extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'dias_abertura' => 'array',
+    ];
+
     protected $fillable = [
         'nome',
         'endereco',
         'horarioInicio',
         'horarioFim',
         'longitude',
-        'latitude'
+        'latitude',
+        'dias_abertura',
     ];
 
     public function rules(){
