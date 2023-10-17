@@ -69,6 +69,19 @@ Vue.filter('formataDataTempoGlobal', function(d) {
     return data + ' ' + tempo
 })
 
+Vue.filter('formataDiasSemana', function(dias) {
+    if (!dias || !Array.isArray(dias)) return ''
+
+    const diasSemana = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"]
+
+    // Ordena os dias de acordo com a ordem da semana
+    dias.sort((a, b) => diasSemana.indexOf(a) - diasSemana.indexOf(b))
+
+    // Retorna os dias formatados
+    return dias.join(', ')
+})
+
+
 const app = new Vue({
     el: '#app',
     store

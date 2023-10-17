@@ -51,7 +51,7 @@
                                 horarioFim: {titulo: 'Acaba', tipo:'text'},
                                 longitude: {},
                                 latitude: {},
-                                dias_abertura: {titulo: 'Semanal', tipo:'text'},
+                                dias_abertura: {titulo: 'Semanal', tipo:'json'},
                                 created_at: {},
                                 updated_at: {},
                             }"

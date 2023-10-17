@@ -13,6 +13,7 @@
                         <span v-if="titulos[chaveValor].tipo == 'text'">{{valor}}</span>
                         <!-- buscar nome do atributo que possui int -->
                         <span v-if="titulos[chaveValor].tipo == 'int'">{{valor}}</span>
+                        <span v-if="titulos[chaveValor].tipo == 'json'">{{valor | formataDiasSemana}}</span>
                         <span v-if="titulos[chaveValor].tipo == 'data'">{{valor | formataDataTempoGlobal}}</span>
                     </td>
                     <td v-if="visualizar.visivel || atualizar.visivel || remover.visivel">
