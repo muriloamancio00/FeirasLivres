@@ -45,6 +45,7 @@ class FairController extends Controller
             'endereco' => $request->endereco,
             'horarioInicio' => $request->horarioInicio,
             'horarioFim' => $request->horarioFim,
+            'dias_abertura' => $request->diasSemana,
         ]);
 
         return  response()->json( $category,201);

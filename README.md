@@ -57,6 +57,9 @@
 <img src="public/storage/imagens/imgCreateFeiras.png">
 <img src="public/storage/imagens/imgDeletFeiras.png">
 
+#### Analyse Component/FairComponent ####
+<img src="public/storage/imagens/phpStan.png">
+
 </details>
 
 ## **Pacotes Instalados pelo Npm**
@@ -83,6 +86,9 @@
 
 ## **tymon@2.0.0**
 *Descrição:* tymon inclui a implementação de autenticação JSON Web Token (JWT) para Laravel e Lumen, por meio do pacote jwt-auth.
+
+## **phpstan@1.10.39**
+*Descrição:* PHPStan verifica toda a sua base de código e procura por bugs óbvios e complicados. Mesmo naquelas raramente executadas se declarações que certamente não são cobertas por testes.
 
 ---
 
