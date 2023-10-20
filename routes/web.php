@@ -19,6 +19,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/update_auth',function(){
+    return view('auth.update');
+})->name('update_auth')->middleware('auth');
+
 Route::get('/category',function(){
     return view('app.category');
 })->name('category')->middleware('auth');

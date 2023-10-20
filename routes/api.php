@@ -21,6 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::prefix('v1')->middleware('jwt.auth')->group(function(){
     Route::post('me','App\Http\Controllers\AuthController@me');
     Route::post('logout','App\Http\Controllers\AuthController@logout');
+    Route::post('update_auth','App\Http\Controllers\AuthController@updateProfile');
     Route::resource('fair', 'App\Http\Controllers\FairController');
     Route::resource('fairs_categories', 'App\Http\Controllers\FairsCategoriesController');
     Route::resource('fairs_events', 'App\Http\Controllers\FairsEventsController');
@@ -29,7 +30,8 @@ Route::prefix('v1')->middleware('jwt.auth')->group(function(){
     //incompletos?
     Route::resource('stand', 'App\Http\Controllers\FairController');
     Route::resource('event', 'App\Http\Controllers\EventController');
-    });
+
+});
 
 Route::post('login','App\Http\Controllers\AuthController@login');
 Route::post('refresh','App\Http\Controllers\AuthController@refresh');

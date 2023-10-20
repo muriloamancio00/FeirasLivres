@@ -35,6 +35,7 @@ export default store;
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('login-component', require('./components/LoginComponent.vue').default);
+Vue.component('update-component', require('./components/UpdateAuthComponent.vue').default);
 Vue.component('category-component', require('./components/CategoryComponent.vue').default);
 Vue.component('product-component', require('./components/ProductComponent.vue').default);
 Vue.component('stand-component', require('./components/StandComponent.vue').default);
