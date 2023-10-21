@@ -3,7 +3,7 @@
         <div class="card-header">
             {{ titulo }}
         </div>
-
+        <slot name="alerta"></slot>
         <div class="card-body">
             <slot name="conteudo"></slot>
         </div>

@@ -53,18 +53,32 @@
                         </button>
                     </template>
                 </card-component>
+
+                <!-- Cadastrar Feirante -->
+
+                <!-- Meus Dados -->
+
+                <button type="button" class="btn btn-primary btn-sm float-right" @click="toggleDados">
+                    Exibir/Ocultar
+                </button>
+
+                <!-- Meus Dados -->
             </div>
 
             <!-- Esquerda -->
 
             <!-- Direita -->
 
-            <div class="col-md-8" v-if="mostrarInputs || mostrarInputs1">
+            <div class="col-md-8" v-if="mostrarInputs || mostrarInputs1 || mostrarDados">
 
                 <!-- Atualizar Auth -->
 
                 <div class="col-md-6" v-if="mostrarInputs">
                     <card-component titulo="Atualizar Perfil">
+                        <template v-slot:alerta>
+                            <alert-component tipo="success" titulo="Transação realizada com sucesso" :detalhes="$store.state.transacao" v-if="$store.state.transacao.status == 'sucesso'"></alert-component>
+                            <alert-component tipo="danger" titulo="Erro na transação" :detalhes="$store.state.transacao" v-if="$store.state.transacao.status == 'erro'"></alert-component>
+                        </template>
                         <template v-slot:conteudo>
                             <div class="form-group">
                                 <encapsular-component titulo="Nome" id="InputNome" id-help="NomeHelp" texto-ajuda="Opcional. Informe o novo nome">
@@ -123,6 +137,21 @@
 
                 <!-- Listar Feirante Cadastro -->
 
+                <!-- Meus Dados -->
+
+                <div class="col-md-6" v-if="mostrarDados">
+                    <div v-if="userData">
+                        <input v-model="userData.name" type="text" placeholder="Nome">
+                        <input v-model="userData.email" type="email" placeholder="Email">
+                        <!-- E assim por diante... -->
+                    </div>
+                    <div v-else>
+                        <p>Usuário não autenticado</p>
+                    </div>
+                </div>
+
+
+
             </div>
 
             <!-- Direita -->
@@ -140,25 +169,42 @@
 export default {
     data() {
         return {
-            urlBase: 'http://127.0.0.1:8000/api/v1/update_auth/',
+            urlBase: 'http://127.0.0.1:8000/api/v1/',
             urlPaginacao: '',
             urlFiltro: '',
             //atributos
+            userData: null,
+            nome: this.$store.state.item.nome,
+            email: this.$store.state.item.email,
+            password: this.$store.state.item.password,
+            password_confirmation: this.$store.state.item.password_confirmation,
+            //Cards
             mostrarInputs: false, // Inicialmente os inputs não são visíveis
             mostrarInputs1: false, // Inicialmente os inputs não são visíveis
+            mostrarDados: false, // Inicialmente os inputs não são visíveis
+            //
+            transacaoStatus: '',
+            transacaoDetalhes: {},
             update: {name: '', email: '', password: '', password_confirmation: ''},
         };
     }, methods: {
         toggleUpdate() {
             this.mostrarInputs = !this.mostrarInputs;
-            this.mostrarInputs1 = false; // Garante que apenas um card seja exibido de cada vez
+            this.mostrarInputs1 = false;
+            this.mostrarDados = false;
         },
         toggleInputs() {
             this.mostrarInputs1 = !this.mostrarInputs1;
-            this.mostrarInputs = false; // Garante que apenas um card seja exibido de cada vez
+            this.mostrarInputs = false;
+            this.mostrarDados = false;
+        },
+        toggleDados() {
+            this.mostrarDados = !this.mostrarDados;
+            this.mostrarInputs = false;
+            this.mostrarInputs1 = false;
         },
         atualizar(){
-            let url = this.urlBase
+            let url = this.urlBase + 'update_auth/'
 
             let formData = new FormData();
             formData.append('_method', 'post')
@@ -181,6 +227,22 @@ export default {
                     this.$store.state.transacao.dados = errors.response.data.errors
                 })
         },
+        async fetchUserData() {
+            try {
+                const response = await fetch(this.urlBase + 'me', {
+                    method: 'POST',
+                });
+
+                if (!response.ok) {
+                    throw new Error('Não foi possível obter os dados do usuário');
+                }
+
+                const userData = await response.json();
+                this.userData = userData;
+            } catch (error) {
+                console.error(error);
+            }
+        }
     },
 };
 </script>
