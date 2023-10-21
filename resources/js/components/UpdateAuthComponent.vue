@@ -68,30 +68,31 @@
                         <template v-slot:conteudo>
                             <div class="form-group">
                                 <encapsular-component titulo="Nome" id="InputNome" id-help="NomeHelp" texto-ajuda="Opcional. Informe o novo nome">
-                                    <input type="text" class="form-control" id="inputNome" aria-describedby="NomeHelp" placeholder="Novo Nome de Usuario" v-model="update.nome">
+                                    <input type="text" class="form-control" id="inputNome" aria-describedby="NomeHelp" placeholder="Novo Nome de Usuario" v-model="$store.state.item.name">
                                 </encapsular-component>
                             </div>
 
                             <div class="form-group">
                                 <encapsular-component titulo="Email" id="InputEmail" id-help="EmailHelp" texto-ajuda="Opcional. Informe o novo email">
-                                    <input type="text" class="form-control" id="inputEmail" aria-describedby="EmailHelp" placeholder="Novo Email de Usuario" v-model="update.email">
+                                    <input type="text" class="form-control" id="inputEmail" aria-describedby="EmailHelp" placeholder="Novo Email de Usuario" v-model="$store.state.item.email">
                                 </encapsular-component>
                             </div>
 
                             <div class="form-group">
                                 <encapsular-component titulo="Senha" id="InputSenha" id-help="SenhaHelp" texto-ajuda="Opcional. Informe a nova senha">
-                                    <input type="password" class="form-control" id="inputSenha" aria-describedby="SenhaHelp" placeholder="Nova Senha de Usuario" v-model="update.password">
+                                    <input type="password" class="form-control" id="inputSenha" aria-describedby="SenhaHelp" placeholder="Nova Senha de Usuario" v-model="$store.state.item.password">
                                 </encapsular-component>
                             </div>
 
                             <div class="form-group">
                                 <encapsular-component titulo="Confirmar Senha" id="InputSenha" id-help="SenhaHelp" texto-ajuda="Confirme sua nova senha">
-                                    <input type="password" class="form-control" id="inputSenha" aria-describedby="SenhaHelp" placeholder="Nova Senha de Usuario" v-model="update.password_confirmation">
+                                    <input type="password" class="form-control" id="inputSenha" aria-describedby="SenhaHelp" placeholder="Nova Senha de Usuario" v-model="$store.state.item.password_confirmation">
                                 </encapsular-component>
                             </div>
                         </template>
                         <template v-slot:rodape>
-                            <button type="button" class="btn btn-primary btn-sm float-right">Update</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="this.mostrarInputs = false">Fechar</button>
+                            <button type="button" class="btn btn-primary btn-sm float-right" @click="atualizar()">Update</button>
                         </template>
                     </card-component>
                 </div>
@@ -139,6 +140,10 @@
 export default {
     data() {
         return {
+            urlBase: 'http://127.0.0.1:8000/api/v1/update_auth/',
+            urlPaginacao: '',
+            urlFiltro: '',
+            //atributos
             mostrarInputs: false, // Inicialmente os inputs não são visíveis
             mostrarInputs1: false, // Inicialmente os inputs não são visíveis
             update: {name: '', email: '', password: '', password_confirmation: ''},
@@ -152,9 +157,30 @@ export default {
             this.mostrarInputs1 = !this.mostrarInputs1;
             this.mostrarInputs = false; // Garante que apenas um card seja exibido de cada vez
         },
-    },
-    atualizar(){
+        atualizar(){
+            let url = this.urlBase
 
+            let formData = new FormData();
+            formData.append('_method', 'post')
+            formData.append('name', this.$store.state.item.name)
+            formData.append('email', this.$store.state.item.email)
+            formData.append('password', this.$store.state.item.password)
+            formData.append('password_confirmation', this.$store.state.item.password_confirmation)
+
+            console.log(formData)
+
+
+            axios.post(url, formData)
+                .then(response => {
+                    console.log(response)
+                    this.$store.state.transacao.status = 'sucesso'
+                    this.$store.state.transacao.mensagem = 'Registro atualizado!'
+                })
+                .catch(errors => {
+                    this.$store.state.transacao.status = 'erro'
+                    this.$store.state.transacao.dados = errors.response.data.errors
+                })
+        },
     },
 };
 </script>
