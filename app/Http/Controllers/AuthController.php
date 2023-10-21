@@ -38,16 +38,19 @@ class AuthController extends Controller
     {
         $user = auth()->user(); // Obtém o usuário autenticado
 
-        // Validação dos campos (você pode personalizar isso conforme suas necessidades)
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
+            'name' => 'string|max:255',
+            'email' => 'string|email|max:255|unique:users,email,'.$user->id,
             'password' => 'nullable|string|min:6|confirmed',
         ]);
 
-        // Atualiza as informações do usuário
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
+        if ($request->has('name')) {
+            $user->name = $request->input('name');
+        }
+
+        if ($request->has('email')) {
+            $user->email = $request->input('email');
+        }
 
         if ($request->has('password')) {
             $user->password = bcrypt($request->input('password'));
@@ -55,7 +58,7 @@ class AuthController extends Controller
 
         $user->save();
 
-        return response()->json(['message' => 'Perfil atualizado com sucesso']);
+        return response()->json(['message' => 'Perfil atualizado com sucesso', 'user' => $user]);
     }
 
     public function me()
