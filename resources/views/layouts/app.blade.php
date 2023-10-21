@@ -61,11 +61,6 @@
                                     <a class="dropdown-item" href="{{ route('fairs_categories') }}">Ocorrencia de Categorias</a>
                                 </div>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('update_auth') }}">
-                                    <i class="fas fa-key"></i> User
-                                </a>
-                            </li>
                         @endauth
                     </ul>
 
@@ -92,7 +87,8 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{{ route('logout') }}"
+                                    <a class="nav-link" href="{{ route('update_auth') }}">Configuração</a>
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                             <i class="fas fa-sign-out-alt"></i> {{ __('Logout') }}
                                         </a>
