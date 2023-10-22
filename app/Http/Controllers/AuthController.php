@@ -41,7 +41,7 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'string|max:255',
             'email' => 'string|email|max:255|unique:users,email,'.$user->id,
-            'password' => 'nullable|string|min:6|confirmed',
+            'password' => 'string|min:6|confirmed',
         ]);
 
         if ($request->has('name')) {

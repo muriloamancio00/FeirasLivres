@@ -19,7 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::prefix('v1')->middleware('jwt.auth')->group(function(){
-    Route::post('me','App\Http\Controllers\AuthController@me');
+    Route::get('me','App\Http\Controllers\AuthController@me');
     Route::post('logout','App\Http\Controllers\AuthController@logout');
     Route::post('update_auth','App\Http\Controllers\AuthController@updateProfile');
     Route::resource('fair', 'App\Http\Controllers\FairController');
