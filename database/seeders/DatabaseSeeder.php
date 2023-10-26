@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\DayWeek;
 use App\Models\Event;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,9 +17,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Type::factory(2)->create();
-        \App\Models\User::factory(2)->create();
-        \App\Models\Permission::factory(40)->create();
+        \App\Models\User::factory(1)->create();
         \App\Models\DayWeek::factory()->count(7)->create();
 
         $categories = [
@@ -28,6 +27,14 @@ class DatabaseSeeder extends Seeder
             ['nome' => 'Material Escolar', 'descricao' => 'Descrição da Categoria 4'],
             ['nome' => 'Eletronico', 'descricao' => 'Descrição da Categoria 5'],
         ];
+
+        $user = [
+            ['name' => 'Feirante', 'email' => 'f@f.com', 'password' => '00000000', 'type_id' => '0'],
+            ['name' => 'Admin', 'email' => 'a@a.com', 'password' => '11111111', 'type_id' => '1'],
+            ['name' => 'SuperUser', 'email' => 's@s.com', 'password' => '22222222', 'type_id' => '2'],
+        ];
+
+        User::insert($user);
 
         Category::insert($categories);
 

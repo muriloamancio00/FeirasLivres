@@ -61,6 +61,19 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="type_id" class="col-md-4 col-form-label text-md-right">Tipo de Usuário:</label>
+
+                            <div class="col-md-6">
+                                <select id="type_id" class="form-control" name="type_id" required>
+                                    <option value="0">Feirante</option>
+                                    <option value="1">Administrador</option>
+                                    <option value="2">SuperUser</option>
+                                </select>
+                            </div>
+                        </div>
+
+
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
