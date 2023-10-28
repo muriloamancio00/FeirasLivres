@@ -62,16 +62,28 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="type_id" class="col-md-4 col-form-label text-md-right">Tipo de Usuário:</label>
+                            <label class="col-md-4 col-form-label text-md-right">Tipo de Usuário:</label>
 
                             <div class="col-md-6">
-                                <select id="type_id" class="form-control" name="type_id" required>
-                                    <option value="0">Feirante</option>
-                                    <option value="1">Administrador</option>
-                                    <option value="2">SuperUser</option>
-                                </select>
+                                <div class="form-check">
+                                    <input type="hidden" name="isAdmin" value="0">
+                                    <input type="checkbox" class="form-check-input" id="isAdmin" name="isAdmin" value="1">
+                                    <label class="form-check-label" for="isAdmin">Administrador</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="hidden" name="isFeirante" value="0">
+                                    <input type="checkbox" class="form-check-input" id="isFeirante" name="isFeirante" value="1">
+                                    <label class="form-check-label" for="isFeirante">Feirante</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="hidden" name="isSuper" value="0">
+                                    <input type="checkbox" class="form-check-input" id="isSuper" name="isSuper" value="1">
+                                    <label class="form-check-label" for="isSuper">Super Usuário</label>
+                                </div>
                             </div>
                         </div>
+
+
 
 
                         <div class="form-group row mb-0">

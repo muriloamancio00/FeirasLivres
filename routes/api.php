@@ -18,6 +18,24 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::middleware('admin')->group(function(){
+    Route::get('admin', function (){
+       dd('Você é admin');
+    });
+});
+
+Route::middleware('feirante')->group(function(){
+    Route::get('feirante', function (){
+        dd('Você é feirante');
+    });
+});
+
+Route::middleware('super')->group(function(){
+    Route::get('super', function (){
+        dd('Você é super');
+    });
+});
+
 Route::prefix('v1')->middleware('jwt.auth')->group(function(){
     Route::get('me','App\Http\Controllers\AuthController@me');
     Route::post('logout','App\Http\Controllers\AuthController@logout');
@@ -30,7 +48,6 @@ Route::prefix('v1')->middleware('jwt.auth')->group(function(){
     //incompletos?
     Route::resource('stand', 'App\Http\Controllers\FairController');
     Route::resource('event', 'App\Http\Controllers\EventController');
-
 });
 
 Route::post('login','App\Http\Controllers\AuthController@login');

@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(1)->create();
+        \App\Models\User::factory(5)->create();
         \App\Models\DayWeek::factory()->count(7)->create();
 
         $categories = [
@@ -28,13 +28,13 @@ class DatabaseSeeder extends Seeder
             ['nome' => 'Eletronico', 'descricao' => 'Descrição da Categoria 5'],
         ];
 
-        $user = [
-            ['name' => 'Feirante', 'email' => 'f@f.com', 'password' => '00000000', 'type_id' => '0'],
-            ['name' => 'Admin', 'email' => 'a@a.com', 'password' => '11111111', 'type_id' => '1'],
-            ['name' => 'SuperUser', 'email' => 's@s.com', 'password' => '22222222', 'type_id' => '2'],
-        ];
-
-        User::insert($user);
+//        $user = [
+//            ['name' => 'Feirante', 'email' => 'f@f.com', 'password' => '00000000', 'type_id' => '0'],
+//            ['name' => 'Admin', 'email' => 'a@a.com', 'password' => '11111111', 'type_id' => '1'],
+//            ['name' => 'SuperUser', 'email' => 's@s.com', 'password' => '22222222', 'type_id' => '2'],
+//        ];
+//
+//        User::insert($user);
 
         Category::insert($categories);
 

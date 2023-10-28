@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use PhpParser\Node\Attribute;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
@@ -21,7 +22,10 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
-        'type_id',    ];
+        'isAdmin',
+        'isFeirante',
+        'isSuper'
+        ];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -41,7 +45,6 @@ class User extends Authenticatable implements JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
