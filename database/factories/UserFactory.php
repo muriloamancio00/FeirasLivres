@@ -33,9 +33,7 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => '11111111', // password
             'remember_token' => Str::random(10),
-            'isAdmin' => rand(0,1),
-            'isFeirante' => rand(0,1),
-            'isSuper' => rand(0,1),
+            'setor' => rand(0,2),
         ];
     }
 }

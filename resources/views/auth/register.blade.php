@@ -62,30 +62,22 @@
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-md-4 col-form-label text-md-right">Tipo de Usuário:</label>
-
+                            <label class="col-md-4 col-form-label text-md-right">Setor do Usuario:</label>
                             <div class="col-md-6">
                                 <div class="form-check">
-                                    <input type="hidden" name="isAdmin" value="0">
-                                    <input type="checkbox" class="form-check-input" id="isAdmin" name="isAdmin" value="1">
-                                    <label class="form-check-label" for="isAdmin">Administrador</label>
+                                    <input type="radio" class="form-check-input" id="feirante" name="setor" value="0">
+                                    <label class="form-check-label" for="feirante">Feirante</label>
                                 </div>
                                 <div class="form-check">
-                                    <input type="hidden" name="isFeirante" value="0">
-                                    <input type="checkbox" class="form-check-input" id="isFeirante" name="isFeirante" value="1">
-                                    <label class="form-check-label" for="isFeirante">Feirante</label>
+                                    <input type="radio" class="form-check-input" id="gestor" name="setor" value="1">
+                                    <label class="form-check-label" for="gestor">Gestor</label>
                                 </div>
                                 <div class="form-check">
-                                    <input type="hidden" name="isSuper" value="0">
-                                    <input type="checkbox" class="form-check-input" id="isSuper" name="isSuper" value="1">
-                                    <label class="form-check-label" for="isSuper">Super Usuário</label>
+                                    <input type="radio" class="form-check-input" id="admin" name="setor" value="2">
+                                    <label class="form-check-label" for="admin">Admin</label>
                                 </div>
                             </div>
                         </div>
-
-
-
-
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">

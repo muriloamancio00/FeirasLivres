@@ -28,13 +28,13 @@ class DatabaseSeeder extends Seeder
             ['nome' => 'Eletronico', 'descricao' => 'Descrição da Categoria 5'],
         ];
 
-//        $user = [
-//            ['name' => 'Feirante', 'email' => 'f@f.com', 'password' => '00000000', 'type_id' => '0'],
-//            ['name' => 'Admin', 'email' => 'a@a.com', 'password' => '11111111', 'type_id' => '1'],
-//            ['name' => 'SuperUser', 'email' => 's@s.com', 'password' => '22222222', 'type_id' => '2'],
-//        ];
+        $user = [
+            ['name' => 'Feirante', 'email' => 'f@f.com', 'password' => '00000000', 'setor' => '0'],
+            ['name' => 'Gestor', 'email' => 'g@g.com', 'password' => '11111111', 'setor' => '1'],
+            ['name' => 'Admin', 'email' => 'a@a.com', 'password' => '22222222', 'setor' => '2'],
+        ];
 //
-//        User::insert($user);
+        User::insert($user);
 
         Category::insert($categories);
 
